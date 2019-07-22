@@ -1,0 +1,13 @@
+<h2>Product Details</h2>
+
+<div *ngIf="product">
+  <h3>{{ product.name }}</h3>
+  <h4>{{ product.price | currency }}</h4>
+  <p>{{ product.description }}</p>
+
+  <button (click)="addToCart(product)">购买</button>
+</div>
+
+<div *ngIf="!product">
+    你找的商品不存在
+</div>
