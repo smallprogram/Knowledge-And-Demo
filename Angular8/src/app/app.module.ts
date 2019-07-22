@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
+
 import { NgModule } from '@angular/core';
+
 import { AppRoutingModule } from './app-routing.module';
+
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -19,6 +23,7 @@ import { ShippingComponent } from './component/shipping/shipping.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +38,8 @@ import { ShippingComponent } from './component/shipping/shipping.component';
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
