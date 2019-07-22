@@ -29,7 +29,7 @@ webset: <a href="https://material.io/tools/icons/">Click here</a>
 `npm install --save hammerjs` for Gesture Support
 
 ### Config
-in app.module.ts import material.module.ts  
+in app.module.ts import <a href="https://github.com/smallprogram/Temp/blob/master/material.module.ts">material.module.ts</a>  
 in src/styles.scss add  
 `@import "~@angular/material/prebuilt-themes/indigo-pink.css";` for website theme  
 you can select other css file in prebuilt-themes folder.
