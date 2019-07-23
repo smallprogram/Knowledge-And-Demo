@@ -16,17 +16,20 @@ export class HeroesComponent implements OnInit {
   // };
 
   heroes: Hero[];
-  selectHero: Hero;
+  //selectHero: Hero;
 
   constructor(private heroService: HeroService) {
     
   }
 
   ngOnInit() {
-    this.heroes = this.heroService.getHeroes();
+    //this.heroes = this.heroService.getHeroes_down(); //同步方式
+    
+    //采用rxjs的observable订阅实现异步
+    this.heroService.getHeroesAsync().subscribe(heroes => this.heroes = heroes);
   }
 
-  onSelect(hero) {
-    this.selectHero = hero;
-  }
+  // onSelect(hero) {
+  //   this.selectHero = hero;
+  // }
 }

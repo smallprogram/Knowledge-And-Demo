@@ -1,8 +1,12 @@
 <!--The content below is only a placeholder and can be replaced.-->
 
-  <h1>
-    {{ title }}
-  </h1>
- 
-<app-heroes></app-heroes>
+<h1>{{title}}</h1>
+<nav>
+    <a [routerLink]="[ '/dashboard']">仪表盘</a>
+    <a [routerLink]="[ '/heroes']">英雄列表</a>
+</nav>
 <router-outlet></router-outlet>
+<app-messages></app-messages>
+
+
+
