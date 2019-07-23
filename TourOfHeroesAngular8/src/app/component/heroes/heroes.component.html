@@ -1,0 +1,8 @@
+<h1>英雄列表</h1>
+<ul class="heroes">
+    <li *ngFor="let item of heroes" (click)="onSelect(item)" [class.selected]="item === selectHero">
+        <span class="badge">{{item.id}}</span> {{item.name}}
+    </li>
+</ul>
+
+<app-hero-detail [hero]="selectHero"></app-hero-detail>
