@@ -16,7 +16,8 @@ export class HeroDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,   //获取路由相关信息的。此处获取路由URI参数之用
               private heroesService: HeroService,
               private location: Location   
-    ) { }
+    ) { 
+    }
 
   ngOnInit() {
     this.getHero();
@@ -29,5 +30,9 @@ export class HeroDetailComponent implements OnInit {
 
   goBack(){
     this.location.back();
+  }
+
+  save(){
+    this.heroesService.udpateHero(this.hero).subscribe(()=> this.goBack());
   }
 }

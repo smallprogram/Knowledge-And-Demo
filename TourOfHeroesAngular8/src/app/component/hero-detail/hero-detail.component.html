@@ -1,11 +1,13 @@
-<h2>{{hero.name | uppercase}} 详情</h2>
 <div *ngIf="hero">
-    <div><span>id:</span>{{hero.id}}</div>
-    <div>
-        <label>名字:
-            <input [(ngModel)]="hero.name" placeholder="name" />
-        </label>
+    <h2>{{hero.name | uppercase}} 详情</h2>
+    <div *ngIf="hero">
+        <div><span>id:</span>{{hero.id}}</div>
+        <div>
+            <label>名字:
+                <input [(ngModel)]="hero.name" placeholder="name" />
+            </label>
+        </div>
     </div>
+    <button (click)="save()">保存修改</button>
+    <button (click)="goBack()">返回</button>
 </div>
-
-<button (click)="goBack()">返回</button>
