@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Tour Of Heroes for Angular8';
+  isUnchange = true;
+  changeisUnchange()
+  {
+    this.isUnchange = !this.isUnchange;
+  }
 }
