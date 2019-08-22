@@ -3,6 +3,6 @@
 
 # 相关知识目录
 
-> [Angular 8 知识库](../Angular8/KnowledgePoints/Readme.md)
+> [Angular 8 知识库](../Angular8/docs/Readme.md)
 
 > [MarkDown相关](../Markdown/docs/readme.md) 
