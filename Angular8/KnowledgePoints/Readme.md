@@ -1,4 +1,4 @@
-# [返回主目录](../../docs/readme.md)<!-- omit in toc --> 
+# [返回主目录](https://github.com/smallprogram/Knowledge-And-Demo)<!-- omit in toc --> 
 
 
 # 目录
