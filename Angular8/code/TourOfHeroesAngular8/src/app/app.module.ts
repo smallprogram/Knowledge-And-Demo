@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
@@ -18,6 +19,7 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { HeroSearchComponent } from './component/hero-search/hero-search.component';
 
 import { InMemoryDataService } from './service/in-memory-data.service';
+import { PopupComponent } from './component/popup/popup.component';
 
 
 
@@ -30,10 +32,12 @@ import { InMemoryDataService } from './service/in-memory-data.service';
     HeroDetailComponent,
     MessagesComponent,
     DashboardComponent,
-    HeroSearchComponent
+    HeroSearchComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     MaterialModule,
     FormsModule,
@@ -42,6 +46,7 @@ import { InMemoryDataService } from './service/in-memory-data.service';
     
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [PopupComponent]
 })
 export class AppModule { }
