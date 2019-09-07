@@ -1,0 +1,17 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div>
+  <mat-grid-list cols="10">
+    <mat-grid-tile  [colspan]="6" [rowspan]="5">
+      <H3>AccessLog</H3>
+      <br/>
+      <br/>
+      {{accesslog}}
+    </mat-grid-tile>
+    <mat-grid-tile  [colspan]="4" [rowspan]="5">
+      <H3>errorLog</H3>
+      <textarea></textarea>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+<router-outlet></router-outlet>
