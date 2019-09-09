@@ -1,0 +1,57 @@
+<h1>响应式表单</h1>
+<mat-card>
+    <h2>FormControl实例控制单个表单控件</h2>
+    <label>
+        Name:
+        <input type="text" [formControl]="name">
+    </label>
+    <p>
+        Value: {{ name.value }}
+    </p>
+    <p>
+        <button (click)="updateName()">Update Name</button>
+    </p>
+</mat-card>
+<mat-card>
+    <h2>FormGroup实例控制多个表单控件</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+        <label>
+            First Name:
+            <input type="text" formControlName="firstName">
+        </label>
+
+        <label>
+            Last Name:
+            <input type="text" formControlName="lastName">
+        </label>
+
+        <div formGroupName="address">
+                <h3>Address</h3>
+              
+                <label>
+                  Street:
+                  <input type="text" formControlName="street">
+                </label>
+              
+                <label>
+                  City:
+                  <input type="text" formControlName="city">
+                </label>
+                
+                <label>
+                  State:
+                  <input type="text" formControlName="state">
+                </label>
+              
+                <label>
+                  Zip Code:
+                  <input type="text" formControlName="zip">
+                </label>
+              </div>
+
+        <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+    </form>
+
+
+</mat-card>
