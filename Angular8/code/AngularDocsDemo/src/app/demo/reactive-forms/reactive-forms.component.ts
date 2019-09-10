@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-reactive-forms',
@@ -28,7 +28,40 @@ export class ReactiveFormsComponent implements OnInit {
   onSubmit() {
     console.warn(this.profileForm.value);
   }
-  constructor() { }
+  updateProfile() {
+    this.profileForm.patchValue({
+      firstName: "zhusir",
+      address: {
+        street: "united statued"
+      }
+    });
+  }
+
+  //使用FormBuilder创建表单
+  constructor(private fb: FormBuilder) { }
+
+  fbProfileForm = this.fb.group({
+    firstName1:['',Validators.required],
+    lastName1:[''],
+    address1:this.fb.group({
+      street1: [''],
+      city1: [''],
+      state1: [''],
+      zip1: ['']
+    }),
+    aliases:this.fb.array([
+      this.fb.control('')
+    ])
+  });
+
+  get aliases(){
+    return this.fbProfileForm.get('aliases') as FormArray;
+  }
+
+  addAlias(){
+    this.aliases.push(this.fb.control(''));
+  }
+
 
   ngOnInit() {
   }
