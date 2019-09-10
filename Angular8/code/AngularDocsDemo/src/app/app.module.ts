@@ -16,6 +16,7 @@ import { ReactiveFormsComponent } from './demo/reactive-forms/reactive-forms.com
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TemplateDrivenFormsComponent } from './demo/template-driven-forms/template-driven-forms.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     NavComponent,
     ReactiveFormsComponent,
-    DashboardComponent
+    DashboardComponent,
+    TemplateDrivenFormsComponent
   ],
   imports: [
     BrowserModule,
