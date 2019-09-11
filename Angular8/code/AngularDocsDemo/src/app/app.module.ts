@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
+import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -15,7 +19,7 @@ import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsComponent } from './demo/reactive-forms/reactive-forms.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
+
 import { TemplateDrivenFormsComponent } from './demo/template-driven-forms/template-driven-forms.component';
 
 
@@ -32,6 +36,7 @@ import { TemplateDrivenFormsComponent } from './demo/template-driven-forms/templ
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    FormsModule,
     LayoutModule,
     MatToolbarModule,
     MatButtonModule,
