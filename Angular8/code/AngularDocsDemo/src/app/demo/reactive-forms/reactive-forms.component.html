@@ -1,0 +1,120 @@
+<h1>响应式表单</h1>
+<mat-card>
+    <h3>FormControl实例控制单个表单控件</h3>
+    <label>
+        Name:
+        <input type="text" [formControl]="name">
+    </label>
+    <p>
+        Value: {{ name.value }}
+    </p>
+    <p>
+        <button (click)="updateName()">Update Name use SetValue</button>
+    </p>
+</mat-card>
+<mat-card>
+    <h2>FormGroup实例控制多个表单控件</h2>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+        <label>
+            First Name:
+            <input type="text" formControlName="firstName">
+        </label>
+
+        <label>
+            Last Name:
+            <input type="text" formControlName="lastName">
+        </label>
+
+        <div formGroupName="address">
+                <h3>Address</h3>
+              
+                <label>
+                  Street:
+                  <input type="text" formControlName="street">
+                </label>
+              
+                <label>
+                  City:
+                  <input type="text" formControlName="city">
+                </label>
+                
+                <label>
+                  State:
+                  <input type="text" formControlName="state">
+                </label>
+              
+                <label>
+                  Zip Code:
+                  <input type="text" formControlName="zip">
+                </label>
+              </div>
+
+        <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+    </form>
+    <p>
+      <button (click)="updateProfile()">Update Profile use PatchValue</button>
+    </p>
+    <p>
+        Value: {{ profileForm.value | json }}
+    </p>
+</mat-card>
+
+<mat-card>
+  <h2>FormBuilder实例控制多个表单控件</h2>
+
+  <form [formGroup]="fbProfileForm">
+
+      <label>
+          First Name:
+          <input type="text" formControlName="firstName1" required>
+      </label>
+
+      <label>
+          Last Name:
+          <input type="text" formControlName="lastName1">
+      </label>
+
+      <div formGroupName="address1">
+              <h3>Address</h3>
+            
+              <label>
+                Street:
+                <input type="text" formControlName="street1">
+              </label>
+            
+              <label>
+                City:
+                <input type="text" formControlName="city1">
+              </label>
+              
+              <label>
+                State:
+                <input type="text" formControlName="state1">
+              </label>
+            
+              <label>
+                Zip Code:
+                <input type="text" formControlName="zip1">
+              </label>
+            </div>
+            <div>
+              <h3>aliases use FormArray</h3>
+              <button (click)="addAlias()">Add Alias</button>
+              <div *ngFor="let address of aliases.controls; let i=index">
+                <label>
+                  Alias:
+                  <input type="text" [formControlName]="i">
+                </label>
+              </div>
+            </div>
+      <button type="submit" [disabled]="!fbProfileForm.valid">Submit</button>
+  </form>
+  <p>
+      Value: {{ fbProfileForm.value | json }}
+  </p>
+  <p>
+    Form Status: {{ fbProfileForm.status }}
+  </p>
+</mat-card>
+
