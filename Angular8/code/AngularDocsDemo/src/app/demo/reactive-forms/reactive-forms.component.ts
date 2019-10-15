@@ -16,8 +16,8 @@ export class ReactiveFormsComponent implements OnInit {
 
   //FormGroup实例控制多个表单控件
   profileForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
+    firstName: new FormControl('',Validators.required),
+    lastName: new FormControl('',[Validators.required,Validators.minLength(4)]),
     address: new FormGroup({
       street: new FormControl(''),
       city: new FormControl(''),
