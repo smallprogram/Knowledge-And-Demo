@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Hero } from 'src/app/class/Hero';
 
 @Component({
   selector: 'app-template-driven-forms',
@@ -33,13 +34,3 @@ export class TemplateDrivenFormsComponent implements OnInit {
 
 }
 
-export class Hero {
-
-  constructor(
-    public id: number,
-    public name: string,
-    public power: string,
-    public alterEgo?: string
-  ) {  }
-
-}

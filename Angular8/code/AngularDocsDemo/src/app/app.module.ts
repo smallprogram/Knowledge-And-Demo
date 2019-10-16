@@ -21,6 +21,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatCardModule } from '@angular/material/card';
 
 import { TemplateDrivenFormsComponent } from './demo/template-driven-forms/template-driven-forms.component';
+import { FormValidationComponent } from './demo/form-validation/form-validation.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { TemplateDrivenFormsComponent } from './demo/template-driven-forms/templ
     NavComponent,
     ReactiveFormsComponent,
     DashboardComponent,
-    TemplateDrivenFormsComponent
+    TemplateDrivenFormsComponent,
+    FormValidationComponent
   ],
   imports: [
     BrowserModule,

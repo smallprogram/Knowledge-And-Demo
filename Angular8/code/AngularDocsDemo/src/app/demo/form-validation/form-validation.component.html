@@ -1,0 +1,77 @@
+<mat-card>
+    <div class="container">
+        <h1>响应式表单验证</h1>
+
+        <form [formGroup]='heroForm' #formDir="ngForm">
+            <div [hidden]="formDir.submitted">
+                <div class="cross-validation" [class.cross-validation-error]="heroForm.hasError((heroForm.touched || heroForm.dirty))">
+                    <!-- 名字 -->
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" class="form-control" formControlName="name" required>
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+                            <div *ngIf="name.hasError('required')">
+                                名字是必填的
+                            </div>
+                            <div *ngIf="name.hasError('minlength')">
+                                名字必须长度大于4个字符
+                            </div>
+                            <!-- <div *ngIf="name.hasError('forbiddenName')">
+                                Name cannot be Bob.
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- 别名 -->
+                    <div class="form-group">
+                        <label for="alterEgo">alterEgo</label>
+                        <input id="alterEgo" class="form-control" formControlName="alterEgo">
+                        <div *ngIf="alterEgo.pending">Validating....验证中...</div>
+                        <div *ngIf="alterEgo.invalid" class="alert alert-danger alter-ego-errors">
+                            <div *ngIf="alterEgo.hasError('uniqueAlterEgo')">
+                                Alter Ego is Already taken 别名已被占用
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div *ngIf="heroForm.hasError('identityRevealed') && (heroForm.touched || heroForm.dirty)"
+                        class="cross-validation-error-message alert alert-danger">
+                        Name cannot match alter ego.
+                    </div> -->
+                    <!-- HeroPower -->
+                    <div class="form-group">
+                        <label for="power">Hero Power</label>
+                        <select id="power" class="form-control" formControlName="power" required>
+                            <option *ngFor="let p of powers" [value]="p">
+                                {{p}}
+                            </option>
+                        </select>
+                        <div *ngIf="power.invalid && power.touched" class="alert alert-danger">
+                            <div *ngIf="power.hasError('required')">
+                                Power is Required
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- sumbit -->
+
+                    <button type="submit" class="btn btn-primary" [disabled]="heroForm.invalid">Sumbit</button>
+
+                    <button type="button" class="btn btn-default" (click)="formDir.resetForm({})">Reset</button>
+
+                </div>
+            </div>
+        </form>
+
+        <div class="submitted-message" *ngIf="formDir.submitted">
+            <p>You've submitted your hero, {{ heroForm.value.name }}!</p>
+            <button (click)="formDir.resetForm({})">Add new hero</button>
+        </div>
+
+
+    </div>
+</mat-card>
+
+<mat-card>
+    <div class="container">
+        <h1>模板驱动表单验证</h1>
+    </div>
+</mat-card>

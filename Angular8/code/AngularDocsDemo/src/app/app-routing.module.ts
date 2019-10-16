@@ -4,6 +4,7 @@ import { NavComponent } from './nav/nav.component';
 import { ReactiveFormsComponent } from './demo/reactive-forms/reactive-forms.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { TemplateDrivenFormsComponent } from './demo/template-driven-forms/template-driven-forms.component';
+import { FormValidationComponent } from './demo/form-validation/form-validation.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard',pathMatch:'full' },
   { path: 'reactiveforms', component: ReactiveFormsComponent },
   { path: 'templatedriveforms', component: TemplateDrivenFormsComponent },
+  { path: 'formvalidation', component: FormValidationComponent}
 ];
 
 @NgModule({
