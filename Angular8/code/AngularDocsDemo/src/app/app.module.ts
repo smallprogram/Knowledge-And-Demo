@@ -22,6 +22,9 @@ import { MatCardModule } from '@angular/material/card';
 
 import { TemplateDrivenFormsComponent } from './demo/template-driven-forms/template-driven-forms.component';
 import { FormValidationComponent } from './demo/form-validation/form-validation.component';
+import { ForbiddenValidatorDirective } from './demo/form-validation/customValidators/forbidden-name.directive';
+import { IdentityRevealedValidatorDirective } from './demo/form-validation/customValidators/identity-revealed.directive';
+import { UniqueAlterEgoValidatorDirective } from './demo/form-validation/customValidators/alter-ego.directive';
 
 
 @NgModule({
@@ -31,7 +34,10 @@ import { FormValidationComponent } from './demo/form-validation/form-validation.
     ReactiveFormsComponent,
     DashboardComponent,
     TemplateDrivenFormsComponent,
-    FormValidationComponent
+    FormValidationComponent,
+    ForbiddenValidatorDirective,
+    IdentityRevealedValidatorDirective,
+    UniqueAlterEgoValidatorDirective
   ],
   imports: [
     BrowserModule,
