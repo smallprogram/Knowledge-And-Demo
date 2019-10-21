@@ -25,6 +25,9 @@ import { FormValidationComponent } from './demo/form-validation/form-validation.
 import { ForbiddenValidatorDirective } from './demo/form-validation/customValidators/forbidden-name.directive';
 import { IdentityRevealedValidatorDirective } from './demo/form-validation/customValidators/identity-revealed.directive';
 import { UniqueAlterEgoValidatorDirective } from './demo/form-validation/customValidators/alter-ego.directive';
+import { DynamicFormComponent } from './demo/dynamic-form/dynamic-form.component';
+import { DynamicFormQuestionComponent } from './demo/dynamic-form/form-control/dynamic-form-question/dynamic-form-question.component';
+import { DyncmiaFormMainComponent } from './demo/dyncmia-form-main/dyncmia-form-main.component';
 
 
 @NgModule({
@@ -37,7 +40,10 @@ import { UniqueAlterEgoValidatorDirective } from './demo/form-validation/customV
     FormValidationComponent,
     ForbiddenValidatorDirective,
     IdentityRevealedValidatorDirective,
-    UniqueAlterEgoValidatorDirective
+    UniqueAlterEgoValidatorDirective,
+    DynamicFormComponent,
+    DynamicFormQuestionComponent,
+    DyncmiaFormMainComponent
   ],
   imports: [
     BrowserModule,
