@@ -11,3 +11,7 @@
 > [4.RxJS与其他框架的关系](../docs/RxJS_BigPicture/4.RxJS与其他框架的关系.md)
 
 > [5.RxJS构建块](../docs/RxJS_BigPicture/5.RxJS构建块.md)
+
+> [6.Demo创建Observable和Observer](../docs/RxJS_BigPicture/6.Demo创建Observable和Observer.md)
+
+> [7.Demo事件观察和Operators应用](../docs/RxJS_BigPicture/7.Demo事件观察和Operators应用.md)
