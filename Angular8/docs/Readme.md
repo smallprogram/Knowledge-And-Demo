@@ -67,3 +67,29 @@
 ## 引导启动
 
 >[05.01-引导启动](05.01-引导启动.md)
+
+## NgModule
+
+>[06.01-NgModule-NgModule简介](06.01-NgModule-NgModule简介.md)
+
+>[06.02-NgModule-JS模块与NgModule](06.02-NgModule-JS模块与NgModule.md)
+
+>[06.03-NgModule-常用模块](06.03-NgModule-常用模块.md)
+
+>[06.04-NgModule-特性模块的分类](06.04-NgModule-特性模块的分类.md)
+
+>[06.05-NgModule-入口组件](06.05-NgModule-入口组件.md)
+
+>[06.06-NgModule-特性模块](06.06-NgModule-特性模块.md)
+
+>[06.07-NgModule-服务提供商](06.07-NgModule-服务提供商.md)
+
+>[06.08-NgModule-单例服务](06.08-NgModule-单例服务.md)
+
+>[06.09-NgModule-惰性加载的特性模块](06.09-NgModule-惰性加载的特性模块.md)
+
+>[06.10-NgModule-共享NgModule](06.10-NgModule-共享NgModule.md)
+
+>[06.11-NgModule-NgModule API](06.11-NgModule-NgModuleAPI.md)
+
+>[06.12-NgModule-NgModule常见问题](06.12-NgModule-NgModule常见问题.md)
