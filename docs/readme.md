@@ -8,3 +8,6 @@
 > [RxJS](../RxJS/docs/Readme.md)
 
 > [MarkDown相关](../Markdown/docs/readme.md) 
+
+
+<div class="text-purple">This text is purple</div>
