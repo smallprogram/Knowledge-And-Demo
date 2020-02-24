@@ -10,4 +10,3 @@
 > [MarkDown相关](../Markdown/docs/readme.md) 
 
 
-<div class="language-color">This text is purple</div>
