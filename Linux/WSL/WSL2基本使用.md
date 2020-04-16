@@ -25,6 +25,9 @@
 - `wsl -d <DistributionName>`运行指定的分发版
 - `[distro.exe] /?` 查看特定分发版exe程序命令
 - `wsl --shutdown` 终止所有wsl实例
+- `wsl -s <Distro>` 设置指定分发为默认
+- `wsl -t <Distro>` 终止指定分发
+
 
 #### 迁移
 
