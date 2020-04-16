@@ -6,7 +6,10 @@
    2. 手动命令安装,适用于应用商店不可用的情况 [官方文档](https://docs.microsoft.com/zh-cn/windows/wsl/install-manual)
    3. 下载并手动解压安装。适用于Windows server 2019或更高版本。
       1. 使用该网址下载安装包 https://aka.ms/wsl-ubuntu-1804 或通过[官方文档](https://docs.microsoft.com/zh-cn/windows/wsl/install-manual)手动下载你需要的Linux系统
-      2. 将想在文件放到你想安装的的目录上，并执行命令`Rename-Item .\Ubuntu.appx` `.\Ubuntu.zipExpand-Archive .\Ubuntu.zip .\Ubuntu` 将安装包转换为压缩包并解压
+      2. 将想在文件放到你想安装的的目录上，并执行命令
+         `Rename-Item .\Ubuntu.appx` 
+         `.\Ubuntu.zipExpand-Archive .\Ubuntu.zip .\Ubuntu` 
+         将安装包转换为压缩包并解压
       3. 执行解压后的Exe文件进行安装
 # 基本命令与特性
 #### 1903以上的win10
