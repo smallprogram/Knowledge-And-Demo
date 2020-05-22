@@ -1,6 +1,6 @@
 ## Material Design Icons
 
-### webset: 
+### website: 
 <a href="https://google.github.io/material-design-icons/">https://google.github.io/material-design-icons/</a>
 
 ### npm install  
@@ -15,12 +15,12 @@ in scr/styles.scss add
 `<i class="material-icons">
 3d_rotation
 </i>`  
-webset: <a href="https://material.io/tools/icons/">Click here</a>
+website: <a href="https://material.io/tools/icons/">Click here</a>
 
 
 ## Angular Material
 
-### webset
+### website
 <a href="https://material.angular.io/guide/getting-started">Click here</a> 
 
 ### npm install
