@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FormsModule }   from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -28,6 +29,7 @@ import { UniqueAlterEgoValidatorDirective } from './demo/form-validation/customV
 import { DynamicFormComponent } from './demo/dynamic-form/dynamic-form.component';
 import { DynamicFormQuestionComponent } from './demo/dynamic-form/form-control/dynamic-form-question/dynamic-form-question.component';
 import { DyncmiaFormMainComponent } from './demo/dyncmia-form-main/dyncmia-form-main.component';
+import { HttpClientComponent } from './demo/http-client/http-client.component';
 
 
 @NgModule({
@@ -43,9 +45,11 @@ import { DyncmiaFormMainComponent } from './demo/dyncmia-form-main/dyncmia-form-
     UniqueAlterEgoValidatorDirective,
     DynamicFormComponent,
     DynamicFormQuestionComponent,
-    DyncmiaFormMainComponent
+    DyncmiaFormMainComponent,
+    HttpClientComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

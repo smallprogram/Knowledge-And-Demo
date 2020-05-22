@@ -1,0 +1,17 @@
+<mat-card>
+    <div class="container">
+        <h1>从服务器获取数据</h1>
+        <h3>v1</h3>
+        <button (click)="showConfigv1()">获取JSON v1</button><br />
+        {{configv1 | json}}
+        <h3>v2</h3>
+        <button (click)="showConfigv2()">获取JSON v2</button><br />
+        {{configv2 |json}}
+
+
+        <h1>读取完整响应体</h1>
+        <button (click)="showConfigResponse()">读取完整响应体</button><br />
+        {{configv3 |json}}
+        {{headers}}
+    </div>
+</mat-card>
