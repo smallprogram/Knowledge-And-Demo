@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfigService } from 'src/app/service/config.service';
-import { Config } from 'src/app/interface/config';
+import { ConfigService } from './service/config.service';
+
+import { Config } from './interface/config';
 
 @Component({
   selector: 'app-http-client',

@@ -29,4 +29,7 @@ export class ConfigService {
   }
   //#endregion
 
+  //#region 发起JSONP请求
+  
+  //#endregion
 }
