@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ComposeMessageComponent } from './compose-message/compose-message.component';
 import { AuthGuard } from './auth/auth.guard';
+import { SelectivePreloadingStrategyService } from './service/selective-preloading-strategy.service';
 // import { HeroListComponent } from './heroes/hero-list/hero-list.component';
 
 
@@ -28,12 +29,17 @@ const routes: Routes = [
     data: { preload: true }
   },
 
-  { path: '', redirectTo: '/heroes', pathMatch: 'full' },
+  { path: '', redirectTo: '/superheroes', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, 
+    { 
+      enableTracing: false,
+      preloadingStrategy: SelectivePreloadingStrategyService, 
+    })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

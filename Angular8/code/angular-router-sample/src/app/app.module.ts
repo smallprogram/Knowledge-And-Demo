@@ -17,6 +17,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HeroesModule } from './heroes/heroes.module';
 import { ComposeMessageComponent } from './compose-message/compose-message.component';
 import { AuthModule } from './auth/auth.module';
+import { Router } from '@angular/router';
 
 
 
@@ -37,11 +38,19 @@ import { AuthModule } from './auth/auth.module';
 
     AuthModule,
 
-    
+
     AppRoutingModule,
 
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  /**
+   * 最终运行时路由的样子
+   */
+  constructor(router: Router) {
+    const replacer = (key, value) => (typeof value == 'function') ? value.name : value;
+    console.log('Router:', JSON.stringify(router.config, replacer, 2));
+  }
+}
