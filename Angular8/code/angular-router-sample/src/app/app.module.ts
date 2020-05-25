@@ -18,6 +18,7 @@ import { HeroesModule } from './heroes/heroes.module';
 import { ComposeMessageComponent } from './compose-message/compose-message.component';
 import { AdminModule } from './admin/admin.module';
 import { CrisisCenterModule } from './crisis-center/crisis-center.module';
+import { AuthModule } from './auth/auth.module';
 
 
 
@@ -36,6 +37,7 @@ import { CrisisCenterModule } from './crisis-center/crisis-center.module';
     AdminModule,
     HeroesModule,
     CrisisCenterModule,
+    AuthModule,
 
     
     AppRoutingModule,
