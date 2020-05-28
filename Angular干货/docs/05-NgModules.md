@@ -1,9 +1,9 @@
 # [返回主目录](Readme.md)<!-- omit in toc --> 
 
 # 目录 <!-- omit in toc --> 
-- [NgModules简介](#ngmodules%e7%ae%80%e4%bb%8b)
-  - [基本格式](#%e5%9f%ba%e6%9c%ac%e6%a0%bc%e5%bc%8f)
-  - [模块分类](#%e6%a8%a1%e5%9d%97%e5%88%86%e7%b1%bb)
+- [NgModules简介](#ngmodules简介)
+  - [基本格式](#基本格式)
+  - [模块分类](#模块分类)
 - [NgModule API](#ngmodule-api)
   - [declarations](#declarations)
   - [providers](#providers)
@@ -11,9 +11,9 @@
   - [exports](#exports)
   - [bootstrap](#bootstrap)
   - [entryComponents](#entrycomponents)
-- [常用的一些模块](#%e5%b8%b8%e7%94%a8%e7%9a%84%e4%b8%80%e4%ba%9b%e6%a8%a1%e5%9d%97)
-- [特性模块的分类](#%e7%89%b9%e6%80%a7%e6%a8%a1%e5%9d%97%e7%9a%84%e5%88%86%e7%b1%bb)
-- [共享NgModule](#%e5%85%b1%e4%ba%abngmodule)
+- [常用的一些模块](#常用的一些模块)
+- [特性模块的分类](#特性模块的分类)
+- [共享NgModule](#共享ngmodule)
 
 ## NgModules简介
 NgModule 是一个带有 @NgModule 装饰器的类。 @NgModule 的参数是一个元数据对象，用于描述如何编译组件的模板，以及如何在运行时创建注入器。 它会标出该模块自己的组件、指令和管道，通过 exports 属性公开其中的一部分，以便外部组件使用它们。 NgModule 还能把一些服务提供者添加到应用的依赖注入器中。
@@ -84,5 +84,22 @@ HttpClientModule|@angular/common/http|当你要和服务器进行对话时
 [具体详解点这里](../../Angular8/docs/06.04-NgModule-特性模块的分类.md)
 
 ## 共享NgModule
-创建共享模块能让你更好地组织和梳理代码。你可以把常用的指令、管道和组件放进一个模块中，然后在应用中其它需要这些的地方导入该模块。
+创建共享模块能让你更好地组织和梳理代码。你可以把常用的指令、管道和组件放进一个模块中，然后在应用中其它需要这些的地方导入该模块。例如：
+```ts
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CustomerComponent } from './customer.component';
+import { NewItemDirective } from './new-item.directive';
+import { OrdersPipe } from './orders.pipe';
+
+@NgModule({
+ imports:      [ CommonModule ],
+ declarations: [ CustomerComponent, NewItemDirective, OrdersPipe ],
+ exports:      [ CustomerComponent, NewItemDirective, OrdersPipe,
+                 CommonModule, FormsModule ]
+})
+export class SharedModule { }
+```
+
 
