@@ -12,3 +12,12 @@
 >[04-Observable与RxJS](./04-Observable与RxJS.md)
 
 >[05-NgModules](./05-NgModules.md)
+
+>[06-依赖注入](./06-依赖注入.md)
+
+>[07-HttpClient](./07-HttpClient.md)
+
+>[08-路由与导航](./08-路由与导航.md)
+
+>[09-动画](./09-动画.md)
+
