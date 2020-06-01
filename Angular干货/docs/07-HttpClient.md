@@ -32,6 +32,10 @@
     - [修改请求和响应](#修改请求和响应)
     - [返回多值可观察对象 ？？？没闹明白](#返回多值可观察对象-没闹明白)
   - [配置请求](#配置请求)
+  - [防止请求短时间内多次发送(请求防抖)](#防止请求短时间内多次发送请求防抖)
+    - [switchMap()](#switchmap)
+  - [监听进度事件](#监听进度事件)
+- [安全：XSRF防护](#安全xsrf防护)
 
 
 ## HttpClient
@@ -552,4 +556,133 @@ PackageSearchComponent 中的一个检查框会切换 withRefresh 标识， 它�
 
 
 ### 配置请求
+
+除了为HttpClient添加httpOptions配置请求头以外，还可以为请求添加HttpParams，来配置URL查询字符串。
+```ts
+import {HttpParams} from "@angular/common/http";
+
+/* GET heroes whose name contains search term */
+searchHeroes(term: string): Observable<Hero[]> {
+  term = term.trim();
+
+  // Add safe, URL encoded search parameter if there is a search term
+  const options = term ?
+   { params: new HttpParams().set('name', term) } : {};
+
+  return this.http.get<Hero[]>(this.heroesUrl, options)
+    .pipe(
+      catchError(this.handleError<Hero[]>('searchHeroes', []))
+    );
+}
+```
+如果上述代码中，term有值且值为foo，那么GET请求的URL为 api/heroes/?name=foo。
+
+HttpParams时不可变的。使用方法set()返回值才能更新HttpParams
+
+创建HttpParams还可以通过fromString的方式：
+```ts
+const params = new HttpParams({fromString: 'name=foo'});
+```
+
+### 防止请求短时间内多次发送(请求防抖)
+最简单的一种情况当给一个元素绑定keyup事件时，每次触发事件都会调用search()方法，而search()方法会向服务器发送查询请求。这种方式太耗费资源。
+
+最好的做法是当用户停止输入时才发送请求。使用RxJS操作符即可实现。
+```html
+<input (keyup)="search($event.target.value)" id="name" placeholder="Search"/>
+
+<ul>
+  <li *ngFor="let package of packages$ | async">
+    <b>{{package.name}} v.{{package.version}}</b> -
+    <i>{{package.description}}</i>
+  </li>
+</ul>
+```
+```ts
+withRefresh = false;
+packages$: Observable<NpmPackageInfo[]>;
+private searchText$ = new Subject<string>();
+
+search(packageName: string) {
+  this.searchText$.next(packageName);
+}
+
+ngOnInit() {
+  this.packages$ = this.searchText$.pipe(
+    debounceTime(500),
+    distinctUntilChanged(),
+    switchMap(packageName =>
+      this.searchService.search(packageName, this.withRefresh))
+  );
+}
+
+constructor(private searchService: PackageSearchService) { }
+```
+searchText$ 是来自用户的搜索框值的序列。它被定义为 RxJS Subject 类型，这意味着它是一个多播 Observable ，它还可以通过调用 next(value) 来自行发出值，就像在 search() 方法中一样。
+
+除了把每个 searchText 的值都直接转发给 PackageSearchService 之外，ngOnInit() 中的代码还通过下列三个操作符对这些搜索值进行管道处理：
+
+1. debounceTime(500) - 等待，直到用户停止输入（这个例子中是停止 1/2 秒）。
+
+2. distinctUntilChanged() - 等待搜索文本发生变化。
+
+3. switchMap() - 将搜索请求发送到服务。
+
+这些代码把 packages$ 设置成了使用搜索结果组合出的 Observable 对象。 模板中使用 AsyncPipe 订阅了 packages$，一旦搜索结果的值发回来了，就显示这些搜索结果。
+
+这样，只有当用户停止了输入且搜索值和以前不一样的时候，搜索值才会传给服务。
+
+#### switchMap()
+这个 switchMap() 操作符有三个重要的特征：
+1. 它的参数是一个返回 Observable 的函数。PackageSearchService.search 会返回 Observable，其它数据服务也一样。
+
+2. 如果先前的搜索请求仍在进行中 （如网络连接不良），它将取消该请求并发送新的请求。
+
+3. 它会按照原始的请求顺序返回这些服务的响应，而不用关心服务器实际上是以乱序返回的它们。
+
+### 监听进度事件
+有时，应用会传输大量数据，并且这些传输可能会花费很长时间。 典型的例子是文件上传。 可以通过在传输过程中提供进度反馈，来提升用户体验。
+
+要想发起带有进度事件的请求，你可以创建一个把 reportProgress 选项设置为 true 的 HttpRequest 实例，以开启进度跟踪事件。
+
+```ts
+const req = new HttpRequest('POST', '/upload/file', file, {
+  reportProgress: true
+});
+```
+把这个请求对象传给 HttpClient.request() 方法，它返回一个 HttpEvents 的 Observable，同样也可以在拦截器中处理这些事件。
+```ts
+// The `HttpClient.request` API produces a raw event stream
+// which includes start (sent), progress, and response events.
+return this.http.request(req).pipe(
+  map(event => this.getEventMessage(event, file)),
+  tap(message => this.showProgress(message)),
+  last(), // return last (completed) message to caller
+  catchError(this.handleError(file))
+);
+```
+getEventMessage 方法会解释事件流中的每一个 HttpEvent 类型。
+```ts
+/** Return distinct message for sent, upload progress, & response events */
+private getEventMessage(event: HttpEvent<any>, file: File) {
+  switch (event.type) {
+    case HttpEventType.Sent:
+      return `Uploading file "${file.name}" of size ${file.size}.`;
+
+    case HttpEventType.UploadProgress:
+      // Compute and show the % done:
+      const percentDone = Math.round(100 * event.loaded / event.total);
+      return `File "${file.name}" is ${percentDone}% uploaded.`;
+
+    case HttpEventType.Response:
+      return `File "${file.name}" was completely uploaded!`;
+
+    default:
+      return `File "${file.name}" surprising upload event: ${event.type}.`;
+  }
+}
+```
+## 安全：XSRF防护
+
+这里参考[官方文档](https://angular.cn/guide/http#configuring-the-request)，未来会使用IdentityServer保护服务端与客户端。
 
