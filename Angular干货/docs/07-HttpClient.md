@@ -20,6 +20,16 @@
   - [POST请求](#post请求)
   - [DELETE请求](#delete请求)
   - [PUT请求](#put请求)
+- [高级用法](#高级用法)
+  - [拦截器Interceptor工作流程](#拦截器interceptor工作流程)
+  - [拦截请求和响应](#拦截请求和响应)
+    - [编写拦截器 Interceptor](#编写拦截器-interceptor)
+    - [next对象](#next对象)
+    - [使用拦截器](#使用拦截器)
+    - [拦截器顺序](#拦截器顺序)
+    - [HttpEvent](#httpevent)
+    - [请求和响应的不可变性](#请求和响应的不可变性)
+    - [修改请求和响应](#修改请求和响应)
 
 
 ## HttpClient
@@ -283,4 +293,228 @@ this.heroesService
   .subscribe();
 ```
 
+## 高级用法
+### 拦截器Interceptor工作流程
+![image](images/07-HttpClient/Interceptor1.jpg)
 
+![image](images/07-HttpClient/Interceptor2.jpg)
+### 拦截请求和响应
+HTTP 拦截机制是 @angular/common/http 中的主要特性之一。 使用这种拦截机制，你可以声明一些拦截器，用它们监视和转换从应用发送到服务器的 HTTP 请求。 拦截器还可以用监视和转换从服务器返回到本应用的那些响应。 多个拦截器会构成一个“请求/响应处理器”的双向链表。
+
+拦截器可以用一种常规的、标准的方式对每一次 HTTP 的请求/响应任务执行从认证到记日志等很多种隐式任务。
+
+#### 编写拦截器 Interceptor
+要实现拦截器，就要实现一个实现了 HttpInterceptor 接口中的 intercept() 方法的类。
+```ts
+import { Injectable } from '@angular/core';
+import {
+  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest
+} from '@angular/common/http';
+
+import { Observable } from 'rxjs';
+
+/** Pass untouched request through to the next request handler. */
+@Injectable()
+export class NoopInterceptor implements HttpInterceptor {
+
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req);
+  }
+}
+```
+这里是一个什么也不做的空白拦截器，它只会不做任何修改的传递这个请求。
+
+#### next对象
+
+next对象的调用表示程序将请求抛给下一个拦截器，如果没有下一个拦截器，则抛给HttpClient的后端处理器进行处理。
+
+有时候可以不调用next对象，使链路短路。返回一个手工构造的服务器响应，其类型为`Observable<HttpEvent<any>>`。
+
+#### 使用拦截器
+创建好单个或多个Interceptor后，可以建立一个Interceptor索引文件。
+```ts
+// app/http-interceptors/index.ts
+
+/* "Barrel" of Http Interceptors */
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+
+import { NoopInterceptor } from './noop-interceptor';
+
+/** Http interceptor providers in outside-in order */
+export const httpInterceptorProviders = [
+  { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true },
+];
+```
+multi: true 选项,告诉Angular以后会有更多的HTTP_INTERCEPTORS注入。这个值是必须的。
+
+之后将这个httpInterceptorProviders导入到AppModule的provides数组中
+```ts
+providers: [
+  httpInterceptorProviders
+],
+```
+#### 拦截器顺序
+拦截器执行顺序取决于你提供的顺序执行。例如，你提供的顺序为 A → B → C。那么请求阶段的顺序就是A → B → C，而响应阶段的顺序就是C → B → A
+
+#### HttpEvent
+拦截器返回的是`Observable<HttpEvent<any>>`类型，而非`Observable<HttpResponse<any>>`类型。这是由于HttpInterceptor工作在HTTP协议比较深的层次上。
+
+HttpEvent包括`HttpSentEvent，HttpHeaderResponse， HttpResponse<T> ，HttpProgressEvent ， HttpUserEvent<T>`。
+
+其中HttpResoponse就包含在其中。实际上HttpResoponse属于HttpEventType.Response
+
+#### 请求和响应的不可变性
+
+ HttpRequest 和 HttpResponse 实例的属性却是只读（readonly）的， 因此让它们基本上是不可变的。
+
+ 其不可变的主要原因是应用可能会重试发送很多次请求之后才能成功，这就意味着这个拦截器链表可能会多次重复处理同一个请求。 如果拦截器可以修改原始的请求对象，那么重试阶段的操作就会从修改过的请求开始，而不是原始请求。
+
+#### 修改请求和响应
+由于请求和响应的不可变性。如果想要修改请求或响应，就需要首先克隆原始请求和响应。然后修改克隆体。在将其发送给next对象。
+```ts
+// 修改http为https
+// clone request and replace 'http://' with 'https://' at the same time
+const secureReq = req.clone({
+  url: req.url.replace('http://', 'https://')
+});
+// send the cloned, "secure" request to the next handler.
+return next.handle(secureReq);
+```
+```ts
+// 修改请求体
+// copy the body and trim whitespace from the name property
+const newBody = { ...body, name: body.name.trim() };
+// clone request and set its body
+const newReq = req.clone({ body: newBody });
+// send the cloned request to the next handler.
+return next.handle(newReq);
+```
+```ts
+// 清空请求体
+newReq = req.clone({ ... }); // body not mentioned => preserve original body
+newReq = req.clone({ body: undefined }); // 保持原样，不是清空
+newReq = req.clone({ body: null }); // 清空请求体
+```
+```ts
+// 在拦截器中更改请求头
+import { AuthService } from '../auth.service';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  constructor(private auth: AuthService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    // Get the auth token from the service.
+    const authToken = this.auth.getAuthorizationToken();
+
+    // Clone the request and replace the original headers with
+    // cloned headers, updated with the authorization.
+    const authReq = req.clone({
+      headers: req.headers.set('Authorization', authToken)
+    });
+
+    // send cloned request with header to the next handler.
+    return next.handle(authReq);
+  }
+}
+```
+```ts
+// 在拦截器中修改请求头的更简便的方法
+import { AuthService } from '../auth.service';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  constructor(private auth: AuthService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    // Get the auth token from the service.
+    const authToken = this.auth.getAuthorizationToken();
+    // Clone the request and set the new header in one step.
+    const authReq = req.clone({ setHeaders: { Authorization: authToken } });
+    // send cloned request with header to the next handler.
+    return next.handle(authReq);
+  }
+}
+```
+```ts
+// 在拦截器中记录日志
+import { finalize, tap } from 'rxjs/operators';
+import { MessageService } from '../message.service';
+
+@Injectable()
+export class LoggingInterceptor implements HttpInterceptor {
+  constructor(private messenger: MessageService) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    const started = Date.now();
+    let ok: string;
+
+    // extend server response observable with logging
+    return next.handle(req)
+      .pipe(
+        tap(
+          // Succeeds when there is a response; ignore other events
+          event => ok = event instanceof HttpResponse ? 'succeeded' : '',
+          // Operation failed; error is an HttpErrorResponse
+          error => ok = 'failed'
+        ),
+        // Log when response observable either completes or errors
+        finalize(() => {
+          const elapsed = Date.now() - started;
+          const msg = `${req.method} "${req.urlWithParams}"
+             ${ok} in ${elapsed} ms.`;
+          this.messenger.add(msg);
+        })
+      );
+  }
+}
+```
+RxJS 的 tap 操作符会捕获请求成功了还是失败了。 RxJS 的 finalize 操作符无论在响应成功还是失败时都会调用（这是必须的），然后把结果汇报给 MessageService。
+
+```ts
+// 在拦截器中设置缓存
+@Injectable()
+export class CachingInterceptor implements HttpInterceptor {
+  constructor(private cache: RequestCache) {}
+
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    // continue if not cachable.
+    if (!isCachable(req)) { return next.handle(req); }
+
+    const cachedResponse = this.cache.get(req);
+    return cachedResponse ?
+      of(cachedResponse) : sendRequest(req, next, this.cache);
+  }
+}
+```
+isCachable() 函数用于决定该请求是否允许缓存。
+如果该请求是不可缓存的，该拦截器只会把该请求转发给链表中的下一个处理器。
+
+如果可缓存的请求在缓存中找到了，该拦截器就会通过 of() 函数返回一个已缓存的响应体的可观察对象，然后绕过 next 处理器（以及所有其它下游拦截器）。
+
+如果可缓存的请求在缓存中没找到，代码就会调用 sendRequest。
+```ts
+/**
+ * Get server response observable by sending request to `next()`.
+ * Will add the response to the cache on the way out.
+ */
+function sendRequest(
+  req: HttpRequest<any>,
+  next: HttpHandler,
+  cache: RequestCache): Observable<HttpEvent<any>> {
+
+  // No headers allowed in npm search request
+  const noHeaderReq = req.clone({ headers: new HttpHeaders() });
+
+  return next.handle(noHeaderReq).pipe(
+    tap(event => {
+      // There may be other events besides the response.
+      if (event instanceof HttpResponse) {
+        cache.put(req, event); // Update the cache.
+      }
+    })
+  );
+}
+```
