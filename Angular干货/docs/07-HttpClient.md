@@ -3,6 +3,7 @@
 # 目录 <!-- omit in toc --> 
 
 - [HttpClient](#httpclient)
+- [Angular中Http请求](#angular中http请求)
 - [从服务器获取数据](#从服务器获取数据)
   - [Get请求JSON数据，返回Observable对象](#get请求json数据返回observable对象)
   - [Get请求获取完整的JSON响应信息](#get请求获取完整的json响应信息)
@@ -13,12 +14,30 @@
   - [错误发生后重试](#错误发生后重试)
 - [Http Headers(Http头)](#http-headershttp头)
   - [为请求添加Http Headers](#为请求添加http-headers)
+  - [修改Http Headers](#修改http-headers)
+  - [发送带有HttpHeaders的请求](#发送带有httpheaders的请求)
+- [把数据发送到服务器](#把数据发送到服务器)
+  - [POST请求](#post请求)
+  - [DELETE请求](#delete请求)
+  - [PUT请求](#put请求)
 
 
 ## HttpClient
 基于XMLHttpRequest接口。包含在HttpClientModule库中，路径为@angular/common/http。
 
 使用时需要在NgModeule中导入HttpClientModule。并通过依赖注入HttpClient到需要的服务或组件中。
+
+## Angular中Http请求
+请求类型|意义
+-|-
+GET、JSONP GET |向特定的资源发出请求。
+HEAD|HEAD请求和GET请求资源类似，但仅仅返回相应的头部，没有具体的响应体。它也不会对服务器造成其他影响
+POST |向指定资源提交数据进行处理请求
+DELETE|请求服务器删除Request-URI所标识的资源。
+PUT|用来对已知资源进行整体更新
+PATCH|用来对已知资源进行局部更新
+OPTIONS|允许客户端请求一个服务所支持的请求方法
+
 
 
 ## 从服务器获取数据
@@ -189,5 +208,79 @@ getConfig() {
 许多请求需要包好Http Headers，例如Content-Type，声明要返回的资源类型。或者服务端需要一个授权令牌，这些也要写在Http Headers中。
 
 ### 为请求添加Http Headers
+Http头，在 HttpHeaders 对象中定义。可以创建一个HttpOptions，将HttpHeaders设置在其中。
+```ts
+import { HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Authorization': 'my-auth-token'
+  })
+};
+```
+### 修改Http Headers
+你无法直接修改HttpHeaders，需要使用set()方法进行修改，该方法返回一个克隆后的headers。
+```ts
+httpOptions.headers =
+  httpOptions.headers.set('Authorization', 'my-new-auth-token');
+```
+
+### 发送带有HttpHeaders的请求
+将HTTPHeaders对象放在Http请求方法的第二个参数中即可。
+
+
+## 把数据发送到服务器
+HttpClient 的所有方法返回的可观察对象都设计为冷的。 HTTP 请求的执行都是延期执行的，让你可以用 tap 和 catchError 这样的操作符来在实际执行Http请求之前，先对这个可观察对象进行扩展。
+
+调用 subscribe(...) 会触发这个可观察对象的执行，并导致 HttpClient 组合并把 HTTP 请求发给服务器。
+
+### POST请求
+```ts
+/** POST: add a new hero to the database */
+addHero (hero: Hero): Observable<Hero> {
+  return this.http.post<Hero>(this.heroesUrl, hero, httpOptions)
+    .pipe(
+      catchError(this.handleError('addHero', hero))
+    );
+}
+```
+使用subscribe方法订阅执行post请求，服务器返回的响应中会带有这个新创建的Hero实例。
+```ts
+this.heroesService
+  .addHero(newHero)
+  .subscribe(hero => this.heroes.push(hero));
+```
+
+### DELETE请求
+```ts
+deleteHero (id: number): Observable<{}> {
+  const url = `${this.heroesUrl}/${id}`; // DELETE api/heroes/42
+  return this.http.delete(url, httpOptions)
+    .pipe(
+      catchError(this.handleError('deleteHero'))
+    );
+}
+```
+```ts
+this.heroesService
+  .deleteHero(hero.id)
+  .subscribe();
+```
+
+### PUT请求
+```ts
+updateHero (hero: Hero): Observable<Hero> {
+  return this.http.put<Hero>(this.heroesUrl, hero, httpOptions)
+    .pipe(
+      catchError(this.handleError('updateHero', hero))
+    );
+}
+```
+```ts
+this.heroesService
+  .updateHero(this.hero)
+  .subscribe();
+```
 
 
