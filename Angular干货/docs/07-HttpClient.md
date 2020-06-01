@@ -30,6 +30,8 @@
     - [HttpEvent](#httpevent)
     - [请求和响应的不可变性](#请求和响应的不可变性)
     - [修改请求和响应](#修改请求和响应)
+    - [返回多值可观察对象 ？？？没闹明白](#返回多值可观察对象-没闹明白)
+  - [配置请求](#配置请求)
 
 
 ## HttpClient
@@ -518,3 +520,36 @@ function sendRequest(
   );
 }
 ```
+
+#### 返回多值可观察对象 ？？？没闹明白
+
+HttpClient.get() 方法正常情况下只会返回一个可观察对象，它或者发出数据，或者发出错误。 有些人说它是“一次性完成”的可观察对象。
+
+但是拦截器也可以把这个修改成发出多个值的可观察对象。
+
+```ts
+// cache-then-refresh
+if (req.headers.get('x-refresh')) {
+  const results$ = sendRequest(req, next, this.cache);
+  return cachedResponse ?
+    results$.pipe( startWith(cachedResponse) ) :
+    results$;
+}
+// cache-or-fetch
+return cachedResponse ?
+  of(cachedResponse) : sendRequest(req, next, this.cache);
+```
+
+这种缓存并刷新的选项是由自定义的 x-refresh 头触发的。
+
+PackageSearchComponent 中的一个检查框会切换 withRefresh 标识， 它是 PackageSearchService.search() 的参数之一。 search() 方法创建了自定义的 x-refresh 头，并在调用 HttpClient.get() 前把它添加到请求里。
+
+修改后的 CachingInterceptor 会发起一个服务器请求，而不管有没有缓存的值。 就像 前面 的 sendRequest() 方法一样进行订阅。 在订阅 results$ 可观察对象时，就会发起这个请求。
+
+如果没有缓存的值，拦截器直接返回 result$。
+
+如果有缓存的值，这些代码就会把缓存的响应加入到 result$ 的管道中，使用重组后的可观察对象进行处理，并发出两次。 先立即发出一次缓存的响应体，然后发出来自服务器的响应。 订阅者将会看到一个包含这两个响应的序列。
+
+
+### 配置请求
+
