@@ -3,7 +3,7 @@
 
 # 相关知识目录
 
-> [Angular 8 知识库](../Angular8/docs/Readme.md)
+> [Angular 知识库](../Angular/docs/Readme.md)
 
 > [Angular 干货](../Angular干货/docs/Readme.md)
 
