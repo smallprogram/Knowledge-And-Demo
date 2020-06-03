@@ -4,7 +4,7 @@
 # 相关知识目录
 
 <div>
-<a href="../Angular/docs/Readme.md"><img src="./image/angluar.png"></a>
+<a href="../Angular/docs/Readme.md" alt="tttt"><img src="./image/angluar.png"></a>
 <span>angular知识库</span>
 </div>
 
