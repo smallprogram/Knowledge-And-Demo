@@ -4,8 +4,10 @@
 # 相关知识目录
 
 <div>
-<a href="../Angular/docs/Readme.md" alt="tttt"><img src="./image/angluar.png"></a>
-<span>angular知识库</span>
+    <a href="../Angular/docs/Readme.md" alt="tttt">
+        <img src="./image/angluar.png" width="120" height="120" alt="angular知识库">
+    </a><br>
+    <span><b>angular知识库</b></span>
 </div>
 
 
