@@ -1,14 +1,19 @@
 # 简介
 这是一个知识库，包含一些自己编写的知识、代码示例和收集整理的配套资料
 
-# 相关知识目录
 
 <div>
-    <a href="../Angular/docs/Readme.md" alt="tttt">
-        <img src="./image/angluar.png" width="120" height="120" alt="angular知识库">
-    </a><br>
-    <span><b>angular知识库</b></span>
+        <img src="./image/angluar.png" width="60" height="60"></img>
+        <img src="./image/rxjs.jpg" width="60" height="60"></img>
+        <img src="./image/markdown.png" width="60" height="60"></img>
+        <img src="./image/.net.png" width="60" height="60"></img>
+        <img src="./image/identityserver.png" width="60" height="60"></img>
+        <img src="./image/linux.jpg" width="60" height="60"></img>
+        <img src="./image/restfullapi.png" width="60" height="60"></img>
 </div>
+
+## 相关知识目录
+
 
 
 > [Angular 知识库](../Angular/docs/Readme.md)
