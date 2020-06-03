@@ -7,6 +7,7 @@
         <img src="./image/rxjs.jpg" width="60" height="60"></img>
         <img src="./image/markdown.png" width="60" height="60"></img>
         <img src="./image/.net.png" width="60" height="60"></img>
+        <img src="./image/asp.netcore.png" width="60" height="60"></img>
         <img src="./image/identityserver.png" width="60" height="60"></img>
         <img src="./image/linux.jpg" width="60" height="60"></img>
         <img src="./image/restfullapi.png" width="60" height="60"></img>
