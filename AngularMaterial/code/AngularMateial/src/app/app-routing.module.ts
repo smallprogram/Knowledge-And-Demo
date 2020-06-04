@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
 
-  { path: 'material', loadChildren: () => import('./material/material.module').then(m => m.MaterialModule) },
+  { path: 'dashboard', loadChildren: () => import('./material/material.module').then(m => m.MaterialModule) },
 
   { path: '', redirectTo: '/', pathMatch: 'full' },
   // { path: '**', component: PageNotFoundComponent },
