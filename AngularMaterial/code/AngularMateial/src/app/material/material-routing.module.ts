@@ -6,6 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TableComponent } from './table/table.component';
 import { TreeComponent } from './tree/tree.component';
 import { DragDropComponent } from './drag-drop/drag-drop.component';
+import { TypographyComponent } from './typography/typography.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
       { path: 'table', component: TableComponent },
       { path: 'tree', component: TreeComponent },
       { path: 'drag-drop', component: DragDropComponent },
+      { path: 'typography', component: TypographyComponent },
 
     ]
   }

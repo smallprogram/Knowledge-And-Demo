@@ -27,6 +27,8 @@ import { MatTreeModule } from '@angular/material/tree';
 import { DragDropComponent } from './drag-drop/drag-drop.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+import { TypographyComponent } from './typography/typography.component';
+
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   DashboardComponent,
   TableComponent,
   TreeComponent,
-  DragDropComponent],
+  DragDropComponent,
+  TypographyComponent],
   imports: [
     CommonModule,
     FormsModule,
