@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RESTfulApi.Api.Models;
 using RESTfulApi.Api.Services;
 
 namespace RESTfulApi.Api.Controllers
@@ -14,22 +16,26 @@ namespace RESTfulApi.Api.Controllers
     public class CompaniesController : ControllerBase
     {
         private readonly ICompanyRepositroy _companyRepositroy;
+        private readonly IMapper _mapper;
 
-        public CompaniesController(ICompanyRepositroy companyRepositroy)
+        public CompaniesController(ICompanyRepositroy companyRepositroy,IMapper mapper)
         {
             _companyRepositroy = companyRepositroy ?? throw new ArgumentNullException(nameof(companyRepositroy));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCompanies()  //ActionResult<IEnumerable<DtoCompany>
+        public async Task<ActionResult<IEnumerable<CompanyDto>>> GetCompanies()  //ActionResult<IEnumerable<DtoCompany>
         {
             var companies = await _companyRepositroy.GetCompaniesAsync();
 
-            return Ok(companies);
+            var companyDtos = _mapper.Map<IEnumerable<CompanyDto>>(companies);
+
+            return Ok(companyDtos);
         }
 
         [HttpGet("{companyId}")]  // "api/Companies/{companyId}"
-        public async Task<IActionResult> GetCompany(Guid companyId)
+        public async Task<ActionResult<CompanyDto>> GetCompany(Guid companyId)
         {
             var company = await _companyRepositroy.GetCompanyAsync(companyId);
             if (company == null)
@@ -37,8 +43,9 @@ namespace RESTfulApi.Api.Controllers
                 return NotFound();
             }
 
+            var companyDto = _mapper.Map<CompanyDto>(company);
             
-            return Ok(company);
+            return Ok(companyDto);
         }
     }
 }
