@@ -28,6 +28,9 @@ namespace RESTfulApi.Api.Profiles
                 target => target.Age,
                 src => src.MapFrom(src => DateTime.Now.Year - src.DateOfBirth.Year)
                 );
+
+            CreateMap<EmployeeAddDto, Employee>();
+           
         }
     }
 }
