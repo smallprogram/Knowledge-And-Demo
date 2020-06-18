@@ -17,6 +17,8 @@ namespace RESTfulApi.Api.Profiles
                 target => target.CpmpanyName, 
                 source => source.MapFrom(src => src.Name)
                 );
+
+            CreateMap<CompanyAddDto, Company>();
         }
     }
 }

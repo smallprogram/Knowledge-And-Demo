@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RESTfulApi.Api.DtoParameters;
+using RESTfulApi.Api.Entities;
 using RESTfulApi.Api.Models;
 using RESTfulApi.Api.Services;
 
@@ -19,7 +20,7 @@ namespace RESTfulApi.Api.Controllers
         private readonly ICompanyRepositroy _companyRepositroy;
         private readonly IMapper _mapper;
 
-        public CompaniesController(ICompanyRepositroy companyRepositroy,IMapper mapper)
+        public CompaniesController(ICompanyRepositroy companyRepositroy, IMapper mapper)
         {
             _companyRepositroy = companyRepositroy ?? throw new ArgumentNullException(nameof(companyRepositroy));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
@@ -36,7 +37,7 @@ namespace RESTfulApi.Api.Controllers
             return Ok(companyDtos);
         }
 
-        [HttpGet("{companyId}")]  // "api/Companies/{companyId}"
+        [HttpGet("{companyId}", Name = nameof(GetCompany))]  // "api/Companies/{companyId}"
         public async Task<ActionResult<CompanyDto>> GetCompany(Guid companyId)
         {
             var company = await _companyRepositroy.GetCompanyAsync(companyId);
@@ -46,8 +47,26 @@ namespace RESTfulApi.Api.Controllers
             }
 
             var companyDto = _mapper.Map<CompanyDto>(company);
-            
+
             return Ok(companyDto);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<CompanyDto>> CreateCompany([FromBody] CompanyAddDto company)
+        {
+            // 使用了api controller就不需要这个判断了。
+            //if (company == null)
+            //{
+            //    return BadRequest();
+            //}
+
+            var entity = _mapper.Map<Company>(company);
+            _companyRepositroy.AddCompany(entity);
+            await _companyRepositroy.SaveAsync();
+
+            var returnDto = _mapper.Map<CompanyDto>(entity);
+
+            return CreatedAtRoute(nameof(GetCompany), new { companyId = returnDto.Id }, returnDto);
         }
     }
 }
