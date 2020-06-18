@@ -9,6 +9,6 @@ namespace RESTfulApi.Api.Models
     {
         public string Name { get; set; }
         public string Introduction { get; set; }
-        //public ICollection<Employee> Employees { get; set; }
+        public ICollection<EmployeeAddDto> Employees { get; set; } = new List<EmployeeAddDto>();
     }
 }
