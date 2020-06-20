@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace RESTfulApi.Api.Models
 {
-    [EmployeeNoMustDefferentFromFirstNameAttribute]
+    [EmployeeNoMustDefferentFromFirstName(ErrorMessage ="员工编号必须和名不一样")]
     public class EmployeeAddDto : IValidatableObject
     {
         //public Guid Id { get; set; }
