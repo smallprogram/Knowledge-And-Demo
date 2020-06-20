@@ -12,11 +12,11 @@ namespace RESTfulApi.Api.ValidationAttributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             // 获取要验证的对象
-            var addDto = (EmployeeAddDto)validationContext.ObjectInstance;
+            var addDto = (EmployeeAddOrUpdateDTO)validationContext.ObjectInstance;
 
             if (addDto.EmployeeNo == addDto.FirstName)
             {
-                return new ValidationResult(ErrorMessage, new[] { nameof(EmployeeAddDto) });
+                return new ValidationResult(ErrorMessage, new[] { nameof(EmployeeAddOrUpdateDTO) });
             }
 
 

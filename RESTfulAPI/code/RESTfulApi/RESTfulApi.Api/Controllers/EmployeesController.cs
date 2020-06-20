@@ -75,5 +75,36 @@ namespace RESTfulApi.Api.Controllers
 
             return CreatedAtRoute(nameof(GetEmployeeForCompany), new { companyId = companyId, employeeId = dtoToReturn.Id }, dtoToReturn);
         }
+
+        [HttpPut("{employeeId}")]
+        public async Task<IActionResult> UpdateEmployeeForCompany(Guid companyId, Guid employeeId,EmployeeUpdateDto employeeUpdateDto)
+        {
+            if (!await _companyRepositroy.CompanyExistsAsync(companyId))
+            {
+                return NotFound();
+            }
+
+            var employeeEntity = await _companyRepositroy.GetEmployeeAsync(companyId, employeeId);
+            if (employeeEntity == null)
+            {
+                return NotFound();
+            }
+
+            // 更新针对的是资源而不是数据库实体
+            // 也就是针对DTO的更新
+            // 这里是需要先把entity转换为updateDto
+            // 再使用传入的DTO更新从entity转换的DTO
+            // 再将更新后的DTO转换entity，然后更新回数据库
+
+            _mapper.Map(employeeUpdateDto, employeeEntity);
+
+
+            _companyRepositroy.UpdateEmployee(employeeEntity);
+
+            await _companyRepositroy.SaveAsync();
+
+            return NoContent();
+            // return CreatedAtRoute(nameof(GetEmployeeForCompany), new { companyId = companyId, employeeId = employeeId }, employeeUpdateDto);
+        }
     }
 }
