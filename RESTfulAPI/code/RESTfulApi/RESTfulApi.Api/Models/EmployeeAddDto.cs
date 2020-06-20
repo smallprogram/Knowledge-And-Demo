@@ -1,4 +1,5 @@
 ﻿using RESTfulApi.Api.Entities;
+using RESTfulApi.Api.ValidationAttributes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace RESTfulApi.Api.Models
 {
+    [EmployeeNoMustDefferentFromFirstNameAttribute]
     public class EmployeeAddDto : IValidatableObject
     {
         //public Guid Id { get; set; }
