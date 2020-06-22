@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using RESTfulApi.Api.DtoParameters;
 using RESTfulApi.Api.Entities;
 using RESTfulApi.Api.Models;
 using RESTfulApi.Api.Services;
@@ -32,15 +33,14 @@ namespace RESTfulApi.Api.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EmployeeDto>>> GetEmployeesForCompany(Guid companyId,
-            [FromQuery(Name = "gender")] string genderDisplay,
-            string q)
+            [FromQuery] EmployeeDtoParameters parameters)
         {
 
             if (!await _companyRepositroy.CompanyExistsAsync(companyId))
             {
                 return NotFound();
             }
-            var employees = await _companyRepositroy.GetEmployeesAsync(companyId, genderDisplay, q);
+            var employees = await _companyRepositroy.GetEmployeesAsync(companyId,parameters);
             var employeeDtos = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
 
             return Ok(employeeDtos);

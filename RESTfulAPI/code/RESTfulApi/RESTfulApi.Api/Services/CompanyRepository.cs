@@ -112,41 +112,49 @@ namespace RESTfulApi.Api.Services
         }
 
 
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, string genderDisplay,string q)
+        public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, EmployeeDtoParameters parameters)
         {
             if (companyId == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(companyId));
             }
-            if (string.IsNullOrWhiteSpace(genderDisplay) && string.IsNullOrWhiteSpace(q))
+            //if (string.IsNullOrWhiteSpace(parameters.Gender) && string.IsNullOrWhiteSpace(parameters.Q))
+            //{
+            //    return await _context.Employees
+            //    .Where(x => x.CompanyId == companyId)
+            //    .OrderBy(x => x.EmployeeNo)
+            //    .ToListAsync();
+            //}
+
+            var items = _context.Employees.Where(x => x.CompanyId == companyId);
+
+            if (!string.IsNullOrWhiteSpace(parameters.Gender))
             {
-                return await _context.Employees
-                .Where(x => x.CompanyId == companyId)
-                .OrderBy(x => x.EmployeeNo)
-                .ToListAsync();
+                parameters.Gender = parameters.Gender.Trim();
+                var gender = Enum.Parse<Gender>(parameters.Gender);
+
+                items = items.Where(x => x.Gender == gender);
             }
-
-            var item = _context.Employees.Where(x => x.CompanyId == companyId);
-
-            if (!string.IsNullOrWhiteSpace(genderDisplay))
+            if (!string.IsNullOrWhiteSpace(parameters.Q))
             {
-                genderDisplay = genderDisplay.Trim();
-                var gender = Enum.Parse<Gender>(genderDisplay);
-
-                item = item.Where(x => x.Gender == gender);
-            }
-            if (!string.IsNullOrWhiteSpace(q))
-            {
-                q = q.Trim();
+                parameters.Q = parameters.Q.Trim();
                 // 通常使用全文检索引擎
 
-                item = item.Where(x => x.EmployeeNo.Contains(q) || x.FirstName.Contains(q) || x.LastName.Contains(q));
+                items = items.Where(x => x.EmployeeNo.Contains(parameters.Q) || x.FirstName.Contains(parameters.Q) || x.LastName.Contains(parameters.Q));
             }
 
+            if (!string.IsNullOrWhiteSpace(parameters.OrderBy))
+            {
+                if (parameters.OrderBy.ToLowerInvariant() == "name")
+                {
+                    items = items.OrderBy(x => x.FirstName).ThenBy(x => x.LastName);
+                }
+            }
 
-            return await item
-                    .OrderBy(x => x.EmployeeNo)
-                    .ToListAsync();
+            //items.ApplySort(parameters.OrderBy, mappingDictionay);
+
+
+            return await items.ToListAsync();
 
         }
         public async Task<Employee> GetEmployeeAsync(Guid companyId, Guid employeeId)

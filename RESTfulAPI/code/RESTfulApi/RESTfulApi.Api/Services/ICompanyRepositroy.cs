@@ -21,7 +21,7 @@ namespace RESTfulApi.Api.Services
         Task<bool> CompanyExistsAsync(Guid companyId);
 
 
-        Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, string genderDisplay,string q);
+        Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, EmployeeDtoParameters parameters);
         Task<Employee> GetEmployeeAsync(Guid companyId, Guid employeeId);
         void AddEmployee(Guid companyId, Employee employee);
         void UpdateEmployee(Employee employee);
