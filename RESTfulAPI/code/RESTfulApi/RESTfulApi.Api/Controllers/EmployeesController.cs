@@ -4,7 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using RESTfulApi.Api.Entities;
 using RESTfulApi.Api.Models;
 using RESTfulApi.Api.Services;
@@ -77,7 +83,7 @@ namespace RESTfulApi.Api.Controllers
         }
 
         [HttpPut("{employeeId}")]
-        public async Task<ActionResult<EmployeeDto>> UpdateEmployeeForCompany(Guid companyId, Guid employeeId,EmployeeUpdateDto employeeUpdateDto)
+        public async Task<ActionResult<EmployeeDto>> UpdateEmployeeForCompany(Guid companyId, Guid employeeId, EmployeeUpdateDto employeeUpdateDto)
         {
             if (!await _companyRepositroy.CompanyExistsAsync(companyId))
             {
@@ -115,6 +121,57 @@ namespace RESTfulApi.Api.Controllers
 
             return NoContent();
             // return CreatedAtRoute(nameof(GetEmployeeForCompany), new { companyId = companyId, employeeId = employeeId }, employeeUpdateDto);
+        }
+
+
+        [HttpPatch("{employeeId}")]
+        public async Task<IActionResult> PartiallyUpdateEmployeeForCompany(Guid companyId, Guid employeeId, JsonPatchDocument<EmployeeUpdateDto> patchDocument)
+        {
+            if (!await _companyRepositroy.CompanyExistsAsync(companyId))
+            {
+                return NotFound();
+            }
+
+            var employeeEntity = await _companyRepositroy.GetEmployeeAsync(companyId, employeeId);
+            if (employeeEntity == null)
+            {
+                //return NotFound();
+                var employeeUpdateDto = new EmployeeUpdateDto();
+                patchDocument.ApplyTo(employeeUpdateDto, ModelState);
+
+                if (!TryValidateModel(employeeUpdateDto))
+                {
+                    return ValidationProblem(ModelState);
+                }
+
+                var entity = _mapper.Map<Employee>(employeeUpdateDto);
+                entity.Id = employeeId;
+                _companyRepositroy.AddEmployee(companyId, entity);
+                await _companyRepositroy.SaveAsync();
+                var dtoToReturn = _mapper.Map<EmployeeDto>(entity);
+                return CreatedAtRoute(nameof(GetEmployeeForCompany), new { companyId = companyId, employeeId = entity.Id }, dtoToReturn);
+            }
+
+            var dtoToPatch = _mapper.Map<EmployeeUpdateDto>(employeeEntity);
+
+            // 需要处理验证错误
+            patchDocument.ApplyTo(dtoToPatch, ModelState);
+
+            if (!TryValidateModel(dtoToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(dtoToPatch, employeeEntity);
+            _companyRepositroy.UpdateEmployee(employeeEntity);
+            await _companyRepositroy.SaveAsync();
+            return NoContent();
+        }
+
+        public override ActionResult ValidationProblem([ActionResultObjectValue] ModelStateDictionary modelStateDictionary)
+        {
+            var options = HttpContext.RequestServices.GetRequiredService<IOptions<ApiBehaviorOptions>>();
+            return (ActionResult)options.Value.InvalidModelStateResponseFactory(ControllerContext);
         }
     }
 }

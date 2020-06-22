@@ -31,6 +31,7 @@ namespace RESTfulApi.Api.Profiles
 
             CreateMap<EmployeeAddDto, Employee>();
             CreateMap<EmployeeUpdateDto, Employee>();
+            CreateMap<Employee, EmployeeUpdateDto>();
 
         }
     }

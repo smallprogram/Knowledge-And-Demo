@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using RESTfulApi.Api.Data;
 using RESTfulApi.Api.Entities;
 using RESTfulApi.Api.Services;
@@ -39,8 +40,13 @@ namespace RESTfulApi.Api
                 //options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());  //添加application/xml请求的媒体类型的支持
                 //options.OutputFormatters.Insert(0, new XmlDataContractSerializerOutputFormatter()); //将application/xml设置为首选媒体媒体类型
             })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                })
                 // 同时添加请求和响应的对于xml媒体类型的支持
                 .AddXmlDataContractSerializerFormatters()
+                
                 // 添加自定义的错误类型
                 // 默认的错误
                 //{
