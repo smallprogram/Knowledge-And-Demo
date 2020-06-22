@@ -3,6 +3,7 @@ using RESTfulApi.Api.Data;
 using RESTfulApi.Api.DtoParameters;
 using RESTfulApi.Api.Entities;
 using RESTfulApi.Api.Helpers;
+using RESTfulApi.Api.Models;
 using SQLitePCL;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ namespace RESTfulApi.Api.Services
     public class CompanyRepository : ICompanyRepositroy
     {
         private readonly AppDbContext _context;
+        private readonly IPropertyMappingService _propertyMappingService;
 
-        public CompanyRepository(AppDbContext context)
+        public CompanyRepository(AppDbContext context, IPropertyMappingService propertyMappingService)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _propertyMappingService = propertyMappingService ?? throw new ArgumentNullException(nameof(propertyMappingService));
         }
 
 
@@ -57,7 +60,7 @@ namespace RESTfulApi.Api.Services
                 queryExpression = queryExpression.Where(x => x.Name.Contains(parameters.SearchTerm) || x.Introduction.Contains(parameters.SearchTerm));
             }
 
-
+            
             //queryExpression = queryExpression.Skip(parameters.PageSize * (parameters.PageNumber - 1)).Take(parameters.PageSize);
 
             return await PagedList<Company>.CreteaAsync(queryExpression, parameters.PageNumber, parameters.PageSize);
@@ -143,15 +146,17 @@ namespace RESTfulApi.Api.Services
                 items = items.Where(x => x.EmployeeNo.Contains(parameters.Q) || x.FirstName.Contains(parameters.Q) || x.LastName.Contains(parameters.Q));
             }
 
-            if (!string.IsNullOrWhiteSpace(parameters.OrderBy))
-            {
-                if (parameters.OrderBy.ToLowerInvariant() == "name")
-                {
-                    items = items.OrderBy(x => x.FirstName).ThenBy(x => x.LastName);
-                }
-            }
+            //if (!string.IsNullOrWhiteSpace(parameters.OrderBy))
+            //{
+            //    if (parameters.OrderBy.ToLowerInvariant() == "name")
+            //    {
+            //        items = items.OrderBy(x => x.FirstName).ThenBy(x => x.LastName);
+            //    }
+            //}
 
-            //items.ApplySort(parameters.OrderBy, mappingDictionay);
+
+            var mappingDictionary = _propertyMappingService.GetPropertyMapping<EmployeeDto, Employee>();
+            items = items.ApplySort(parameters.OrderBy, mappingDictionary);
 
 
             return await items.ToListAsync();

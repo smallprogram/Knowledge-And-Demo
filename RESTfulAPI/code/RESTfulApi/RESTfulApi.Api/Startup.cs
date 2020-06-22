@@ -100,6 +100,8 @@ namespace RESTfulApi.Api
 
             services.AddScoped<ICompanyRepositroy, CompanyRepository>();
 
+            services.AddTransient<IPropertyMappingService, PropertyMappingService>();
+
             services.AddDbContext<AppDbContext>(options =>
             {
                 options.UseSqlite("Data Source=AppDB.db");

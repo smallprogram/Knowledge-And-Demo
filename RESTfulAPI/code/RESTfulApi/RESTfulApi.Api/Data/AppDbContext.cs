@@ -233,13 +233,53 @@ namespace RESTfulApi.Api.Data
                     EmployeeNo = "MSFT245",
                     FirstName = "Vince",
                     LastName = "Carter",
+                    Gender = Gender.女
+                },
+                new Employee
+                {
+                    Id = Guid.Parse("aee28ab3-146f-4036-b417-decb89483cff"),
+                    CompanyId = Guid.Parse("e2f039ad-237c-4efe-97e9-15deccda6691"),
+                    DateOfBirth = new DateTime(1990, 12, 5),
+                    EmployeeNo = "MSFT225",
+                    FirstName = "Mande",
+                    LastName = "Etfb",
                     Gender = Gender.男
+                },
+                new Employee
+                {
+                    Id = Guid.Parse("a9e0b740-4f88-470f-88dc-7f5b1f72d8cc"),
+                    CompanyId = Guid.Parse("e2f039ad-237c-4efe-97e9-15deccda6691"),
+                    DateOfBirth = new DateTime(1989, 7, 15),
+                    EmployeeNo = "MSFT345",
+                    FirstName = "Zhu",
+                    LastName = "Sir",
+                    Gender = Gender.男
+                },
+                new Employee
+                {
+                    Id = Guid.Parse("2c96ef7c-457c-4722-8b17-5d37240f5eaf"),
+                    CompanyId = Guid.Parse("e2f039ad-237c-4efe-97e9-15deccda6691"),
+                    DateOfBirth = new DateTime(1989, 12, 5),
+                    EmployeeNo = "MSFT545",
+                    FirstName = "Lv",
+                    LastName = "Xiaolu",
+                    Gender = Gender.女
+                },
+                new Employee
+                {
+                    Id = Guid.Parse("0c781f03-b82f-45b2-9427-203e47ee47ed"),
+                    CompanyId = Guid.Parse("e2f039ad-237c-4efe-97e9-15deccda6691"),
+                    DateOfBirth = new DateTime(1983, 12, 5),
+                    EmployeeNo = "MSFT145",
+                    FirstName = "Anne",
+                    LastName = "Dei",
+                    Gender = Gender.女
                 },
                 new Employee
                 {
                     Id = Guid.Parse("72457e73-ea34-4e02-b575-8d384e82a481"),
                     CompanyId = Guid.Parse("e2b07120-ce3d-4e30-8fa8-a4fb76c663e5"),
-                    DateOfBirth = new DateTime(1986, 11, 4),
+                    DateOfBirth = new DateTime(1997, 11, 4),
                     EmployeeNo = "G003",
                     FirstName = "Mary",
                     LastName = "King",
