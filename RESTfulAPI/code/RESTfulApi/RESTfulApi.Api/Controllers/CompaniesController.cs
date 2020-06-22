@@ -75,5 +75,22 @@ namespace RESTfulApi.Api.Controllers
             Response.Headers.Add("Allow", "GET,POST,OPTIONS");
             return Ok();
         }
+
+
+        [HttpDelete("{companyId}")]
+        public async Task<IActionResult> DeleteEmployeeForCompany(Guid companyId)
+        {
+            if (!await _companyRepositroy.CompanyExistsAsync(companyId))
+            {
+                return NotFound();
+            }
+            var company = await _companyRepositroy.GetCompanyAsync(companyId);
+
+            _companyRepositroy.DeleteCompany(company);
+
+            await _companyRepositroy.SaveAsync();
+
+            return NoContent();
+        }
     }
 }

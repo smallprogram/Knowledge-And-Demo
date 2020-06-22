@@ -28,7 +28,7 @@ namespace RESTfulApi.Api.Data
                 .HasOne(x => x.Company)
                 .WithMany(x => x.Employees)
                 .HasForeignKey(x => x.CompanyId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);  // DeleteBehavior.Restrict 不级联删除   DeleteBehavior.Cascade 级联删除
 
             // 种子数据
             modelBuilder.Entity<Company>().HasData(

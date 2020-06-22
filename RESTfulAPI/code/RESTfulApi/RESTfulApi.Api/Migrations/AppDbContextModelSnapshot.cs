@@ -159,7 +159,7 @@ namespace RESTfulApi.Api.Migrations
                     b.HasOne("RESTfulApi.Api.Entities.Company", "Company")
                         .WithMany("Employees")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
