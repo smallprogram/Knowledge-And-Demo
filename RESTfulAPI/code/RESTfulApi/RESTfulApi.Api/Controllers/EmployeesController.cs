@@ -77,7 +77,7 @@ namespace RESTfulApi.Api.Controllers
         }
 
         [HttpPut("{employeeId}")]
-        public async Task<IActionResult> UpdateEmployeeForCompany(Guid companyId, Guid employeeId,EmployeeUpdateDto employeeUpdateDto)
+        public async Task<ActionResult<EmployeeDto>> UpdateEmployeeForCompany(Guid companyId, Guid employeeId,EmployeeUpdateDto employeeUpdateDto)
         {
             if (!await _companyRepositroy.CompanyExistsAsync(companyId))
             {
@@ -87,7 +87,17 @@ namespace RESTfulApi.Api.Controllers
             var employeeEntity = await _companyRepositroy.GetEmployeeAsync(companyId, employeeId);
             if (employeeEntity == null)
             {
-                return NotFound();
+                //return NotFound();
+
+                var employeeToAddEntity = _mapper.Map<Employee>(employeeUpdateDto);
+                employeeToAddEntity.Id = employeeId;
+
+                _companyRepositroy.AddEmployee(companyId, employeeToAddEntity);
+                await _companyRepositroy.SaveAsync();
+
+                var dtoToReturn = _mapper.Map<EmployeeDto>(employeeToAddEntity);
+
+                return CreatedAtRoute(nameof(GetEmployeeForCompany), new { companyId = companyId, employeeId = dtoToReturn.Id }, dtoToReturn);
             }
 
             // 更新针对的是资源而不是数据库实体
