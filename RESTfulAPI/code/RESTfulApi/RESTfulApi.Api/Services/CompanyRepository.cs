@@ -2,6 +2,7 @@
 using RESTfulApi.Api.Data;
 using RESTfulApi.Api.DtoParameters;
 using RESTfulApi.Api.Entities;
+using RESTfulApi.Api.Helpers;
 using SQLitePCL;
 using System;
 using System.Collections.Generic;
@@ -29,17 +30,20 @@ namespace RESTfulApi.Api.Services
             }
             return await _context.Companies.FirstOrDefaultAsync(x => x.Id == companyId);
         }
-        public async Task<IEnumerable<Company>> GetCompaniesAsync(CompanyDtoParameters parameters)
+        public async Task<PagedList<Company>> GetCompaniesAsync(CompanyDtoParameters parameters)
         {
             if (parameters == null)
             {
                 throw new ArgumentNullException(nameof(parameters));
             }
-            if (string.IsNullOrWhiteSpace(parameters.CompanyName) && string.IsNullOrWhiteSpace(parameters.SearchTerm))
-            {
-                return await _context.Companies.ToListAsync();
-            }
+
+            //if (string.IsNullOrWhiteSpace(parameters.CompanyName) && string.IsNullOrWhiteSpace(parameters.SearchTerm))
+            //{
+            //    return await _context.Companies.ToListAsync();
+            //}
+            
             var queryExpression = _context.Companies as IQueryable<Company>;
+
             if (!string.IsNullOrWhiteSpace(parameters.CompanyName))
             {
                 parameters.CompanyName = parameters.CompanyName.Trim();
@@ -53,7 +57,10 @@ namespace RESTfulApi.Api.Services
                 queryExpression = queryExpression.Where(x => x.Name.Contains(parameters.SearchTerm) || x.Introduction.Contains(parameters.SearchTerm));
             }
 
-            return await queryExpression.ToListAsync();
+
+            //queryExpression = queryExpression.Skip(parameters.PageSize * (parameters.PageNumber - 1)).Take(parameters.PageSize);
+
+            return await PagedList<Company>.CreteaAsync(queryExpression, parameters.PageNumber, parameters.PageSize);
         }
         public async Task<IEnumerable<Company>> GetCompaniesAsync(IEnumerable<Guid> companyIds)
         {

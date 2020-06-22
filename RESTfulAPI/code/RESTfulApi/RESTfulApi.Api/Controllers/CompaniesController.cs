@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using RESTfulApi.Api.DtoParameters;
 using RESTfulApi.Api.Entities;
+using RESTfulApi.Api.Helpers;
 using RESTfulApi.Api.Models;
 using RESTfulApi.Api.Services;
 
@@ -27,13 +31,26 @@ namespace RESTfulApi.Api.Controllers
         }
 
         [HttpHead]
-        [HttpGet]
+        [HttpGet(Name = nameof(GetCompanies))]
         public async Task<ActionResult<IEnumerable<CompanyDto>>> GetCompanies([FromQuery] CompanyDtoParameters parameters)  //ActionResult<IEnumerable<DtoCompany>
         {
             var companies = await _companyRepositroy.GetCompaniesAsync(parameters);
 
-            var companyDtos = _mapper.Map<IEnumerable<CompanyDto>>(companies);
+            var paginationMetadata = new
+            {
+                totalCount = companies.TotalCount,
+                pageSize = companies.PageSize,
+                currentPage = companies.CurrentPage,
+                totalPage = companies.TotalPages,
+                privousPageLink = companies.HasPrevious ? CreateCompaniesResourceUri(parameters, ResourceUriType.PreviousPage) : null,
+                nextPageLink = companies.HasNext ? CreateCompaniesResourceUri(parameters, ResourceUriType.NextPage) : null
+            };
 
+            Response.Headers.Add("X-Pagination",
+                JsonSerializer.Serialize(paginationMetadata,new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping })
+                );
+
+            var companyDtos = _mapper.Map<IEnumerable<CompanyDto>>(companies);
             return Ok(companyDtos);
         }
 
@@ -92,5 +109,45 @@ namespace RESTfulApi.Api.Controllers
 
             return NoContent();
         }
+
+
+        #region helper
+        private string CreateCompaniesResourceUri(CompanyDtoParameters parameters, ResourceUriType type)
+        {
+            switch (type)
+            {
+                case ResourceUriType.PreviousPage:
+                    return Url.Link(
+                        nameof(GetCompanies),
+                        new
+                        {
+                            pageNumber = parameters.PageNumber - 1,
+                            pageSize = parameters.PageSize,
+                            companyName = parameters.CompanyName,
+                            searchTerm = parameters.SearchTerm
+                        });
+                case ResourceUriType.NextPage:
+                    return Url.Link(
+                        nameof(GetCompanies),
+                        new
+                        {
+                            pageNumber = parameters.PageNumber + 1,
+                            pageSize = parameters.PageSize,
+                            companyName = parameters.CompanyName,
+                            searchTerm = parameters.SearchTerm
+                        });
+                default:
+                    return Url.Link(
+                        nameof(GetCompanies),
+                        new
+                        {
+                            pageNumber = parameters.PageNumber,
+                            pageSize = parameters.PageSize,
+                            companyName = parameters.CompanyName,
+                            searchTerm = parameters.SearchTerm
+                        });
+            }
+        }
+        #endregion
     }
 }

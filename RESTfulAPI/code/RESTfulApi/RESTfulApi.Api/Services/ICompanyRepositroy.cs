@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using RESTfulApi.Api.DtoParameters;
 using RESTfulApi.Api.Entities;
+using RESTfulApi.Api.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace RESTfulApi.Api.Services
     public interface ICompanyRepositroy
     {
         Task<Company> GetCompanyAsync(Guid companyId);
-        Task<IEnumerable<Company>> GetCompaniesAsync(CompanyDtoParameters parameters);
+        Task<PagedList<Company>> GetCompaniesAsync(CompanyDtoParameters parameters);
         Task<IEnumerable<Company>> GetCompaniesAsync(IEnumerable<Guid> companyIds);
         void AddCompany(Company company);
         void UpdateCompany(Company company);

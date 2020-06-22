@@ -32,8 +32,8 @@ namespace RESTfulApi.Api.Data
 
             // 种子数据
             modelBuilder.Entity<Company>().HasData(
-                new Company 
-                { 
+                new Company
+                {
                     Id = Guid.Parse("e2f039ad-237c-4efe-97e9-15deccda6691"),
                     Name = "Microsoft",
                     Introduction = "Great Company"
@@ -49,6 +49,168 @@ namespace RESTfulApi.Api.Data
                     Id = Guid.Parse("a2f92442-73dc-4091-ad4d-4398b39f4d47"),
                     Name = "Alibaba",
                     Introduction = "FuBao Company"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("bbdee09c-089b-4d30-bece-44df5923716c"),
+                    Name = "Microsoft",
+                    Introduction = "Great Company",
+                    //Country = "USA",
+                    //Industry = "Software",
+                    //Product = "Software"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("6fb600c1-9011-4fd7-9234-881379716440"),
+                    Name = "Google",
+                    Introduction = "Don't be evil",
+                    //Country = "USA",
+                    //Industry = "Internet",
+                    //Product = "Software"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("5efc910b-2f45-43df-afae-620d40542853"),
+                    Name = "Alipapa",
+                    Introduction = "Fubao Company",
+                    //Country = "China",
+                    //Industry = "Internet",
+                    //Product = "Software"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("bbdee09c-089b-4d30-bece-44df59237100"),
+                    Name = "Tencent",
+                    Introduction = "From Shenzhen",
+                    //Country = "China",
+                    //Industry = "ECommerce",
+                    //Product = "Software"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("6fb600c1-9011-4fd7-9234-881379716400"),
+                    Name = "Baidu",
+                    Introduction = "From Beijing",
+                    //Country = "China",
+                    //Industry = "Internet",
+                    //Product = "Software"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("5efc910b-2f45-43df-afae-620d40542800"),
+                    Name = "Adobe",
+                    Introduction = "Photoshop?",
+                    //Country = "USA",
+                    //Industry = "Software",
+                    //Product = "Software"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("bbdee09c-089b-4d30-bece-44df59237111"),
+                    Name = "SpaceX",
+                    Introduction = "Wow",
+                    //Country = "USA",
+                    //Industry = "Technology",
+                    //Product = "Rocket"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("6fb600c1-9011-4fd7-9234-881379716411"),
+                    Name = "AC Milan",
+                    Introduction = "Football Club",
+                    //Country = "Italy",
+                    //Industry = "Football",
+                    //Product = "Football Match"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("5efc910b-2f45-43df-afae-620d40542811"),
+                    Name = "Suning",
+                    Introduction = "From Jiangsu",
+                    //Country = "China",
+                    //Industry = "ECommerce",
+                    //Product = "Goods"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("bbdee09c-089b-4d30-bece-44df59237122"),
+                    Name = "Twitter",
+                    Introduction = "Blocked",
+                    //Country = "USA",
+                    //Industry = "Internet",
+                    //Product = "Tweets"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("6fb600c1-9011-4fd7-9234-881379716422"),
+                    Name = "Youtube",
+                    Introduction = "Blocked",
+                    //Country = "USA",
+                    //Industry = "Internet",
+                    //Product = "Videos"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("5efc910b-2f45-43df-afae-620d40542822"),
+                    Name = "360",
+                    Introduction = "- -",
+                    //Country = "China",
+                    //Industry = "Security",
+                    //Product = "Security Product"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("bbdee09c-089b-4d30-bece-44df59237133"),
+                    Name = "Jingdong",
+                    Introduction = "Brothers",
+                    //Country = "China",
+                    //Industry = "ECommerce",
+                    //Product = "Goods"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("6fb600c1-9011-4fd7-9234-881379716433"),
+                    Name = "NetEase",
+                    Introduction = "Music?",
+                    //Country = "China",
+                    //Industry = "Internet",
+                    //Product = "Songs"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("5efc910b-2f45-43df-afae-620d40542833"),
+                    Name = "Amazon",
+                    Introduction = "Store",
+                    //Country = "USA",
+                    //Industry = "ECommerce",
+                    //Product = "Books"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("bbdee09c-089b-4d30-bece-44df59237144"),
+                    Name = "AOL",
+                    Introduction = "Not Exists?",
+                    //Country = "USA",
+                    //Industry = "Internet",
+                    //Product = "Website"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("6fb600c1-9011-4fd7-9234-881379716444"),
+                    Name = "Yahoo",
+                    Introduction = "Who?",
+                    //Country = "USA",
+                    //Industry = "Internet",
+                    //Product = "Mail"
+                },
+                new Company
+                {
+                    Id = Guid.Parse("5efc910b-2f45-43df-afae-620d40542844"),
+                    Name = "Firefox",
+                    Introduction = "Is it a company?",
+                    //Country = "USA",
+                    //Industry = "Internet",
+                    //Product = "Browser"
                 });
 
 
