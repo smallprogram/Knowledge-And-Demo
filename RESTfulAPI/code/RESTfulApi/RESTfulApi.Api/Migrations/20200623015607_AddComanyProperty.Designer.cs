@@ -9,8 +9,8 @@ using RESTfulApi.Api.Data;
 namespace RESTfulApi.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200622054353_add-companyData")]
-    partial class addcompanyData
+    [Migration("20200623015607_AddComanyProperty")]
+    partial class AddComanyProperty
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,10 +24,27 @@ namespace RESTfulApi.Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Industry")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(50);
+
                     b.Property<string>("Introduction")
-                        .HasColumnType("TEXT");
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(500);
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Product")
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasMaxLength(100);
@@ -40,128 +57,191 @@ namespace RESTfulApi.Api.Migrations
                         new
                         {
                             Id = new Guid("e2f039ad-237c-4efe-97e9-15deccda6691"),
+                            Country = "USA",
+                            Industry = "Software",
                             Introduction = "Great Company",
-                            Name = "Microsoft"
+                            Name = "Microsoft",
+                            Product = "Software"
                         },
                         new
                         {
                             Id = new Guid("e2b07120-ce3d-4e30-8fa8-a4fb76c663e5"),
+                            Country = "USA",
+                            Industry = "Software",
                             Introduction = "Don't be evil",
-                            Name = "Google"
+                            Name = "Google",
+                            Product = "Software"
                         },
                         new
                         {
                             Id = new Guid("a2f92442-73dc-4091-ad4d-4398b39f4d47"),
+                            Country = "China",
+                            Industry = "Software",
                             Introduction = "FuBao Company",
-                            Name = "Alibaba"
+                            Name = "Alibaba",
+                            Product = "Software"
                         },
                         new
                         {
                             Id = new Guid("bbdee09c-089b-4d30-bece-44df5923716c"),
+                            Country = "USA",
+                            Industry = "Software",
                             Introduction = "Great Company",
-                            Name = "Microsoft"
+                            Name = "Microsoft",
+                            Product = "Software"
                         },
                         new
                         {
                             Id = new Guid("6fb600c1-9011-4fd7-9234-881379716440"),
+                            Country = "USA",
+                            Industry = "Internet",
                             Introduction = "Don't be evil",
-                            Name = "Google"
+                            Name = "Google",
+                            Product = "Software"
                         },
                         new
                         {
                             Id = new Guid("5efc910b-2f45-43df-afae-620d40542853"),
+                            Country = "China",
+                            Industry = "Internet",
                             Introduction = "Fubao Company",
-                            Name = "Alipapa"
+                            Name = "Alipapa",
+                            Product = "Software"
                         },
                         new
                         {
                             Id = new Guid("bbdee09c-089b-4d30-bece-44df59237100"),
+                            Country = "China",
+                            Industry = "ECommerce",
                             Introduction = "From Shenzhen",
-                            Name = "Tencent"
+                            Name = "Tencent",
+                            Product = "Software"
                         },
                         new
                         {
                             Id = new Guid("6fb600c1-9011-4fd7-9234-881379716400"),
+                            Country = "China",
+                            Industry = "Internet",
                             Introduction = "From Beijing",
-                            Name = "Baidu"
+                            Name = "Baidu",
+                            Product = "Software"
                         },
                         new
                         {
                             Id = new Guid("5efc910b-2f45-43df-afae-620d40542800"),
+                            Country = "USA",
+                            Industry = "Software",
                             Introduction = "Photoshop?",
-                            Name = "Adobe"
+                            Name = "Adobe",
+                            Product = "Software"
                         },
                         new
                         {
                             Id = new Guid("bbdee09c-089b-4d30-bece-44df59237111"),
+                            Country = "USA",
+                            Industry = "Technology",
                             Introduction = "Wow",
-                            Name = "SpaceX"
+                            Name = "SpaceX",
+                            Product = "Rocket"
                         },
                         new
                         {
                             Id = new Guid("6fb600c1-9011-4fd7-9234-881379716411"),
+                            Country = "Italy",
+                            Industry = "Football",
                             Introduction = "Football Club",
-                            Name = "AC Milan"
+                            Name = "AC Milan",
+                            Product = "Football Match"
                         },
                         new
                         {
                             Id = new Guid("5efc910b-2f45-43df-afae-620d40542811"),
+                            Country = "China",
+                            Industry = "ECommerce",
                             Introduction = "From Jiangsu",
-                            Name = "Suning"
+                            Name = "Suning",
+                            Product = "Goods"
                         },
                         new
                         {
                             Id = new Guid("bbdee09c-089b-4d30-bece-44df59237122"),
+                            Country = "USA",
+                            Industry = "Internet",
                             Introduction = "Blocked",
-                            Name = "Twitter"
+                            Name = "Twitter",
+                            Product = "Tweets"
                         },
                         new
                         {
                             Id = new Guid("6fb600c1-9011-4fd7-9234-881379716422"),
+                            Country = "USA",
+                            Industry = "Internet",
                             Introduction = "Blocked",
-                            Name = "Youtube"
+                            Name = "Youtube",
+                            Product = "Videos"
                         },
                         new
                         {
                             Id = new Guid("5efc910b-2f45-43df-afae-620d40542822"),
+                            Country = "China",
+                            Industry = "Security",
                             Introduction = "- -",
-                            Name = "360"
+                            Name = "360",
+                            Product = "Security Product"
                         },
                         new
                         {
                             Id = new Guid("bbdee09c-089b-4d30-bece-44df59237133"),
+                            Country = "China",
+                            Industry = "ECommerce",
                             Introduction = "Brothers",
-                            Name = "Jingdong"
+                            Name = "Jingdong",
+                            Product = "Goods"
                         },
                         new
                         {
                             Id = new Guid("6fb600c1-9011-4fd7-9234-881379716433"),
+                            Country = "China",
+                            Industry = "Internet",
                             Introduction = "Music?",
-                            Name = "NetEase"
+                            Name = "NetEase",
+                            Product = "Songs"
                         },
                         new
                         {
                             Id = new Guid("5efc910b-2f45-43df-afae-620d40542833"),
+                            Country = "USA",
+                            Industry = "ECommerce",
                             Introduction = "Store",
-                            Name = "Amazon"
+                            Name = "Amazon",
+                            Product = "Books"
                         },
                         new
                         {
                             Id = new Guid("bbdee09c-089b-4d30-bece-44df59237144"),
+                            Country = "USA",
+                            Industry = "Internet",
                             Introduction = "Not Exists?",
-                            Name = "AOL"
+                            Name = "AOL",
+                            Product = "Website"
                         },
                         new
                         {
                             Id = new Guid("6fb600c1-9011-4fd7-9234-881379716444"),
+                            Country = "USA",
+                            Industry = "Internet",
                             Introduction = "Who?",
-                            Name = "Yahoo"
+                            Name = "Yahoo",
+                            Product = "Mail"
                         },
                         new
                         {
                             Id = new Guid("5efc910b-2f45-43df-afae-620d40542844"),
+                            Country = "USA",
+                            Industry = "Internet",
                             Introduction = "Is it a company?",
-                            Name = "Firefox"
+                            Name = "Firefox",
+                            Product = "Browser"
                         });
                 });
 
@@ -219,14 +299,54 @@ namespace RESTfulApi.Api.Migrations
                             DateOfBirth = new DateTime(1981, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmployeeNo = "MSFT245",
                             FirstName = "Vince",
-                            Gender = 1,
+                            Gender = 2,
                             LastName = "Carter"
+                        },
+                        new
+                        {
+                            Id = new Guid("aee28ab3-146f-4036-b417-decb89483cff"),
+                            CompanyId = new Guid("e2f039ad-237c-4efe-97e9-15deccda6691"),
+                            DateOfBirth = new DateTime(1990, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmployeeNo = "MSFT225",
+                            FirstName = "Mande",
+                            Gender = 1,
+                            LastName = "Etfb"
+                        },
+                        new
+                        {
+                            Id = new Guid("a9e0b740-4f88-470f-88dc-7f5b1f72d8cc"),
+                            CompanyId = new Guid("e2f039ad-237c-4efe-97e9-15deccda6691"),
+                            DateOfBirth = new DateTime(1989, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmployeeNo = "MSFT345",
+                            FirstName = "Zhu",
+                            Gender = 1,
+                            LastName = "Sir"
+                        },
+                        new
+                        {
+                            Id = new Guid("2c96ef7c-457c-4722-8b17-5d37240f5eaf"),
+                            CompanyId = new Guid("e2f039ad-237c-4efe-97e9-15deccda6691"),
+                            DateOfBirth = new DateTime(1989, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmployeeNo = "MSFT545",
+                            FirstName = "Lv",
+                            Gender = 2,
+                            LastName = "Xiaolu"
+                        },
+                        new
+                        {
+                            Id = new Guid("0c781f03-b82f-45b2-9427-203e47ee47ed"),
+                            CompanyId = new Guid("e2f039ad-237c-4efe-97e9-15deccda6691"),
+                            DateOfBirth = new DateTime(1983, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EmployeeNo = "MSFT145",
+                            FirstName = "Anne",
+                            Gender = 2,
+                            LastName = "Dei"
                         },
                         new
                         {
                             Id = new Guid("72457e73-ea34-4e02-b575-8d384e82a481"),
                             CompanyId = new Guid("e2b07120-ce3d-4e30-8fa8-a4fb76c663e5"),
-                            DateOfBirth = new DateTime(1986, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1997, 11, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EmployeeNo = "G003",
                             FirstName = "Mary",
                             Gender = 2,

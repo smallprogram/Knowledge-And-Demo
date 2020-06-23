@@ -14,7 +14,7 @@ namespace RESTfulApi.Api.Profiles
         {
             CreateMap<Company, CompanyDto>()
                 .ForMember(
-                target => target.CpmpanyName, 
+                target => target.CompanyName, 
                 source => source.MapFrom(src => src.Name)
                 );
 

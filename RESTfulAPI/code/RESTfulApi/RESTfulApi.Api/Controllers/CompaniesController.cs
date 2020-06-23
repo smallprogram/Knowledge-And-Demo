@@ -23,17 +23,25 @@ namespace RESTfulApi.Api.Controllers
     {
         private readonly ICompanyRepositroy _companyRepositroy;
         private readonly IMapper _mapper;
+        private readonly IPropertyMappingService _propertyMappingService;
 
-        public CompaniesController(ICompanyRepositroy companyRepositroy, IMapper mapper)
+        public CompaniesController(ICompanyRepositroy companyRepositroy, IMapper mapper, IPropertyMappingService propertyMappingService)
         {
             _companyRepositroy = companyRepositroy ?? throw new ArgumentNullException(nameof(companyRepositroy));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _propertyMappingService = propertyMappingService ?? throw new ArgumentNullException(nameof(propertyMappingService));
         }
 
         [HttpHead]
         [HttpGet(Name = nameof(GetCompanies))]
         public async Task<ActionResult<IEnumerable<CompanyDto>>> GetCompanies([FromQuery] CompanyDtoParameters parameters)  //ActionResult<IEnumerable<DtoCompany>
         {
+
+            if (!_propertyMappingService.ValidMappingExistsFor<CompanyDto,Company>(parameters.OrderBy))
+            {
+                return BadRequest();
+            }
+
             var companies = await _companyRepositroy.GetCompaniesAsync(parameters);
 
             var paginationMetadata = new
@@ -121,6 +129,7 @@ namespace RESTfulApi.Api.Controllers
                         nameof(GetCompanies),
                         new
                         {
+                            orderBy = parameters.OrderBy,
                             pageNumber = parameters.PageNumber - 1,
                             pageSize = parameters.PageSize,
                             companyName = parameters.CompanyName,
@@ -131,6 +140,7 @@ namespace RESTfulApi.Api.Controllers
                         nameof(GetCompanies),
                         new
                         {
+                            orderBy = parameters.OrderBy,
                             pageNumber = parameters.PageNumber + 1,
                             pageSize = parameters.PageSize,
                             companyName = parameters.CompanyName,
@@ -141,6 +151,7 @@ namespace RESTfulApi.Api.Controllers
                         nameof(GetCompanies),
                         new
                         {
+                            orderBy = parameters.OrderBy,
                             pageNumber = parameters.PageNumber,
                             pageSize = parameters.PageSize,
                             companyName = parameters.CompanyName,
