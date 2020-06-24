@@ -24,20 +24,26 @@ namespace RESTfulApi.Api.Controllers
         private readonly ICompanyRepositroy _companyRepositroy;
         private readonly IMapper _mapper;
         private readonly IPropertyMappingService _propertyMappingService;
+        private readonly IPropertyCheckerService _propertyCheckerService;
 
-        public CompaniesController(ICompanyRepositroy companyRepositroy, IMapper mapper, IPropertyMappingService propertyMappingService)
+        public CompaniesController(ICompanyRepositroy companyRepositroy, IMapper mapper, IPropertyMappingService propertyMappingService, IPropertyCheckerService propertyCheckerService)
         {
             _companyRepositroy = companyRepositroy ?? throw new ArgumentNullException(nameof(companyRepositroy));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _propertyMappingService = propertyMappingService ?? throw new ArgumentNullException(nameof(propertyMappingService));
+            _propertyCheckerService = propertyCheckerService ?? throw new ArgumentNullException(nameof(propertyCheckerService)); 
         }
 
         [HttpHead]
         [HttpGet(Name = nameof(GetCompanies))]
-        public async Task<ActionResult<IEnumerable<CompanyDto>>> GetCompanies([FromQuery] CompanyDtoParameters parameters)  //ActionResult<IEnumerable<DtoCompany>
+        public async Task<IActionResult> GetCompanies([FromQuery] CompanyDtoParameters parameters)  //ActionResult<IEnumerable<DtoCompany>
         {
 
             if (!_propertyMappingService.ValidMappingExistsFor<CompanyDto,Company>(parameters.OrderBy))
+            {
+                return BadRequest();
+            }
+            if (!_propertyCheckerService.TypeHasProperites<CompanyDto>(parameters.Fields))
             {
                 return BadRequest();
             }
@@ -59,12 +65,16 @@ namespace RESTfulApi.Api.Controllers
                 );
 
             var companyDtos = _mapper.Map<IEnumerable<CompanyDto>>(companies);
-            return Ok(companyDtos);
+            return Ok(companyDtos.ShapeData(parameters.Fields));
         }
 
         [HttpGet("{companyId}", Name = nameof(GetCompany))]  // "api/Companies/{companyId}"
-        public async Task<ActionResult<CompanyDto>> GetCompany(Guid companyId)
+        public async Task<ActionResult<CompanyDto>> GetCompany(Guid companyId, string fields)
         {
+            if (!_propertyCheckerService.TypeHasProperites<CompanyDto>(fields))
+            {
+                return BadRequest();
+            }
             var company = await _companyRepositroy.GetCompanyAsync(companyId);
             if (company == null)
             {
@@ -73,7 +83,7 @@ namespace RESTfulApi.Api.Controllers
 
             var companyDto = _mapper.Map<CompanyDto>(company);
 
-            return Ok(companyDto);
+            return Ok(companyDto.shapeData(fields));
         }
 
         [HttpPost]
@@ -129,6 +139,7 @@ namespace RESTfulApi.Api.Controllers
                         nameof(GetCompanies),
                         new
                         {
+                            fields = parameters.Fields,
                             orderBy = parameters.OrderBy,
                             pageNumber = parameters.PageNumber - 1,
                             pageSize = parameters.PageSize,
@@ -140,6 +151,7 @@ namespace RESTfulApi.Api.Controllers
                         nameof(GetCompanies),
                         new
                         {
+                            fields = parameters.Fields,
                             orderBy = parameters.OrderBy,
                             pageNumber = parameters.PageNumber + 1,
                             pageSize = parameters.PageSize,
@@ -151,6 +163,7 @@ namespace RESTfulApi.Api.Controllers
                         nameof(GetCompanies),
                         new
                         {
+                            fields = parameters.Fields,
                             orderBy = parameters.OrderBy,
                             pageNumber = parameters.PageNumber,
                             pageSize = parameters.PageSize,

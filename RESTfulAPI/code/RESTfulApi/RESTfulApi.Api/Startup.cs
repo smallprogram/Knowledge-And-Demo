@@ -101,6 +101,7 @@ namespace RESTfulApi.Api
             services.AddScoped<ICompanyRepositroy, CompanyRepository>();
 
             services.AddTransient<IPropertyMappingService, PropertyMappingService>();
+            services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
             services.AddDbContext<AppDbContext>(options =>
             {
