@@ -82,20 +82,30 @@ namespace RESTfulApi.Api
                         };
                     };
                 });
-                    //{
-                    //    "type": "http://www.google.com",
-                    //    "title": "有错误！！",
-                    //    "status": 422,
-                    //    "detail": "请参考详细信息",
-                    //    "instance": "/api/companies/e2f039ad-237c-4efe-97e9-15deccda6691/employees",
-                    //    "traceId": "0HM0KSAVHTPEC:00000001",
-                    //    "errors": {
-                    //                    "EmployeeAddDto": [
-                    //                        "员工编号必须和名不一样",
-                    //            "姓和名不能一样"
-                    //        ]
-                    //    }
-                    //}
+            //{
+            //    "type": "http://www.google.com",
+            //    "title": "有错误！！",
+            //    "status": 422,
+            //    "detail": "请参考详细信息",
+            //    "instance": "/api/companies/e2f039ad-237c-4efe-97e9-15deccda6691/employees",
+            //    "traceId": "0HM0KSAVHTPEC:00000001",
+            //    "errors": {
+            //                    "EmployeeAddDto": [
+            //                        "员工编号必须和名不一样",
+            //            "姓和名不能一样"
+            //        ]
+            //    }
+            //}
+
+
+            services.Configure<MvcOptions>(config => 
+            {
+                var newtonSoftJsonOutputFormatter = config.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
+                if (newtonSoftJsonOutputFormatter != null)
+                {
+                    newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
+                }
+            });
 
 
             services.AddScoped<ICompanyRepositroy, CompanyRepository>();

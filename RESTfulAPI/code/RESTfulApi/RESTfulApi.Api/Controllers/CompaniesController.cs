@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 using RESTfulApi.Api.DtoParameters;
 using RESTfulApi.Api.Entities;
 using RESTfulApi.Api.Helpers;
@@ -88,8 +89,15 @@ namespace RESTfulApi.Api.Controllers
         }
 
         [HttpGet("{companyId}", Name = nameof(GetCompany))]  // "api/Companies/{companyId}"
-        public async Task<IActionResult> GetCompany(Guid companyId, string fields)
+        public async Task<IActionResult> GetCompany(Guid companyId, string fields, [FromHeader(Name = "Accept")] string mediaType)
         {
+
+
+            if (!MediaTypeHeaderValue.TryParse(mediaType, out MediaTypeHeaderValue parsedMediaType))
+            {
+                return BadRequest();
+            }
+
             if (!_propertyCheckerService.TypeHasProperites<CompanyDto>(fields))
             {
                 return BadRequest();
@@ -102,13 +110,21 @@ namespace RESTfulApi.Api.Controllers
 
             var companyDto = _mapper.Map<CompanyDto>(company);
 
-            var links = CreateLinksForCompany(companyId, fields);
 
-            var linkedDict = _mapper.Map<CompanyDto>(company).shapeData(fields) as IDictionary<string, object>;
+            if (parsedMediaType.MediaType == "application/vnd.company.hateoas+json")
+            {
 
-            linkedDict.Add("links", links);
+                var links = CreateLinksForCompany(companyId, fields);
 
-            return Ok(linkedDict);
+                var linkedDict = _mapper.Map<CompanyDto>(company).shapeData(fields) as IDictionary<string, object>;
+
+                linkedDict.Add("links", links);
+
+                return Ok(linkedDict);
+            }
+
+
+            return Ok(_mapper.Map<CompanyDto>(company).shapeData(fields));
         }
 
         [HttpPost(Name = nameof(CreateCompany))]
@@ -120,11 +136,13 @@ namespace RESTfulApi.Api.Controllers
             //    return BadRequest();
             //}
 
+
             var entity = _mapper.Map<Company>(company);
             _companyRepositroy.AddCompany(entity);
             await _companyRepositroy.SaveAsync();
 
             var returnDto = _mapper.Map<CompanyDto>(entity);
+
 
             var links = CreateLinksForCompany(returnDto.Id, null);
 
