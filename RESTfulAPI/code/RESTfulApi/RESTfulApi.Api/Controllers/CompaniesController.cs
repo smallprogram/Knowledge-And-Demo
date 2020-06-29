@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using RESTfulApi.Api.DtoParameters;
 using RESTfulApi.Api.Entities;
 using RESTfulApi.Api.Helpers;
 using RESTfulApi.Api.Models;
 using RESTfulApi.Api.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace RESTfulApi.Api.Controllers
 {
@@ -56,16 +55,36 @@ namespace RESTfulApi.Api.Controllers
                 pageSize = companies.PageSize,
                 currentPage = companies.CurrentPage,
                 totalPage = companies.TotalPages,
-                privousPageLink = companies.HasPrevious ? CreateCompaniesResourceUri(parameters, ResourceUriType.PreviousPage) : null,
-                nextPageLink = companies.HasNext ? CreateCompaniesResourceUri(parameters, ResourceUriType.NextPage) : null
+                //privousPageLink = companies.HasPrevious ? CreateCompaniesResourceUri(parameters, ResourceUriType.PreviousPage) : null,
+                //nextPageLink = companies.HasNext ? CreateCompaniesResourceUri(parameters, ResourceUriType.NextPage) : null
             };
 
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(paginationMetadata, new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping })
                 );
 
+
+
             var companyDtos = _mapper.Map<IEnumerable<CompanyDto>>(companies);
-            return Ok(companyDtos.ShapeData(parameters.Fields));
+
+            var shapeData = companyDtos.ShapeData(parameters.Fields);
+            var links = CreateLinksForCompany(parameters, companies.HasPrevious, companies.HasNext);
+
+            var shapedCompaniesWithLinks = shapeData.Select(c =>
+            {
+                var companyDict = c as IDictionary<string, object>;
+                var companyLinks = CreateLinksForCompany((Guid)companyDict["Id"], null);
+                companyDict.Add("links", companyLinks);
+                return companyDict;
+            });
+
+            var linkedCollectionResource = new
+            {
+                value = shapedCompaniesWithLinks,
+                links = links
+            };
+
+            return Ok(linkedCollectionResource);
         }
 
         [HttpGet("{companyId}", Name = nameof(GetCompany))]  // "api/Companies/{companyId}"
@@ -92,7 +111,7 @@ namespace RESTfulApi.Api.Controllers
             return Ok(linkedDict);
         }
 
-        [HttpPost]
+        [HttpPost(Name = nameof(CreateCompany))]
         public async Task<ActionResult<CompanyDto>> CreateCompany([FromBody] CompanyAddDto company)
         {
             // 使用了api controller就不需要这个判断了。
@@ -142,24 +161,6 @@ namespace RESTfulApi.Api.Controllers
             return Ok();
         }
 
-
-        //[HttpDelete("{companyId}")]
-        //public async Task<IActionResult> DeleteEmployeeForCompany(Guid companyId)
-        //{
-        //    if (!await _companyRepositroy.CompanyExistsAsync(companyId))
-        //    {
-        //        return NotFound();
-        //    }
-        //    var company = await _companyRepositroy.GetCompanyAsync(companyId);
-
-        //    _companyRepositroy.DeleteCompany(company);
-
-        //    await _companyRepositroy.SaveAsync();
-
-        //    return NoContent();
-        //}
-
-
         #region helper
         private string CreateCompaniesResourceUri(CompanyDtoParameters parameters, ResourceUriType type)
         {
@@ -185,6 +186,18 @@ namespace RESTfulApi.Api.Controllers
                             fields = parameters.Fields,
                             orderBy = parameters.OrderBy,
                             pageNumber = parameters.PageNumber + 1,
+                            pageSize = parameters.PageSize,
+                            companyName = parameters.CompanyName,
+                            searchTerm = parameters.SearchTerm
+                        });
+                case ResourceUriType.CurrentPage:
+                    return Url.Link(
+                        nameof(GetCompanies),
+                        new
+                        {
+                            fields = parameters.Fields,
+                            orderBy = parameters.OrderBy,
+                            pageNumber = parameters.PageNumber,
                             pageSize = parameters.PageSize,
                             companyName = parameters.CompanyName,
                             searchTerm = parameters.SearchTerm
@@ -226,7 +239,7 @@ namespace RESTfulApi.Api.Controllers
                     );
             }
             links.Add(new LinkDto(
-                Url.Link(nameof(DeleteCompany), new { companyId}),
+                Url.Link(nameof(DeleteCompany), new { companyId }),
                 "delete_company",
                 "DELETE")
                 );
@@ -241,6 +254,24 @@ namespace RESTfulApi.Api.Controllers
                 "employees",
                 "GET")
                 );
+
+            return links;
+        }
+
+        private IEnumerable<LinkDto> CreateLinksForCompany(CompanyDtoParameters parameters, bool hasPrevious, bool hasNext)
+        {
+            var links = new List<LinkDto>();
+
+            links.Add(new LinkDto(CreateCompaniesResourceUri(parameters, ResourceUriType.CurrentPage), "self", "GET"));
+
+            if (hasPrevious)
+            {
+                links.Add(new LinkDto(CreateCompaniesResourceUri(parameters, ResourceUriType.PreviousPage), "previous_page", "GET"));
+            }
+            if (hasNext)
+            {
+                links.Add(new LinkDto(CreateCompaniesResourceUri(parameters, ResourceUriType.NextPage), "next_page", "GET"));
+            }
 
             return links;
         }

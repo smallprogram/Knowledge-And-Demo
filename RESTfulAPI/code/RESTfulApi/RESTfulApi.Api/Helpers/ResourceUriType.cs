@@ -8,6 +8,7 @@ namespace RESTfulApi.Api.Helpers
     public enum ResourceUriType
     {
         PreviousPage,
-        NextPage
+        NextPage,
+        CurrentPage
     }
 }
