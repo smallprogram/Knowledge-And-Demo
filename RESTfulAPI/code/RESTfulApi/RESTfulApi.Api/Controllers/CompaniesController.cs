@@ -31,7 +31,7 @@ namespace RESTfulApi.Api.Controllers
             _companyRepositroy = companyRepositroy ?? throw new ArgumentNullException(nameof(companyRepositroy));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _propertyMappingService = propertyMappingService ?? throw new ArgumentNullException(nameof(propertyMappingService));
-            _propertyCheckerService = propertyCheckerService ?? throw new ArgumentNullException(nameof(propertyCheckerService)); 
+            _propertyCheckerService = propertyCheckerService ?? throw new ArgumentNullException(nameof(propertyCheckerService));
         }
 
         [HttpHead]
@@ -39,7 +39,7 @@ namespace RESTfulApi.Api.Controllers
         public async Task<IActionResult> GetCompanies([FromQuery] CompanyDtoParameters parameters)  //ActionResult<IEnumerable<DtoCompany>
         {
 
-            if (!_propertyMappingService.ValidMappingExistsFor<CompanyDto,Company>(parameters.OrderBy))
+            if (!_propertyMappingService.ValidMappingExistsFor<CompanyDto, Company>(parameters.OrderBy))
             {
                 return BadRequest();
             }
@@ -61,7 +61,7 @@ namespace RESTfulApi.Api.Controllers
             };
 
             Response.Headers.Add("X-Pagination",
-                JsonSerializer.Serialize(paginationMetadata,new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping })
+                JsonSerializer.Serialize(paginationMetadata, new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping })
                 );
 
             var companyDtos = _mapper.Map<IEnumerable<CompanyDto>>(companies);
@@ -69,7 +69,7 @@ namespace RESTfulApi.Api.Controllers
         }
 
         [HttpGet("{companyId}", Name = nameof(GetCompany))]  // "api/Companies/{companyId}"
-        public async Task<ActionResult<CompanyDto>> GetCompany(Guid companyId, string fields)
+        public async Task<IActionResult> GetCompany(Guid companyId, string fields)
         {
             if (!_propertyCheckerService.TypeHasProperites<CompanyDto>(fields))
             {
@@ -83,7 +83,13 @@ namespace RESTfulApi.Api.Controllers
 
             var companyDto = _mapper.Map<CompanyDto>(company);
 
-            return Ok(companyDto.shapeData(fields));
+            var links = CreateLinksForCompany(companyId, fields);
+
+            var linkedDict = _mapper.Map<CompanyDto>(company).shapeData(fields) as IDictionary<string, object>;
+
+            linkedDict.Add("links", links);
+
+            return Ok(linkedDict);
         }
 
         [HttpPost]
@@ -101,7 +107,32 @@ namespace RESTfulApi.Api.Controllers
 
             var returnDto = _mapper.Map<CompanyDto>(entity);
 
-            return CreatedAtRoute(nameof(GetCompany), new { companyId = returnDto.Id }, returnDto);
+            var links = CreateLinksForCompany(returnDto.Id, null);
+
+            var linkedDict = returnDto.shapeData(null) as IDictionary<string, object>;
+
+            linkedDict.Add("links", links);
+
+            return CreatedAtRoute(nameof(GetCompany), new { companyId = linkedDict["Id"] }, linkedDict);
+        }
+
+        [HttpDelete("{companyId}", Name = nameof(DeleteCompany))]
+        public async Task<IActionResult> DeleteCompany(Guid companyId)
+        {
+            var companyEntity = await _companyRepositroy.GetCompanyAsync(companyId);
+
+            if (companyEntity == null)
+            {
+                return NotFound();
+            }
+
+            await _companyRepositroy.GetEmployeesAsync(companyId, new EmployeeDtoParameters());
+
+            _companyRepositroy.DeleteCompany(companyEntity);
+
+            await _companyRepositroy.SaveAsync();
+
+            return NoContent();
         }
 
         [HttpOptions]
@@ -112,21 +143,21 @@ namespace RESTfulApi.Api.Controllers
         }
 
 
-        [HttpDelete("{companyId}")]
-        public async Task<IActionResult> DeleteEmployeeForCompany(Guid companyId)
-        {
-            if (!await _companyRepositroy.CompanyExistsAsync(companyId))
-            {
-                return NotFound();
-            }
-            var company = await _companyRepositroy.GetCompanyAsync(companyId);
+        //[HttpDelete("{companyId}")]
+        //public async Task<IActionResult> DeleteEmployeeForCompany(Guid companyId)
+        //{
+        //    if (!await _companyRepositroy.CompanyExistsAsync(companyId))
+        //    {
+        //        return NotFound();
+        //    }
+        //    var company = await _companyRepositroy.GetCompanyAsync(companyId);
 
-            _companyRepositroy.DeleteCompany(company);
+        //    _companyRepositroy.DeleteCompany(company);
 
-            await _companyRepositroy.SaveAsync();
+        //    await _companyRepositroy.SaveAsync();
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
 
         #region helper
@@ -171,6 +202,47 @@ namespace RESTfulApi.Api.Controllers
                             searchTerm = parameters.SearchTerm
                         });
             }
+        }
+
+
+        private IEnumerable<LinkDto> CreateLinksForCompany(Guid companyId, string fields)
+        {
+            var links = new List<LinkDto>();
+
+            if (string.IsNullOrWhiteSpace(fields))
+            {
+                links.Add(new LinkDto(
+                    Url.Link(nameof(GetCompany), new { companyId }),
+                    "self",
+                    "GET")
+                    );
+            }
+            else
+            {
+                links.Add(new LinkDto(
+                    Url.Link(nameof(GetCompany), new { companyId, fields }),
+                    "self",
+                    "GET")
+                    );
+            }
+            links.Add(new LinkDto(
+                Url.Link(nameof(DeleteCompany), new { companyId}),
+                "delete_company",
+                "DELETE")
+                );
+
+            links.Add(new LinkDto(
+                Url.Link(nameof(EmployeesController.CreateEmployeeForCompany), new { companyId }),
+                "create_employee_for_company",
+                "POST")
+                );
+            links.Add(new LinkDto(
+                Url.Link(nameof(EmployeesController.GetEmployeesForCompany), new { companyId }),
+                "employees",
+                "GET")
+                );
+
+            return links;
         }
         #endregion
     }

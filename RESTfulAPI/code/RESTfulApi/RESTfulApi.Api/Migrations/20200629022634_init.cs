@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RESTfulApi.Api.Migrations
 {
-    public partial class AddComanyProperty : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,9 +13,9 @@ namespace RESTfulApi.Api.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
-                    Country = table.Column<string>(maxLength: 50, nullable: false),
-                    Industry = table.Column<string>(maxLength: 50, nullable: false),
-                    Product = table.Column<string>(maxLength: 100, nullable: false),
+                    Country = table.Column<string>(maxLength: 50, nullable: true),
+                    Industry = table.Column<string>(maxLength: 50, nullable: true),
+                    Product = table.Column<string>(maxLength: 100, nullable: true),
                     Introduction = table.Column<string>(maxLength: 500, nullable: false)
                 },
                 constraints: table =>
