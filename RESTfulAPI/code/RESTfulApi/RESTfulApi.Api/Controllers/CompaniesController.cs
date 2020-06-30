@@ -36,8 +36,12 @@ namespace RESTfulApi.Api.Controllers
 
         [HttpHead]
         [HttpGet(Name = nameof(GetCompanies))]
-        public async Task<IActionResult> GetCompanies([FromQuery] CompanyDtoParameters parameters)  //ActionResult<IEnumerable<DtoCompany>
+        public async Task<IActionResult> GetCompanies([FromQuery] CompanyDtoParameters parameters, [FromHeader(Name = "Accept")] string mediaType)  //ActionResult<IEnumerable<DtoCompany>
         {
+            if (!MediaTypeHeaderValue.TryParse(mediaType, out MediaTypeHeaderValue parsedMediaType))
+            {
+                return BadRequest();
+            }
 
             if (!_propertyMappingService.ValidMappingExistsFor<CompanyDto, Company>(parameters.OrderBy))
             {
@@ -50,42 +54,62 @@ namespace RESTfulApi.Api.Controllers
 
             var companies = await _companyRepositroy.GetCompaniesAsync(parameters);
 
+
+            var companyDtos = _mapper.Map<IEnumerable<CompanyDto>>(companies);
+
+            var shapeData = companyDtos.ShapeData(parameters.Fields);
+
+
+            if (parsedMediaType.MediaType == "application/vnd.company.hateoas+json")
+            {
+                var paginationMetadata_hateoas = new
+                {
+                    totalCount = companies.TotalCount,
+                    pageSize = companies.PageSize,
+                    currentPage = companies.CurrentPage,
+                    totalPage = companies.TotalPages,
+                    //privousPageLink = companies.HasPrevious ? CreateCompaniesResourceUri(parameters, ResourceUriType.PreviousPage) : null,
+                    //nextPageLink = companies.HasNext ? CreateCompaniesResourceUri(parameters, ResourceUriType.NextPage) : null
+                };
+
+                Response.Headers.Add("X-Pagination",
+                    JsonSerializer.Serialize(paginationMetadata_hateoas, new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping })
+                    );
+
+                var links = CreateLinksForCompany(parameters, companies.HasPrevious, companies.HasNext);
+
+                var shapedCompaniesWithLinks = shapeData.Select(c =>
+                {
+                    var companyDict = c as IDictionary<string, object>;
+                    var companyLinks = CreateLinksForCompany((Guid)companyDict["Id"], null);
+                    companyDict.Add("links", companyLinks);
+                    return companyDict;
+                });
+
+                var linkedCollectionResource = new
+                {
+                    value = shapedCompaniesWithLinks,
+                    links = links
+                };
+                return Ok(linkedCollectionResource);
+            }
+
             var paginationMetadata = new
             {
                 totalCount = companies.TotalCount,
                 pageSize = companies.PageSize,
                 currentPage = companies.CurrentPage,
                 totalPage = companies.TotalPages,
-                //privousPageLink = companies.HasPrevious ? CreateCompaniesResourceUri(parameters, ResourceUriType.PreviousPage) : null,
-                //nextPageLink = companies.HasNext ? CreateCompaniesResourceUri(parameters, ResourceUriType.NextPage) : null
+                privousPageLink = companies.HasPrevious ? CreateCompaniesResourceUri(parameters, ResourceUriType.PreviousPage) : null,
+                nextPageLink = companies.HasNext ? CreateCompaniesResourceUri(parameters, ResourceUriType.NextPage) : null
             };
 
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(paginationMetadata, new JsonSerializerOptions { Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping })
                 );
 
-
-
-            var companyDtos = _mapper.Map<IEnumerable<CompanyDto>>(companies);
-
-            var shapeData = companyDtos.ShapeData(parameters.Fields);
-            var links = CreateLinksForCompany(parameters, companies.HasPrevious, companies.HasNext);
-
-            var shapedCompaniesWithLinks = shapeData.Select(c =>
-            {
-                var companyDict = c as IDictionary<string, object>;
-                var companyLinks = CreateLinksForCompany((Guid)companyDict["Id"], null);
-                companyDict.Add("links", companyLinks);
-                return companyDict;
-            });
-
-            var linkedCollectionResource = new
-            {
-                value = shapedCompaniesWithLinks,
-                links = links
-            };
-
-            return Ok(linkedCollectionResource);
+            return Ok(shapeData);
+           
         }
 
         [HttpGet("{companyId}", Name = nameof(GetCompany))]  // "api/Companies/{companyId}"

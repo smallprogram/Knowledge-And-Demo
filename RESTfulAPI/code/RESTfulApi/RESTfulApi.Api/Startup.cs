@@ -44,25 +44,10 @@ namespace RESTfulApi.Api
                 {
                     options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 })
-                // 同时添加请求和响应的对于xml媒体类型的支持
-                .AddXmlDataContractSerializerFormatters()
-                
-                // 添加自定义的错误类型
-                // 默认的错误
-                //{
-                //    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                //    "title": "One or more validation errors occurred.",
-                //    "status": 400,
-                //    "traceId": "|e6c880f1-41183333b665f87b.",
-                //    "errors": {
-                //                "EmployeeAddDto": [
-                //                    "员工编号不可以等于名",
-                //            "姓和名不能一样"
-                //        ]
-                //    }
-                //}
-                .ConfigureApiBehaviorOptions(setupAction =>
+                .AddXmlDataContractSerializerFormatters()                  // 同时添加请求和响应的对于xml媒体类型的支持
+                .ConfigureApiBehaviorOptions(setupAction =>               
                 {
+                    // 添加自定义的错误类型
                     setupAction.InvalidModelStateResponseFactory = context =>
                     {
                         var probleDetails = new ValidationProblemDetails(context.ModelState)
@@ -82,29 +67,16 @@ namespace RESTfulApi.Api
                         };
                     };
                 });
-            //{
-            //    "type": "http://www.google.com",
-            //    "title": "有错误！！",
-            //    "status": 422,
-            //    "detail": "请参考详细信息",
-            //    "instance": "/api/companies/e2f039ad-237c-4efe-97e9-15deccda6691/employees",
-            //    "traceId": "0HM0KSAVHTPEC:00000001",
-            //    "errors": {
-            //                    "EmployeeAddDto": [
-            //                        "员工编号必须和名不一样",
-            //            "姓和名不能一样"
-            //        ]
-            //    }
-            //}
-
 
             services.Configure<MvcOptions>(config => 
             {
                 var newtonSoftJsonOutputFormatter = config.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
-                if (newtonSoftJsonOutputFormatter != null)
-                {
-                    newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
-                }
+                newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
+
+                //if (newtonSoftJsonOutputFormatter != null)
+                //{
+                //    newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
+                //}
             });
 
 
