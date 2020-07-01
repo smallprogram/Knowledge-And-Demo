@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using Newtonsoft.Json.Serialization;
+using RESTfulApi.Api.ActionConstraints;
 using RESTfulApi.Api.DtoParameters;
 using RESTfulApi.Api.Entities;
 using RESTfulApi.Api.Helpers;
@@ -188,7 +189,37 @@ namespace RESTfulApi.Api.Controllers
         }
 
         [HttpPost(Name = nameof(CreateCompany))]
+        [RequestHeaderMatchesMediaType("Content-Type","application/json","application/vnd.company.companyforcreation+json")]
+        [Consumes("application/json", "application/vnd.company.companyforcreation+json")]
         public async Task<ActionResult<CompanyDto>> CreateCompany([FromBody] CompanyAddDto company)
+        {
+            // 使用了api controller就不需要这个判断了。
+            //if (company == null)
+            //{
+            //    return BadRequest();
+            //}
+
+
+            var entity = _mapper.Map<Company>(company);
+            _companyRepositroy.AddCompany(entity);
+            await _companyRepositroy.SaveAsync();
+
+            var returnDto = _mapper.Map<CompanyDto>(entity);
+
+
+            var links = CreateLinksForCompany(returnDto.Id, null);
+
+            var linkedDict = returnDto.shapeData(null) as IDictionary<string, object>;
+
+            linkedDict.Add("links", links);
+
+            return CreatedAtRoute(nameof(GetCompany), new { companyId = linkedDict["Id"] }, linkedDict);
+        }
+
+        [HttpPost(Name = nameof(CreateCompanyAddWithBankruptTime))]
+        [RequestHeaderMatchesMediaType("Content-Type", "application/json", "application/vnd.company.companyforcreationwihtbankrupttime+json")]
+        [Consumes("application/vnd.company.companyforcreationwihtbankrupttime+json")]
+        public async Task<ActionResult<CompanyDto>> CreateCompanyAddWithBankruptTime([FromBody] CompanyAddWithBankruptTimeDto company)
         {
             // 使用了api controller就不需要这个判断了。
             //if (company == null)
