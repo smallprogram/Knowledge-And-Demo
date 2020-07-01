@@ -19,6 +19,7 @@ namespace RESTfulApi.Api.Profiles
                 );
 
             CreateMap<CompanyAddDto, Company>();
+            CreateMap<Company, CompanyFullDto>();
         }
     }
 }
