@@ -132,8 +132,6 @@ namespace RESTfulApi.Api.Controllers
                 return NotFound();
             }
 
-            var companyDto = _mapper.Map<CompanyDto>(company);
-
 
             if (parsedMediaType.MediaType == "application/vnd.company.hateoas+json")
             {

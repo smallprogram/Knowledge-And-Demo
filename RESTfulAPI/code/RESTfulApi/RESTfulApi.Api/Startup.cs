@@ -1,23 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
 using RESTfulApi.Api.Data;
-using RESTfulApi.Api.Entities;
 using RESTfulApi.Api.Services;
+using System;
+using System.Linq;
 
 namespace RESTfulApi.Api
 {
@@ -70,13 +65,11 @@ namespace RESTfulApi.Api
 
             services.Configure<MvcOptions>(config => 
             {
-                var newtonSoftJsonOutputFormatter = config.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
+                var newtonSoftJsonOutputFormatter = config.OutputFormatters.OfType<NewtonsoftJsonOutputFormatter>()?.FirstOrDefault();
                 newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
 
-                //if (newtonSoftJsonOutputFormatter != null)
-                //{
-                //    newtonSoftJsonOutputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
-                //}
+                //var newtonSoftJsonInputFormatter = config.InputFormatters.OfType<NewtonsoftJsonInputFormatter>()?.FirstOrDefault();
+                //newtonSoftJsonInputFormatter?.SupportedMediaTypes.Add("application/vnd.company.hateoas+json");
             });
 
 
