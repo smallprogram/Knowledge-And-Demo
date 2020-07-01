@@ -28,12 +28,16 @@ namespace RESTfulApi.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddResponseCaching();
+
             services.AddControllers(options =>
             {
                 options.ReturnHttpNotAcceptable = true; //如果请求的类型与服务器支持的类型不一致，返回406状态码
                 // 老写法，过时的
                 //options.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());  //添加application/xml请求的媒体类型的支持
                 //options.OutputFormatters.Insert(0, new XmlDataContractSerializerOutputFormatter()); //将application/xml设置为首选媒体媒体类型
+
+                options.CacheProfiles.Add("120sCacheProfile", new CacheProfile { Duration = 120 });
             })
                 .AddNewtonsoftJson(options =>
                 {
@@ -112,6 +116,8 @@ namespace RESTfulApi.Api
             }
 
             app.UseHttpsRedirection();
+
+            app.UseResponseCaching();
 
             app.UseRouting();
 

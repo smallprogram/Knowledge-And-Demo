@@ -20,6 +20,7 @@ namespace RESTfulApi.Api.Controllers
 {
     [Route("api/companies/{companyId}/employees")]
     [ApiController]
+    [ResponseCache(CacheProfileName = "120sCacheProfile")]
     public class EmployeesController : ControllerBase
     {
         private readonly ICompanyRepositroy _companyRepositroy;
@@ -40,13 +41,14 @@ namespace RESTfulApi.Api.Controllers
             {
                 return NotFound();
             }
-            var employees = await _companyRepositroy.GetEmployeesAsync(companyId,parameters);
+            var employees = await _companyRepositroy.GetEmployeesAsync(companyId, parameters);
             var employeeDtos = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
 
             return Ok(employeeDtos);
         }
 
         [HttpGet("{employeeId}", Name = nameof(GetEmployeeForCompany))]
+        [ResponseCache(Duration = 60)]
         public async Task<ActionResult<EmployeeDto>> GetEmployeeForCompany(Guid companyId, Guid employeeId)
         {
 
