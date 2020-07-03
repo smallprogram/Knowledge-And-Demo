@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Marvin.Cache.Headers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,9 @@ namespace RESTfulApi.Api.Controllers
 {
     [Route("api/companies/{companyId}/employees")]
     [ApiController]
-    [ResponseCache(CacheProfileName = "120sCacheProfile")]
+    //[ResponseCache(CacheProfileName = "120sCacheProfile")]
+    [HttpCacheExpiration(CacheLocation = CacheLocation.Public)]
+    [HttpCacheValidation(MustRevalidate = true)]
     public class EmployeesController : ControllerBase
     {
         private readonly ICompanyRepositroy _companyRepositroy;
@@ -48,7 +51,9 @@ namespace RESTfulApi.Api.Controllers
         }
 
         [HttpGet("{employeeId}", Name = nameof(GetEmployeeForCompany))]
-        [ResponseCache(Duration = 60)]
+        //[ResponseCache(Duration = 60)]
+        [HttpCacheExpiration(CacheLocation = CacheLocation.Public, MaxAge = 1800)]
+        [HttpCacheValidation(MustRevalidate = false)]
         public async Task<ActionResult<EmployeeDto>> GetEmployeeForCompany(Guid companyId, Guid employeeId)
         {
 
