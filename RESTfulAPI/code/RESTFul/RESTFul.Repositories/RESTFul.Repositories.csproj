@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RESTFul.Data.Entities\RESTFul.Data.Entities.csproj" />
+    <ProjectReference Include="..\RESTFul.Data\RESTFul.Data.csproj" />
+    <ProjectReference Include="..\RESTFul.Models\RESTFul.Models.csproj" />
+    <ProjectReference Include="..\RESTFul.Services\RESTFul.Services.csproj" />
+  </ItemGroup>
+
+</Project>

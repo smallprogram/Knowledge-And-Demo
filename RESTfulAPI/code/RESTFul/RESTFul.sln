@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTFul.MappingProfiles", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTFul.Services", "RESTFul.Services\RESTFul.Services.csproj", "{7E4D99E2-B5E7-4802-A3F5-55B73C967ECE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RESTFul.Repositories", "RESTFul.Repositories\RESTFul.Repositories.csproj", "{2F4A87E3-CD1B-418A-A4C9-DFF79291EC15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{7E4D99E2-B5E7-4802-A3F5-55B73C967ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E4D99E2-B5E7-4802-A3F5-55B73C967ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E4D99E2-B5E7-4802-A3F5-55B73C967ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F4A87E3-CD1B-418A-A4C9-DFF79291EC15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F4A87E3-CD1B-418A-A4C9-DFF79291EC15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F4A87E3-CD1B-418A-A4C9-DFF79291EC15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F4A87E3-CD1B-418A-A4C9-DFF79291EC15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

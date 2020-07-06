@@ -23,3 +23,5 @@
 /RESTfulAPI/code/RESTFul/RESTFul.MappingProfiles/bin/Debug/netcoreapp3.1
 /RESTfulAPI/code/RESTFul/RESTFul.Models/bin/Debug/netcoreapp3.1
 /RESTfulAPI/code/RESTFul/RESTFul.Services/bin/Debug/netcoreapp3.1
+/RESTfulAPI/code/RESTFul/RESTFul.Repositories/obj
+/RESTfulAPI/code/RESTFul/RESTFul.Repositories/bin/Debug/netcoreapp3.1
