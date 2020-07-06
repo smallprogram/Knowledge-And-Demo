@@ -9,3 +9,11 @@
 /RESTfulAPI/code/RESTfulApi/.vs/RESTfulApi/DesignTimeBuild
 /RESTfulAPI/code/RESTFul/.vs/RESTFul/v16
 /RESTfulAPI/code/RESTFul/RESTFul.Api/obj
+/RESTfulAPI/code/RESTFul/RESTFul.Api.Helper/obj
+/RESTfulAPI/code/RESTFul/RESTFul.Data/bin/Debug/netcoreapp3.1
+/RESTfulAPI/code/RESTFul/RESTFul.Data/obj
+/RESTfulAPI/code/RESTFul/RESTFul.Data.Entities/obj
+/RESTfulAPI/code/RESTFul/RESTFul.Dto/obj
+/RESTfulAPI/code/RESTFul/RESTFul.MappingProfiles/obj
+/RESTfulAPI/code/RESTFul/RESTFul.Models/obj
+/RESTfulAPI/code/RESTFul/RESTFul.Services/obj
