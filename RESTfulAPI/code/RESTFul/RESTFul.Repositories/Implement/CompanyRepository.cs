@@ -4,13 +4,13 @@ using RESTFul.Data.Entities.AppDbEntities;
 using RESTFul.Models.Dto;
 using RESTFul.Models.DtoParameters;
 using RESTFul.Repositories.Helper;
+using RESTFul.Repositories.Interface;
 using RESTFul.Repositories.Models;
 using RESTFul.Services.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static RESTFul.Repositories.Interface.ICompanyRepository;
 
 namespace RESTFul.Repositories.Implement
 {
