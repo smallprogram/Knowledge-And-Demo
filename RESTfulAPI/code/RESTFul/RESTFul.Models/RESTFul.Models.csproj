@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="DtoParameters\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RESTFul.Data.Entities\RESTFul.Data.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
