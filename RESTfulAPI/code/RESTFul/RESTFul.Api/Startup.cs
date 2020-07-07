@@ -35,6 +35,7 @@ namespace RESTFul.Api
                 options.UseSqlite("Data Source=AppDB.db");
             });
 
+            // ×¢²áAutoMapper
             services.AddAutoMapper(Assembly.GetAssembly(typeof(AutoMapperProfilesAssembly))); //AppDomain.CurrentDomain.GetAssemblies()
         }
 

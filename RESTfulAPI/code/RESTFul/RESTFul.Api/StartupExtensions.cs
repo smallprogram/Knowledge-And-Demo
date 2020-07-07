@@ -44,10 +44,12 @@ namespace RESTFul.Api
             services.AddControllers(options =>
             {
                 options.ReturnHttpNotAcceptable = true; //如果请求的类型与服务器支持的类型不一致，返回406状态码
-            }).AddNewtonsoftJson(options =>
+            })
+                .AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver(); //使用CamelCase驼峰序列化JSON
-            }).AddXmlDataContractSerializerFormatters() //添加输入输出xml媒体类型支持
+            })
+            .AddXmlDataContractSerializerFormatters() //添加输入输出xml媒体类型支持
             .ConfigureApiBehaviorOptions(setupAction =>
             {
                 // 添加自定义的错误类型
