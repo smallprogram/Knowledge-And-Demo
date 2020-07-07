@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -9,10 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RESTFul.Data.DatabaseContext;
 using RESTFul.MappingProfiles.Helper;
-using RESTFul.Repositories.Implement;
-using RESTFul.Repositories.Interface;
-using RESTFul.Services.Implement;
-using RESTFul.Services.Interface;
 
 namespace RESTFul.Api
 {
@@ -32,10 +27,8 @@ namespace RESTFul.Api
 
             services._ControllersSetting();
 
-            services.AddScoped<ICompanyRepositroy, CompanyRepository>();
+            services._DI_Setting();
 
-            services.AddTransient<IPropertyMappingService, PropertyMappingService>();
-            services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
             services.AddDbContext<AppDbContext>(options =>
             {
