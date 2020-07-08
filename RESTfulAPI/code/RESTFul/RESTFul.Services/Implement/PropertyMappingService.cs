@@ -9,6 +9,9 @@ using System.Text;
 
 namespace RESTFul.Services.Implement
 {
+    /// <summary>
+    /// 属性映射服务，主要用于数据排序时DTO与Entity实体的属性对应关系。
+    /// </summary>
     public class PropertyMappingService : IPropertyMappingService
     {
         private IList<IPropertyMapping> _propertyMappings = new List<IPropertyMapping>();
@@ -18,7 +21,12 @@ namespace RESTFul.Services.Implement
             this._propertyMappings.Add(new PropertyMapping<EmployeeDto, Employee>(this._employeePropertyMapping));
             this._propertyMappings.Add(new PropertyMapping<CompanyDto, Company>(this._companyPropertyMapping));
         }
-
+        /// <summary>
+        /// 获取DTO与Entity的字段对应关系的Dictionary
+        /// </summary>
+        /// <typeparam name="TSource">Dto类型</typeparam>
+        /// <typeparam name="TDestination">Entity类型</typeparam>
+        /// <returns></returns>
         public Dictionary<string, PropertyMappingValue> GetPropertyMapping<TSource, TDestination>()
         {
             var matchingMapping = _propertyMappings.OfType<PropertyMapping<TSource, TDestination>>();
@@ -31,6 +39,13 @@ namespace RESTFul.Services.Implement
             throw new Exception($"无法找到唯一映射关系:{typeof(TSource)},{typeof(TDestination)}");
         }
 
+        /// <summary>
+        /// 验证DTO与Entity对应关系中是否包含传入多字段字符串
+        /// </summary>
+        /// <typeparam name="TSourct">DTO类型</typeparam>
+        /// <typeparam name="TDestination">Entity类型</typeparam>
+        /// <param name="fields">以逗号分割的字段名字符串</param>
+        /// <returns></returns>
         public bool ValidMappingExistsFor<TSourct, TDestination>(string fields)
         {
             var propertyMapping = GetPropertyMapping<TSourct, TDestination>();
@@ -55,6 +70,7 @@ namespace RESTFul.Services.Implement
             return true;
         }
 
+        #region Dto与Entity属性对应关系
         private Dictionary<string, PropertyMappingValue> _employeePropertyMapping
             = new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
             {
@@ -75,5 +91,6 @@ namespace RESTFul.Services.Implement
                         {"Product",new PropertyMappingValue(new List<string>{ "Product"})},
                         {"Introduction",new PropertyMappingValue(new List<string>{ "Introduction"})}
             };
+        #endregion
     }
 }
