@@ -1,1 +1,1 @@
-need text
+<p align=center><img src="./image/logo.png"></p>
