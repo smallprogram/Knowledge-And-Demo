@@ -29,3 +29,6 @@
 /IdentityServer/code/Demo_Idp4/Demo_Idp4/bin/Debug/netcoreapp3.1
 /IdentityServer/code/Demo_Idp4/.vs/Demo_Idp4/v16
 /IdentityServer/code/Demo_Idp4/Demo_Idp4/obj
+/IdentityServer/code/Demo_Api/.vs/Demo_Api
+/IdentityServer/code/Demo_Api/Demo_Api/obj
+/IdentityServer/code/Demo_Api/Demo_Api/bin/Debug/netcoreapp3.1
