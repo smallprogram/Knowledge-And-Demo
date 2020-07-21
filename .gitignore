@@ -32,3 +32,6 @@
 /IdentityServer/code/Demo_Api/.vs/Demo_Api
 /IdentityServer/code/Demo_Api/Demo_Api/obj
 /IdentityServer/code/Demo_Api/Demo_Api/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Demo_Client_ClientCredentials/.vs/Demo_Client_ClientCredentials
+/IdentityServer/code/Demo_Client_ClientCredentials/Demo_Client_ClientCredentials/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Demo_Client_ClientCredentials/Demo_Client_ClientCredentials/obj
