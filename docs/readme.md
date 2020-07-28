@@ -1,3 +1,6 @@
+
+[![SmallProgram's github stats](https://github-readme-stats.vercel.app/api?username=smallprogram)](https://github.com/anuraghazra/github-readme-stats)
+
 # 简介
 这是一个知识库，包含一些自己编写的知识、代码示例和收集整理的配套资料
 
