@@ -40,3 +40,5 @@
 /IdentityServer/code/idp4Bymyself/.vs/idp4Bymyself/v16
 /IdentityServer/code/Authentication/Basic/bin/Debug/netcoreapp3.1
 /IdentityServer/code/Authentication/.vs/Authentication/DesignTimeBuild
+/IdentityServer/code/Authentication/IdentityExample/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/IdentityExample/obj
