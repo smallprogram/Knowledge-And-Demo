@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NETCore.MailKit.Core;
+using Org.BouncyCastle.Ocsp;
 
 namespace IdentityExample.Controllers
 {
@@ -14,11 +16,13 @@ namespace IdentityExample.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IEmailService _emailService;
 
-        public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _emailService = emailService;
         }
 
         public IActionResult Index()
@@ -45,6 +49,7 @@ namespace IdentityExample.Controllers
 
             if (user != null)
             {
+                // sign in
                 var signInResult = await _signInManager.PasswordSignInAsync(user, password, false, false);
                 if (signInResult.Succeeded)
                 {
@@ -53,6 +58,7 @@ namespace IdentityExample.Controllers
             }
             return RedirectToAction("Index");
         }
+
         public IActionResult Register()
         {
             return View();
@@ -72,10 +78,30 @@ namespace IdentityExample.Controllers
             if (result.Succeeded)
             {
                 // sign user here 登录账户
+                // 生成Email Token
+
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var link = Url.Action(nameof(VerifyEmial), "Home", new { userId = user.Id, code },Request.Scheme,Request.Host.ToString());
+                await _emailService.SendAsync("181171302@qq.com", "email verify", link);
+                return RedirectToAction("EmailVerification");
             }
 
             return RedirectToAction("Index");
         }
+        public  IActionResult VerifyEmial(string userId, string code)
+        {
+            // 验证EmailToken
+
+
+            return View();
+        }
+
+        public IActionResult EmailVerification()
+        {
+            return View();
+        }
+
+
 
         public async Task<IActionResult> LogOut()
         {
