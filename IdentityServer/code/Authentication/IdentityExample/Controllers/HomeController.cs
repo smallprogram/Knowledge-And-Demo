@@ -36,6 +36,7 @@ namespace IdentityExample.Controllers
         {
             return View();
         }
+        [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
             // 登录业务
@@ -57,6 +58,7 @@ namespace IdentityExample.Controllers
             return View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> Register(string username, string password)
         {
             // 注册业务
@@ -71,6 +73,14 @@ namespace IdentityExample.Controllers
             {
                 // sign user here 登录账户
             }
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            // 注销业务
+            await _signInManager.SignOutAsync();
 
             return RedirectToAction("Index");
         }
