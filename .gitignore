@@ -35,3 +35,8 @@
 /IdentityServer/code/Demo_Client_ClientCredentials/.vs/Demo_Client_ClientCredentials
 /IdentityServer/code/Demo_Client_ClientCredentials/Demo_Client_ClientCredentials/bin/Debug/netcoreapp3.1
 /IdentityServer/code/Demo_Client_ClientCredentials/Demo_Client_ClientCredentials/obj
+/IdentityServer/code/Authentication/.vs/Authentication/v16
+/IdentityServer/code/Authentication/Basic/obj
+/IdentityServer/code/idp4Bymyself/.vs/idp4Bymyself/v16
+/IdentityServer/code/Authentication/Basic/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/.vs/Authentication/DesignTimeBuild
