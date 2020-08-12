@@ -88,12 +88,21 @@ namespace IdentityExample.Controllers
 
             return RedirectToAction("Index");
         }
-        public  IActionResult VerifyEmial(string userId, string code)
+        public async Task<IActionResult> VerifyEmial(string userId, string code)
         {
             // 验证EmailToken
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, code);
 
-
-            return View();
+            if (result.Succeeded)
+            {
+                return View();
+            }
+            return BadRequest();
         }
 
         public IActionResult EmailVerification()
