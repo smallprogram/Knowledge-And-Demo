@@ -13,6 +13,8 @@ namespace Basic.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.userClaims = HttpContext.User.Claims.ToList();
+
             return View();
         }
 
@@ -22,7 +24,17 @@ namespace Basic.Controllers
             return View();
         }
 
+        [Authorize(Policy = "Claim.custom")]
+        public IActionResult SecretPolicy()
+        {
+            return View();
+        }
 
+        [Authorize(Roles = "Admin")]
+        public IActionResult SecretRole()
+        {
+            return View();
+        }
 
         public IActionResult Authenticate()
         {
@@ -31,12 +43,14 @@ namespace Basic.Controllers
             {
                 new Claim(ClaimTypes.Name,"zhusir"),
                 new Claim(ClaimTypes.Email,"zhusir@zz.com"),
+                new Claim(ClaimTypes.DateOfBirth,"2000-05-08"),
                 new Claim("zhusir said","you are good"),
             };
             // 创建用户Claims
             var zhusirLicenseClaims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Email,"zhusir@zz.com"),
+                new Claim(ClaimTypes.Role,"Admin"),
                 new Claim("zhusir drivingLicense","A+"),
                 new Claim(ClaimTypes.Name,"zhusirDirveLicense"),
 
@@ -53,6 +67,15 @@ namespace Basic.Controllers
 
             return RedirectToAction("Index");
         }
+        public IActionResult ResetCookie()
+        {
+            HttpContext.SignOutAsync();
+            return RedirectToAction("Index");
+        }
 
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
