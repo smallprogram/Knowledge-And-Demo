@@ -11,6 +11,12 @@ namespace Basic.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IAuthorizationService _authorizationService;
+
+        public HomeController(IAuthorizationService authorizationService)
+        {
+            _authorizationService = authorizationService;
+        }
         public IActionResult Index()
         {
             ViewBag.userClaims = HttpContext.User.Claims.ToList();
@@ -36,6 +42,32 @@ namespace Basic.Controllers
             return View();
         }
 
+        public async Task<IActionResult> DoStuff()
+        {
+            var builder = new AuthorizationPolicyBuilder("policy1");
+            var customPolicy = builder.RequireClaim("claimname").Build();
+
+            var authResult = await _authorizationService.AuthorizeAsync(HttpContext.User, customPolicy);
+            if (authResult.Succeeded)
+            {
+
+            }
+            return View("Index");
+        }
+        public async Task<IActionResult> DoStuff2([FromServices] IAuthorizationService authorizationService)
+        {
+            var builder = new AuthorizationPolicyBuilder("policy1");
+            var customPolicy = builder.RequireClaim("claimname").Build();
+
+            var authResult = await authorizationService.AuthorizeAsync(HttpContext.User, customPolicy);
+            if (authResult.Succeeded)
+            {
+                return View("Index");
+            }
+            return View("Index");
+        }
+
+        [AllowAnonymous]
         public IActionResult Authenticate()
         {
             // 创建用户Claims
@@ -77,5 +109,7 @@ namespace Basic.Controllers
         {
             return View();
         }
+
+
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -17,6 +18,20 @@ namespace Basic
     {
         public void ConfigureServices(IServiceCollection services)
         {
+
+            
+            services.AddControllersWithViews(config =>
+            {
+                // 全局的授权策略
+                var defaultAuthBuilder = new AuthorizationPolicyBuilder();
+                var defaultAuthPolicy = defaultAuthBuilder
+                .RequireAuthenticatedUser()
+                .Build();
+
+                config.Filters.Add(new AuthorizeFilter(defaultAuthPolicy));
+            });
+
+
             services.AddAuthentication("CookieAuth")
                 .AddCookie("CookieAuth", config => 
                 {
@@ -55,7 +70,8 @@ namespace Basic
 
             services.AddScoped<IAuthorizationHandler, CostomRequeireClaimHandler>();
 
-            services.AddControllersWithViews();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

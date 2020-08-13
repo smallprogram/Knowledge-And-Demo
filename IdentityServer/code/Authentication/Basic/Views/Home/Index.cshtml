@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Index";
 }
+@inject Microsoft.AspNetCore.Authorization.IAuthorizationService authorizationService
 
 <style>
     table, th, td {
@@ -9,9 +10,27 @@
         border-collapse: collapse;
     }
 </style>
+@*精简验证*@
+@if (User.Identity.IsAuthenticated)
+{
+    <p> User is Authenticated</p>
+}
+else
+{
+    <p> User not Authenticated</p>
+
+}
 
 <h1>Index Page</h1>
-
+@*复杂牛刀*@
+@if ((await authorizationService.AuthorizeAsync(User, null, "Claim.custom")).Succeeded)
+{
+    <p>User pass Claim.custom policy</p>
+}
+else
+{
+    <p>User not pass Claim.custom policy </p>
+}
 <a href="/Home/Secret">Secret page</a>
 <br />
 <a href="/Home/SecretPolicy">Secret Policy page</a>
@@ -25,11 +44,13 @@
         <th>ClaimType</th>
         <th>ClaimValue</th>
     </tr>
-    @foreach (System.Security.Claims.Claim claim in ViewBag.userClaims)
+    @foreach (System.Security.Claims.Claim claim in User.Claims)
     {
         <tr>
             <td>@claim.Type</td>
             <td>@claim.Value</td>
         </tr>
     }
+
+
 </table>
