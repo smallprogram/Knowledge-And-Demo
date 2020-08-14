@@ -18,10 +18,9 @@ namespace Basic.Controllers
         {
             _authorizationService = authorizationService;
         }
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            ViewBag.userClaims = HttpContext.User.Claims.ToList();
-
             return View();
         }
 
@@ -77,10 +76,20 @@ namespace Basic.Controllers
             }
             return View("Index");
         }
-
         [AllowAnonymous]
+        [HttpGet]
         public IActionResult Authenticate()
         {
+            return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Authenticate([FromForm] string key)
+        {
+            if (key != "test")
+            {
+                return RedirectToAction(nameof(AccessDenied));
+            }
             // 创建用户Claims
             var zhusirClaims = new List<Claim>()
             {
@@ -110,6 +119,7 @@ namespace Basic.Controllers
             HttpContext.SignInAsync(userPrincipal);
 
             return RedirectToAction("Index");
+            //return Redirect(ReturnUrl);
         }
         public IActionResult ResetCookie()
         {

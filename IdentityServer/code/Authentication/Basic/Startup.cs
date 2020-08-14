@@ -23,7 +23,7 @@ namespace Basic
         public void ConfigureServices(IServiceCollection services)
         {
 
-            
+
             services.AddControllersWithViews(config =>
             {
                 // 全局的授权策略
@@ -37,7 +37,7 @@ namespace Basic
 
 
             services.AddAuthentication("CookieAuth")
-                .AddCookie("CookieAuth", config => 
+                .AddCookie("CookieAuth", config =>
                 {
                     config.Cookie.Name = "zhusir.Cookie";
                     config.LoginPath = "/Home/Authenticate";
@@ -85,7 +85,15 @@ namespace Basic
             // 自定义的运行时填充Claim
             services.AddScoped<IClaimsTransformation, ClaimsTransformation>();
 
-            
+            services.AddRazorPages()
+                .AddRazorPagesOptions(config =>
+                {
+                    // root dir is /Pages/
+                    config.Conventions.AllowAnonymousToPage("/Razor/Index");
+                    config.Conventions.AuthorizePage("/Razor/Secured");
+                    config.Conventions.AuthorizePage("/Razor/Policy", "Claim.custom");
+                    config.Conventions.AuthorizeFolder("/RzoreSecured");
+                });
 
         }
 
@@ -97,7 +105,7 @@ namespace Basic
                 app.UseDeveloperExceptionPage();
             }
 
-            
+
             app.UseRouting();
 
             // 你是谁，身份认证
@@ -108,11 +116,12 @@ namespace Basic
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
                 //endpoints.MapGet("/", async context =>
                 //{
                 //    await context.Response.WriteAsync("Hello World!");
                 //});
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
             });
         }
     }
