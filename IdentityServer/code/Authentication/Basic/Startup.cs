@@ -4,6 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Basic.AuthorizationRequirements;
+using Basic.Controllers;
+using Basic.CustomPolicyProvider;
+using Basic.Transformer;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -68,9 +72,20 @@ namespace Basic
                 });
             });
 
+            services.AddSingleton<IAuthorizationPolicyProvider, CustomAuthorizaitonPolicyProvider>();
+            services.AddScoped<IAuthorizationHandler, SecurityLevelHandler>();
+
+
+            // 自定义的授权处理器
             services.AddScoped<IAuthorizationHandler, CostomRequeireClaimHandler>();
 
+            // 自定义的针对资源进行授权
+            services.AddScoped<IAuthorizationHandler, CookieJarAuthorizationHandler>();
 
+            // 自定义的运行时填充Claim
+            services.AddScoped<IClaimsTransformation, ClaimsTransformation>();
+
+            
 
         }
 

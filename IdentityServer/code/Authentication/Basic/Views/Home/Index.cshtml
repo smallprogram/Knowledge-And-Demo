@@ -35,21 +35,32 @@ else
 <br />
 <a href="/Home/SecretPolicy">Secret Policy page</a>
 <br />
+<a href="/Home/SecretLevel">Secret Policy Level 5 page</a>
+<br />
+<a href="/Home/SecretHighLevel">Secret Policy Level 10 page</a>
+<br />
 <a href="/Home/SecretRole">Secret Role page</a>
 <br />
 <a href="/Home/ResetCookie">ClearCookie</a>
 <br />
 <table>
     <tr>
+        <th>IdentityName</th>
         <th>ClaimType</th>
         <th>ClaimValue</th>
     </tr>
-    @foreach (System.Security.Claims.Claim claim in User.Claims)
+    @foreach (var identity in User.Identities)
     {
-        <tr>
-            <td>@claim.Type</td>
-            <td>@claim.Value</td>
-        </tr>
+
+        @foreach (System.Security.Claims.Claim claim in identity.Claims)
+        {
+            <tr>
+                <td>@identity.Name</td>
+                <td>@claim.Type</td>
+                <td>@claim.Value</td>
+            </tr>
+        }
+
     }
 
 

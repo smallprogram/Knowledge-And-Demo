@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Basic.CustomPolicyProvider;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,16 @@ namespace Basic.Controllers
         {
             return View();
         }
+        [SecurityLevel(5)]
+        public IActionResult SecretLevel()
+        {
+            return View();
+        }
+        [SecurityLevel(10)]
+        public IActionResult SecretHighLevel()
+        {
+            return View();
+        }
 
         public async Task<IActionResult> DoStuff()
         {
@@ -76,6 +87,7 @@ namespace Basic.Controllers
                 new Claim(ClaimTypes.Name,"zhusir"),
                 new Claim(ClaimTypes.Email,"zhusir@zz.com"),
                 new Claim(ClaimTypes.DateOfBirth,"2000-05-08"),
+                new Claim(DynamicPilicies.SecurityLevel,"7"),
                 new Claim("zhusir said","you are good"),
             };
             // 创建用户Claims
