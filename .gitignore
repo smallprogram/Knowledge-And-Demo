@@ -42,5 +42,3 @@
 /IdentityServer/code/Authentication/.vs/Authentication/DesignTimeBuild
 /IdentityServer/code/Authentication/IdentityExample/bin/Debug/netcoreapp3.1
 /IdentityServer/code/Authentication/IdentityExample/obj
-/IdentityServer/code/Authentication/Server/bin/Debug/netcoreapp3.1
-/IdentityServer/code/Authentication/Server/obj
