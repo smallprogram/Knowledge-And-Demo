@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+@*精简验证*@
+@if (User.Identity.IsAuthenticated)
+{
+    <p> User is Authenticated</p>
+}
+else
+{
+    <p> User not Authenticated</p>
+
+}
+
+<h1>Index Page</h1>
+<a href="/Home/Authenticate">Authentication</a>
+<br />
+<a href="/Home/Secret">Secret page</a>
+<br />
+<form action="/Home/Decode" method="get">
+    <input type="text" name="jwt" />
+    <button type="submit">解密jwt的PAYLOAD</button>
+</form>
+<a href="/Home/ResetCookie" style="color:red;font-size:20px">ClearCookie</a>
+<br />
+<table>
+    <tr>
+        <th>IdentityName</th>
+        <th>ClaimType</th>
+        <th>ClaimValue</th>
+    </tr>
+    @foreach (var identity in User.Identities)
+    {
+
+        @foreach (System.Security.Claims.Claim claim in identity.Claims)
+        {
+            <tr>
+                <td>@identity.Name</td>
+                <td>@claim.Type</td>
+                <td>@claim.Value</td>
+            </tr>
+        }
+
+    }
+
+
+</table>
