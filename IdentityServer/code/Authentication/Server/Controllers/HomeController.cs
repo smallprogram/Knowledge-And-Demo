@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Basic.Controllers
+namespace Server.Controllers
 {
     public class HomeController : Controller
     {
@@ -81,7 +81,7 @@ namespace Basic.Controllers
         }
         private static byte[] ConvertFromBase64String(string input)
         {
-            if (String.IsNullOrWhiteSpace(input)) return null;
+            if (string.IsNullOrWhiteSpace(input)) return null;
             try
             {
                 string working = input.Replace('-', '+').Replace('_', '/'); ;
