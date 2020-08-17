@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -86,6 +87,18 @@ namespace Server.Controllers
             // 如果使用return和public async Task<IActionResult> Token( 就会报错。不知到为啥。
 
             //return Redirect(redirect_uri);
+        }
+
+        [Authorize]
+        public IActionResult TokenValidate()
+        {
+            if (HttpContext.Request.Query.TryGetValue("access_token", out var accessToken))
+            {
+                // 做一些验证Token的操作
+                return Ok();
+            }
+            return BadRequest();
+            
         }
     }
 }

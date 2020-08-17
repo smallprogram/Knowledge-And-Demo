@@ -60,7 +60,7 @@ namespace Client
 
             services.AddControllersWithViews();
 
-
+            services.AddHttpClient();
 
         }
 
