@@ -19,7 +19,7 @@ namespace ApiTwo.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-        [Route("/")]
+        [Route("/home")]
         public async Task<IActionResult> Index()
         {
             //请求 AccessToken
@@ -35,7 +35,7 @@ namespace ApiTwo.Controllers
 
                     ClientId = "client_id",
                     ClientSecret = "client_secret",
-                    Scope = "ApiOne",
+                    Scope = "ApiOne.read",
                 });
 
             //请求 Secret Data

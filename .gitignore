@@ -55,3 +55,5 @@
 /IdentityServer/code/Authentication/ApiTwo/obj
 /IdentityServer/code/Authentication/IdentityServer/bin/Debug/netcoreapp3.1
 /IdentityServer/code/Authentication/IdentityServer/obj
+/IdentityServer/code/Authentication/MvcClient/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/MvcClient/obj

@@ -20,8 +20,9 @@ namespace ApiOne
                 {
                     //config.MetadataAddress 
                     config.Authority = "https://localhost:7001";
-                    
-                    config.TokenValidationParameters.ValidateAudience = false; //不验证aud
+                    config.Audience = "https://localhost:7002/api/secret";
+
+                    //config.TokenValidationParameters.ValidateAudience = false; //不验证aud
 
                     // 验证aud暂时不可用，ValidTypes不可用 https://github.com/IdentityServer/IdentityServer4/issues/4515
                     //config.Audience = "https://localhost:7002";

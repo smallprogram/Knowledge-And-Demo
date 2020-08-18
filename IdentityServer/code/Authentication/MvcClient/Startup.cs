@@ -8,26 +8,32 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace IdentityServer
+namespace MvcClient
 {
     public class Startup
     {
- 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = "Cookie";
+                config.DefaultChallengeScheme = "oidc";
+                
+            })
+                .AddCookie("Cookie")
+                .AddOpenIdConnect("oidc", config =>
+                {
+                    config.Authority = "https://localhost:7001";
+                    config.ClientId = "client_id_mvc";
+                    config.ClientSecret = "client_secret_mvc";
+                    config.SaveTokens = true;
 
-            // https://localhost:7001/.well-known/openid-configuration
-
-            services.AddIdentityServer()
-                .AddInMemoryApiResources(Configuration.GetApis())
-                .AddInMemoryApiScopes(Configuration.GetApiScopes())
-                .AddInMemoryClients(Configuration.GetClients())
-                .AddInMemoryIdentityResources(Configuration.GetIdentityResources())
-                .AddDeveloperSigningCredential(); //临时的RSA开发密钥，用于JWT加密签名之用
+                    config.ResponseType = "code";
+                    
+                });
 
             services.AddControllersWithViews();
         }
-
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -38,7 +44,8 @@ namespace IdentityServer
 
             app.UseRouting();
 
-            app.UseIdentityServer();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
