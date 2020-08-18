@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Api.OAuthJwtRequirement;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,7 +19,8 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication();
+            services.AddAuthentication()
+                .AddScheme<AuthenticationSchemeOptions, CustomeAuthenticationHandler>("DefaultAuth", null);
 
             services.AddAuthorization(config =>
             {

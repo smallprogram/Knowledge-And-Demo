@@ -46,7 +46,8 @@ namespace Server.Controllers
             string grant_type,  // OAuth的Flow类型，这里是Authorization Code Flow
             string code,
             string client_id,
-            string redirect_uri
+            string redirect_uri,
+            string refresh_token
             )
         {
             // 验证code 
@@ -67,7 +68,7 @@ namespace Server.Controllers
                 Constants.Audiance,
                 claims,
                 notBefore: DateTime.Now,
-                expires: DateTime.Now.AddHours(1),
+                expires:grant_type == "refresh_token" ? DateTime.Now.AddMinutes(5): DateTime.Now.AddMilliseconds(1),
                 signingCredentials
                 );
 
@@ -77,7 +78,8 @@ namespace Server.Controllers
             {
                 access_token,
                 token_type = "Bearer",
-                raw_claim = "authTuorial"
+                raw_claim = "authTuorial",
+                refresh_token = "RefreshTokenSample"
             };
 
             var responseJson = JsonConvert.SerializeObject(responseObject);

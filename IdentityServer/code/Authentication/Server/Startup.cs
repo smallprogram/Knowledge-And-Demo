@@ -41,6 +41,7 @@ namespace Server
 
                     config.TokenValidationParameters = new TokenValidationParameters()
                     {
+                        ClockSkew = TimeSpan.Zero,  //获取或设置时钟倾斜，当前是0，代表超时0秒token失效
                         IssuerSigningKey = key,
                         ValidIssuer = Constants.Issuer,
                         ValidAudience = Constants.Audiance,
