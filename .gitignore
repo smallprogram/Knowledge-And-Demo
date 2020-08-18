@@ -49,3 +49,9 @@
 /IdentityServer/code/Authentication/Client/obj
 /IdentityServer/code/Authentication/Api/bin/Debug/netcoreapp3.1
 /IdentityServer/code/Authentication/Api/obj
+/IdentityServer/code/Authentication/ApiOne/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/ApiOne/obj
+/IdentityServer/code/Authentication/ApiTwo/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/ApiTwo/obj
+/IdentityServer/code/Authentication/IdentityServer/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/IdentityServer/obj
