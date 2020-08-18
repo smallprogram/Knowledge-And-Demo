@@ -1,0 +1,33 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IdentityServer.Controllers.RegisterViewModel
+<form asp-controller="Auth" asp-action="Register" method="post">
+    <input type="hidden" asp-for="ReturnUrl" />
+    <div>
+        <label>UserName</label>
+        <input asp-for="Username" />
+        <span asp-validation-for="Username"></span>
+    </div>
+    <div>
+        <label>Password</label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+
+    </div>
+    <div>
+        <label>ConfirmPassword</label>
+        <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword"></span>
+
+    </div>
+    <div>
+        <button type="submit">Sign Up</button>
+    </div>
+</form>
+
+<div>
+    <a asp-controller="Auth" asp-action="Login" asp-route-returnurl="@Model.ReturnUrl">to Login</a>
+</div>

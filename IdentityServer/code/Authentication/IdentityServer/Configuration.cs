@@ -78,7 +78,7 @@ namespace IdentityServer
                         "ApiOne.read",
                         "ApiTwo.read"
                     },
-
+                    RequireConsent = false, //是否需要用户确认授权
                 }
             };
         }
