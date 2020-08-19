@@ -20,7 +20,7 @@ namespace ApiOne
                 {
                     //config.MetadataAddress 
                     config.Authority = "https://localhost:7001";
-                    config.Audience = "https://localhost:7002/api/secret";
+                    config.Audience = "ApiOne";
 
                     //config.TokenValidationParameters.ValidateAudience = false; //≤ª—È÷§aud
 

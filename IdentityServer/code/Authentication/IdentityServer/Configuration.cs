@@ -16,6 +16,14 @@ namespace IdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource
+                {
+                    Name ="role.scope",
+                    UserClaims =
+                    {
+                        "role"
+                    }
+                }
             };
         }
         public static IEnumerable<ApiScope> GetApiScopes()
@@ -33,7 +41,7 @@ namespace IdentityServer
             return new List<ApiResource>
             {
                 // Aud
-                new ApiResource(name:"https://localhost:7002/api/secret")
+                new ApiResource(name:"ApiOne",displayName:"ApiOneResource",userClaims:new string[]{ "role.apione" })
                 {
                     Scopes ={ "ApiOne.read" }
                 },
@@ -76,9 +84,13 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "ApiOne.read",
-                        "ApiTwo.read"
+                        "ApiTwo.read",
+                        "role.scope",
                     },
                     RequireConsent = false, //是否需要用户确认授权
+
+
+                    //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
                 }
             };
         }

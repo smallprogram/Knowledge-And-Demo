@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,9 +29,24 @@ namespace MvcClient
                     config.ClientSecret = "client_secret_mvc";
                     config.SaveTokens = true;
 
-                    config.ResponseType = "code";
-                    
+                    config.ResponseType = "code"; // 请求oidc模式
+
+                    //对Claim进行操作，删除，映射到新的Claim上
+                    config.ClaimActions.DeleteClaim("amr");
+                    config.ClaimActions.MapUniqueJsonKey("RawCoding.role", "role");
+
+                    // 使用idp服务器的userinfo端点请求用户信息
+                    config.GetClaimsFromUserInfoEndpoint = true;
+
+                    // 对请求的scope进行操作。去掉无用的，只添加有用的scope
+                    config.Scope.Clear();
+                    config.Scope.Add("openid");
+                    config.Scope.Add("role.scope");
+                    config.Scope.Add("ApiOne.read");
+                    config.Scope.Add("ApiTwo.read");
                 });
+
+            services.AddHttpClient();
 
             services.AddControllersWithViews();
         }
