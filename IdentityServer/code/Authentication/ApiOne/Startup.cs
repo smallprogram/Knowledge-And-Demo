@@ -29,7 +29,6 @@ namespace ApiOne
                     //config.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
 
 
-
                 });
 
             services.AddControllers();

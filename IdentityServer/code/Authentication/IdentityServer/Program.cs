@@ -26,6 +26,7 @@ namespace IdentityServer
                 userManager.CreateAsync(user, "zhusir").GetAwaiter();
                 userManager.AddClaimAsync(user, new Claim("role", "admin")).GetAwaiter();
                 userManager.AddClaimAsync(user, new Claim("role.apione", "apioneadmin")).GetAwaiter();
+                userManager.AddClaimAsync(user, new Claim("scope.claim", "apionecliam")).GetAwaiter();
             }
 
             host.Run();

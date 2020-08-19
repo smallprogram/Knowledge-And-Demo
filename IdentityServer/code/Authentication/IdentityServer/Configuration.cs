@@ -10,27 +10,32 @@ namespace IdentityServer
 {
     public static class Configuration
     {
+        #region IdentityToken的组成部分
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                new IdentityResource
-                {
-                    Name ="role.scope",
-                    UserClaims =
-                    {
-                        "role"
-                    }
-                }
+                //new IdentityResource
+                //{
+                //    Name ="role.scope",
+                //    UserClaims =
+                //    {
+                //        "role"
+                //    }
+                //}
             };
         }
+        #endregion
+
+        #region AccessToken的组成部分
         public static IEnumerable<ApiScope> GetApiScopes()
         {
+            // Scope
             return new List<ApiScope>
             {
-                new ApiScope(name: "ApiOne.read",   displayName: "Read your data."),
+                new ApiScope(name: "ApiOne.read",   displayName: "Read your data.",userClaims:new string[]{"scope.claim" }),
                 new ApiScope(name: "ApiOne.write",   displayName: "write your data."),
                 new ApiScope(name: "ApiOne.all",   displayName: "management apione"),
                 new ApiScope(name: "ApiTwo.read",   displayName: "Read your data."),
@@ -38,6 +43,7 @@ namespace IdentityServer
         }
         public static IEnumerable<ApiResource> GetApis()
         {
+            // Aud
             return new List<ApiResource>
             {
                 // Aud
@@ -51,6 +57,7 @@ namespace IdentityServer
                 },
             };
         }
+        #endregion
 
         public static IEnumerable<Client> GetClients()
         {
@@ -85,7 +92,7 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.Profile,
                         "ApiOne.read",
                         "ApiTwo.read",
-                        "role.scope",
+                        //"role.scope",
                     },
                     RequireConsent = false, //是否需要用户确认授权
 
