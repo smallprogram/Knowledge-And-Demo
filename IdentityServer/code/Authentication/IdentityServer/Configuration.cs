@@ -99,11 +99,27 @@ namespace IdentityServer
                     RequireConsent = false, //是否需要用户确认授权
 
                     AllowOfflineAccess = true, // 启用refresh_token
-
                     //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
+                },
+                new Client
+                {
+                    ClientId = "client_id_js",
+                    //ClientSecrets = {new Secret("client_secret_mvc".ToSha256())},
 
+                    AllowedGrantTypes = GrantTypes.Implicit,
 
-                }
+                    RedirectUris ={"https://localhost:7005/Home/SingIn" },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        "ApiOne.read",
+                    },
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false, //是否需要用户确认授权
+                    //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
+                },
+
             };
         }
     }

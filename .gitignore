@@ -57,3 +57,5 @@
 /IdentityServer/code/Authentication/IdentityServer/obj
 /IdentityServer/code/Authentication/MvcClient/bin/Debug/netcoreapp3.1
 /IdentityServer/code/Authentication/MvcClient/obj
+/IdentityServer/code/Authentication/JavascriptClient/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/JavascriptClient/obj
