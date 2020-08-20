@@ -93,11 +93,16 @@ namespace IdentityServer
                         "ApiOne.read",
                         "ApiTwo.read",
                         //"role.scope",
+
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
                     },
                     RequireConsent = false, //是否需要用户确认授权
 
+                    AllowOfflineAccess = true, // 启用refresh_token
 
                     //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
+
+
                 }
             };
         }

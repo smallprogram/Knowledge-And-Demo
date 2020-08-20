@@ -42,9 +42,11 @@ namespace MvcClient
                     config.Scope.Clear();
                     config.Scope.Add("openid");
                     config.Scope.Add("profile");
+                    config.Scope.Add("offline_access"); // refresh_token
                     //config.Scope.Add("role.scope");
                     config.Scope.Add("ApiOne.read");
                     config.Scope.Add("ApiTwo.read");
+                    
                 });
 
             services.AddHttpClient();
