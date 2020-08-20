@@ -6,6 +6,17 @@
 <h1>Javascript Client Signin</h1>
 
 
-<button onclick="extractTokens()">Extract Tokens</button>
+@*<button onclick="extractTokens()">Extract Tokens</button>
 
-<script src="~/sign-in-callback.js"></script>
+    <script src="~/sign-in-callback.js"></script>*@
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.10.1/oidc-client.min.js"></script>
+<script>
+    var userManager = new Oidc.UserManager();
+
+    userManager.signinCallback().then(res => {
+        console.log(res);
+
+        window.location.href = "/home/index";
+    })
+</script>

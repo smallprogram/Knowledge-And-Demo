@@ -108,8 +108,8 @@ namespace IdentityServer
 
                     AllowedGrantTypes = GrantTypes.Implicit,
 
-                    RedirectUris ={"https://localhost:7005/Home/SingIn" },
-
+                    RedirectUris ={"https://localhost:7005/Home/SignIn" },
+                    AllowedCorsOrigins = { "https://localhost:7005" }, //允许客户端跨域请求
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
@@ -117,6 +117,8 @@ namespace IdentityServer
                     },
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false, //是否需要用户确认授权
+
+                    //yu
                     //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
                 },
 
