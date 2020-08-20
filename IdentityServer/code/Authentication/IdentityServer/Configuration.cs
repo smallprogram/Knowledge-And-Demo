@@ -17,14 +17,14 @@ namespace IdentityServer
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                //new IdentityResource
-                //{
-                //    Name ="role.scope",
-                //    UserClaims =
-                //    {
-                //        "role"
-                //    }
-                //}
+                new IdentityResource
+                {
+                    Name ="role.scope",
+                    UserClaims =
+                    {
+                        "role"
+                    }
+                }
             };
         }
         #endregion
@@ -114,9 +114,12 @@ namespace IdentityServer
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         "ApiOne.read",
+                        "role.scope",
                     },
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false, //是否需要用户确认授权
+
+                    AccessTokenLifetime = 1,
 
                     //yu
                     //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
