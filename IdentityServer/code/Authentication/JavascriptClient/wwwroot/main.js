@@ -3,6 +3,7 @@
     authority: "https://localhost:7001",
     client_id: "client_id_js",
     redirect_uri: "https://localhost:7005/Home/SignIn",
+    post_logout_redirect_uri: "https://localhost:7005/Home/Index",
     response_type: "id_token token",
     scope: "openid ApiOne.read role.scope",
 };
@@ -10,9 +11,16 @@
 
 var userManager = new Oidc.UserManager(config);
 
-var signin = function () {
+var signIn = function () {
     userManager.signinRedirect();
 }
+
+var signOut = function () {
+    userManager.signoutRedirect();
+}
+
+
+
 
 userManager.getUser().then(user => {
     console.log("user:", user);
@@ -63,3 +71,4 @@ axios.interceptors.response.use(
     },
 
 )
+

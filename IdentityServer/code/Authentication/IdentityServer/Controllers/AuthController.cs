@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,12 +17,18 @@ namespace IdentityServer.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IIdentityServerInteractionService _identityServerInteractionService;
         private readonly IEmailService _emailService;
 
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IEmailService emailService)
+        public AuthController(
+            UserManager<IdentityUser> userManager, 
+            SignInManager<IdentityUser> signInManager, 
+            IIdentityServerInteractionService identityServerInteractionService,
+            IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _identityServerInteractionService = identityServerInteractionService;
             _emailService = emailService;
         }
 
@@ -37,6 +44,37 @@ namespace IdentityServer.Controllers
         }
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel vm)
+        {
+            // 登录业务
+
+            var user = await _userManager.FindByNameAsync(vm.Username);
+
+            if (user != null)
+            {
+                // sign in
+                var signInResult = await _signInManager.PasswordSignInAsync(user, vm.Password, false, false);
+                if (signInResult.Succeeded)
+                {
+                    return Redirect(vm.ReturnUrl);
+                }
+            }
+            return BadRequest();
+        }
+        [HttpGet]
+        public async Task<IActionResult> Logout(string logoutId)
+        {
+            await _signInManager.SignOutAsync();
+
+            var logoutRequest = await _identityServerInteractionService.GetLogoutContextAsync(logoutId);
+
+            if (string.IsNullOrEmpty(logoutRequest.PostLogoutRedirectUri))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return Redirect(logoutRequest.PostLogoutRedirectUri);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Logout(LoginViewModel vm)
         {
             // 登录业务
 

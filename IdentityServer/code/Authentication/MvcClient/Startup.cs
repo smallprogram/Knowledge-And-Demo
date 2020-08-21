@@ -31,6 +31,8 @@ namespace MvcClient
 
                     config.ResponseType = "code"; // 请求oidc模式
 
+                    config.SignedOutCallbackPath = "/Home/Index";
+
                     //对Claim进行操作，删除，映射到新的Claim上
                     //config.ClaimActions.DeleteClaim("amr");
                     //config.ClaimActions.MapUniqueJsonKey("RawCoding.role", "role");

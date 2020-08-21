@@ -93,5 +93,10 @@ namespace MvcClient.Controllers
             var refreshTokenDifferent = !refreshToken.Equals(tokenResponse.RefreshToken);
             //-----------test-------------
         }
+
+        public IActionResult Logout()
+        {
+            return SignOut("MvcClientCookie", "oidc");
+        }
     }
 }

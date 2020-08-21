@@ -85,6 +85,8 @@ namespace IdentityServer
                     AllowedGrantTypes = GrantTypes.Code,
 
                     RedirectUris ={"https://localhost:7004/signin-oidc" },
+                    PostLogoutRedirectUris = {"https://localhost:7004/Home/Index" },
+
 
                     AllowedScopes =
                     {
@@ -109,6 +111,7 @@ namespace IdentityServer
                     AllowedGrantTypes = GrantTypes.Implicit,
 
                     RedirectUris ={"https://localhost:7005/Home/SignIn" },
+                    PostLogoutRedirectUris = {"https://localhost:7005/Home/Index" },
                     AllowedCorsOrigins = { "https://localhost:7005" }, //允许客户端跨域请求
                     AllowedScopes =
                     {
