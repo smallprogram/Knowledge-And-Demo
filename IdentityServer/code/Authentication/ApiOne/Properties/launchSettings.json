@@ -3,7 +3,7 @@
     "ApiOne": {
       "commandName": "Project",
       "launchBrowser": false,
-      "applicationUrl": "https://localhost:7002;http://localhost:7020",
+      "applicationUrl": "https://localhost:17002;http://localhost:17020",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

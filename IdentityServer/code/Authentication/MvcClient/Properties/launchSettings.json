@@ -3,7 +3,7 @@
     "MvcClient": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7004;http://localhost:7040",
+      "applicationUrl": "https://localhost:17004;http://localhost:17040",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

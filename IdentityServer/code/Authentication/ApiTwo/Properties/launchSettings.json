@@ -3,7 +3,7 @@
     "ApiTwo": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7003;http://localhost:7030",
+      "applicationUrl": "https://localhost:17003;http://localhost:17030",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

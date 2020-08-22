@@ -1,9 +1,9 @@
 ﻿var config = {
     userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }), // 告诉oidc从localStorage读取已认证的用户数据
-    authority: "https://localhost:7001",
+    authority: "https://localhost:17001",
     client_id: "client_id_js",
-    redirect_uri: "https://localhost:7005/Home/SignIn",
-    post_logout_redirect_uri: "https://localhost:7005/Home/Index",
+    redirect_uri: "https://localhost:17005/Home/SignIn",
+    post_logout_redirect_uri: "https://localhost:17005/Home/Index",
     response_type: "id_token token",
     scope: "openid ApiOne.read role.scope",
 };
@@ -30,7 +30,7 @@ userManager.getUser().then(user => {
 })
 
 var callApi = function () {
-    axios.get('https://localhost:7002/api/secret')
+    axios.get('https://localhost:17002/api/secret')
         .then(res => {
             console.log(res);
         });

@@ -3,7 +3,7 @@
     "JavascriptClient": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7005;http://localhost:7050",
+      "applicationUrl": "https://localhost:17005;http://localhost:17050",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

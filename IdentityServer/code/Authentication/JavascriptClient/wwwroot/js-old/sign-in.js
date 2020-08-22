@@ -8,7 +8,7 @@ var createNonce = function () {
 }
 
 var signIn = function () {
-    var redirectUri = "https://localhost:7005/Home/SingIn";
+    var redirectUri = "https://localhost:17005/Home/SingIn";
     var responseType = "id_token token";
     var scope = "openid ApiOne.read";
     var authUrl =
@@ -24,5 +24,5 @@ var signIn = function () {
     console.log(authUrl)
     console.log(returnUrlEncode)
 
-    window.location.href = "https://localhost:7001/Auth/Login?ReturnUrl=" + returnUrlEncode;
+    window.location.href = "https://localhost:17001/Auth/Login?ReturnUrl=" + returnUrlEncode;
 }

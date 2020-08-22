@@ -18,7 +18,7 @@ namespace ApiTwo
                 .AddJwtBearer("Bearer", config =>
                 {
                     //config.MetadataAddress 
-                    config.Authority = "https://localhost:7001";
+                    config.Authority = "https://localhost:17001";
                     config.Audience = "ApiTwo";
                 });
 

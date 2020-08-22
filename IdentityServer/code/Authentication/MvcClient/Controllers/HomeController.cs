@@ -46,7 +46,7 @@ namespace MvcClient.Controllers
         {
             var apiClient = _httpClientFactory.CreateClient();
             apiClient.SetBearerToken(accessToken);
-            var response = await apiClient.GetAsync("https://localhost:7002/api/secret");
+            var response = await apiClient.GetAsync("https://localhost:17002/api/secret");
             var content = await response.Content.ReadAsStringAsync();
 
 
@@ -58,7 +58,7 @@ namespace MvcClient.Controllers
         {
 
             var serverClient = _httpClientFactory.CreateClient();
-            var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync("https://localhost:7001");
+            var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync("https://localhost:17001");
 
             var refreshToken = await HttpContext.GetTokenAsync("refresh_token");
 
