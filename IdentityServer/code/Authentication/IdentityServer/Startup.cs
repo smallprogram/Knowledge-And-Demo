@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using IdentityServer.Data;
 using IdentityServer4.EntityFramework.DbContexts;
@@ -23,10 +25,12 @@ namespace IdentityServer
     public class Startup
     {
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _environment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             _configuration = configuration;
+            _environment = environment;
         }
         public void ConfigureServices(IServiceCollection services)
         {
@@ -62,6 +66,9 @@ namespace IdentityServer
 
             var assembly = typeof(Startup).Assembly.GetName().Name;
 
+            var filePath = Path.Combine(_environment.ContentRootPath, "Idp4.pfx");
+            var certificate = new X509Certificate2(filePath, "identityserver");
+
             services.AddIdentityServer()
                 .AddAspNetIdentity<IdentityUser>()
                 // IdentityServer4 的 Configuration内容，例如IdentityResource、ApiScope、ApiResouce、Client等
@@ -76,11 +83,12 @@ namespace IdentityServer
                     options.ConfigureDbContext = b => b.UseSqlServer(connectionString,
                         sql => sql.MigrationsAssembly(assembly));
                 })
+                .AddSigningCredential(certificate);
                 //.AddInMemoryApiResources(Configuration.GetApis())
                 //.AddInMemoryApiScopes(Configuration.GetApiScopes())
                 //.AddInMemoryClients(Configuration.GetClients())
                 //.AddInMemoryIdentityResources(Configuration.GetIdentityResources())
-                .AddDeveloperSigningCredential(); //临时的RSA开发密钥，用于JWT加密签名之用
+                //.AddDeveloperSigningCredential(); //临时的RSA开发密钥，用于JWT加密签名之用
 
             services.AddControllersWithViews();
 
@@ -113,7 +121,7 @@ namespace IdentityServer
         {
             var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             var identityContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            //identityContext.Database.EnsureDeleted();
+            identityContext.Database.EnsureDeleted();
             //identityContext.Database.EnsureCreated();
             identityContext.Database.Migrate();
             if (!identityContext.Users.Any())
