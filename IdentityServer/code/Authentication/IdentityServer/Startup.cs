@@ -121,7 +121,7 @@ namespace IdentityServer
         {
             var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             var identityContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            identityContext.Database.EnsureDeleted();
+            //identityContext.Database.EnsureDeleted();
             //identityContext.Database.EnsureCreated();
             identityContext.Database.Migrate();
             if (!identityContext.Users.Any())

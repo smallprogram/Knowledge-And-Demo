@@ -12,7 +12,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/oidc-client/1.10.1/oidc-client.min.js"></script>
 <script>
-    var userManager = new Oidc.UserManager({ userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }) });  //设置在localStorage持久化已认证的用户
+    var userManager = new Oidc.UserManager({
+        userStore: new Oidc.WebStorageStateStore({ store: window.localStorage }),
+        response_mode: "query"
+    });  //设置在localStorage持久化已认证的用户
 
     userManager.signinCallback().then(res => {
         console.log(res);

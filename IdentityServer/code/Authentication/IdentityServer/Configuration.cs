@@ -100,6 +100,8 @@ namespace IdentityServer
                     },
                     RequireConsent = false, //是否需要用户确认授权
 
+                    RequirePkce = true,
+
                     AllowOfflineAccess = true, // 启用refresh_token
                     //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
                 },
@@ -108,7 +110,11 @@ namespace IdentityServer
                     ClientId = "client_id_js",
                     //ClientSecrets = {new Secret("client_secret_mvc".ToSha256())},
 
-                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowedGrantTypes = GrantTypes.Code,
+
+                    RequirePkce = true,
+                    RequireClientSecret = false,
+
 
                     RedirectUris ={"https://localhost:17005/Home/SignIn" },
                     PostLogoutRedirectUris = {"https://localhost:17005/Home/Index" },
@@ -121,6 +127,7 @@ namespace IdentityServer
                     },
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false, //是否需要用户确认授权
+
 
                     AccessTokenLifetime = 1,
 

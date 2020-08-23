@@ -33,6 +33,8 @@ namespace MvcClient
 
                     config.SignedOutCallbackPath = "/Home/Index";
 
+                    config.UsePkce = true;
+
                     //对Claim进行操作，删除，映射到新的Claim上
                     //config.ClaimActions.DeleteClaim("amr");
                     //config.ClaimActions.MapUniqueJsonKey("RawCoding.role", "role");
