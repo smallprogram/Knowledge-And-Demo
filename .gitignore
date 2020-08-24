@@ -74,3 +74,7 @@
 /Blazor/code/BlazorSample/BlazorSignalRApp/Server/obj
 /Blazor/code/BlazorSample/BlazorSignalRApp/Shared/bin/Debug/netstandard2.1
 /Blazor/code/BlazorSample/BlazorSignalRApp/Shared/obj
+/Blazor/code/BlazorSample/BlazorWebAssembly/obj
+/Blazor/code/BlazorSample/BlazorWebAssembly/bin/Debug/netstandard2.1/wwwroot/_framework/wasm
+/Blazor/code/BlazorSample/BlazorWebAssembly/bin/Debug/netstandard2.1/wwwroot/_framework
+/Blazor/code/BlazorSample/BlazorWebAssembly/bin/Debug/netstandard2.1
