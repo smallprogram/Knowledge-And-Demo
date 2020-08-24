@@ -68,3 +68,9 @@
 /Blazor/code/BlazorSample/BlazorSignalRApp.Client/obj
 /Blazor/code/BlazorSample/BlazorSignalRApp.Server/obj
 /Blazor/code/BlazorSample/BlazorSignalRApp.Server/bin/Debug/netcoreapp3.1
+/Blazor/code/BlazorSample/BlazorSignalRApp/Client/bin/Debug/netstandard2.1
+/Blazor/code/BlazorSample/BlazorSignalRApp/Client/obj
+/Blazor/code/BlazorSample/BlazorSignalRApp/Server/bin/Debug/netcoreapp3.1
+/Blazor/code/BlazorSample/BlazorSignalRApp/Server/obj
+/Blazor/code/BlazorSample/BlazorSignalRApp/Shared/bin/Debug/netstandard2.1
+/Blazor/code/BlazorSample/BlazorSignalRApp/Shared/obj
