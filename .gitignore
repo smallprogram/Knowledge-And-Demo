@@ -62,3 +62,5 @@
 /Blazor/code/BlazorSample/BlazorServer_TodoList/bin/Debug/netcoreapp3.1
 /Blazor/code/BlazorSample/BlazorServer_TodoList/obj
 /Blazor/code/BlazorSample/.vs/BlazorSample/v16
+/Blazor/code/BlazorSample/.vs/BlazorSample/config
+/Blazor/code/BlazorSample/.vs/BlazorSample/DesignTimeBuild
