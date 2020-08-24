@@ -59,3 +59,6 @@
 /IdentityServer/code/Authentication/MvcClient/obj
 /IdentityServer/code/Authentication/JavascriptClient/bin/Debug/netcoreapp3.1
 /IdentityServer/code/Authentication/JavascriptClient/obj
+/Blazor/code/BlazorSample/BlazorServer_TodoList/bin/Debug/netcoreapp3.1
+/Blazor/code/BlazorSample/BlazorServer_TodoList/obj
+/Blazor/code/BlazorSample/.vs/BlazorSample/v16
