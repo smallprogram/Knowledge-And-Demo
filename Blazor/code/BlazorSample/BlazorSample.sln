@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServer_TodoList", "BlazorServer_TodoList\BlazorServer_TodoList.csproj", "{347FE857-C625-4534-964A-05EB6A89D8BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorServer_TodoList", "BlazorServer_TodoList\BlazorServer_TodoList.csproj", "{347FE857-C625-4534-964A-05EB6A89D8BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorWebAssembly", "BlazorWebAssembly", "{D863724E-94CE-4640-BB08-A096ACC6E454}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSignalRApp.Client", "BlazorSignalRApp.Client\BlazorSignalRApp.Client.csproj", "{F3323228-F9E1-457C-A259-DC32631199E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSignalRApp.Server", "BlazorSignalRApp.Server\BlazorSignalRApp.Server.csproj", "{72AFAC81-9417-430A-9CCA-771D345E5C5B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +21,21 @@ Global
 		{347FE857-C625-4534-964A-05EB6A89D8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{347FE857-C625-4534-964A-05EB6A89D8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{347FE857-C625-4534-964A-05EB6A89D8BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3323228-F9E1-457C-A259-DC32631199E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3323228-F9E1-457C-A259-DC32631199E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3323228-F9E1-457C-A259-DC32631199E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3323228-F9E1-457C-A259-DC32631199E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72AFAC81-9417-430A-9CCA-771D345E5C5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72AFAC81-9417-430A-9CCA-771D345E5C5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72AFAC81-9417-430A-9CCA-771D345E5C5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72AFAC81-9417-430A-9CCA-771D345E5C5B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F3323228-F9E1-457C-A259-DC32631199E2} = {D863724E-94CE-4640-BB08-A096ACC6E454}
+		{72AFAC81-9417-430A-9CCA-771D345E5C5B} = {D863724E-94CE-4640-BB08-A096ACC6E454}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E29840A9-A686-416A-91EA-CFF201B54E62}

@@ -64,3 +64,7 @@
 /Blazor/code/BlazorSample/.vs/BlazorSample/v16
 /Blazor/code/BlazorSample/.vs/BlazorSample/config
 /Blazor/code/BlazorSample/.vs/BlazorSample/DesignTimeBuild
+/Blazor/code/BlazorSample/BlazorSignalRApp.Client/bin/Debug/netstandard2.1
+/Blazor/code/BlazorSample/BlazorSignalRApp.Client/obj
+/Blazor/code/BlazorSample/BlazorSignalRApp.Server/obj
+/Blazor/code/BlazorSample/BlazorSignalRApp.Server/bin/Debug/netcoreapp3.1
