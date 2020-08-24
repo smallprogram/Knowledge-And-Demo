@@ -5,7 +5,7 @@
 
 
 <div>
-        <img src="./image/angluar.png" width="50" height="60"></img>
+        <img src="./image/angluar.png" width="50" height="50"></img>
         <img src="./image/AngularMaterial.png" width="50" height="50"></img>
         <img src="./image/rxjs.jpg" width="50" height="50"></img>
         <img src="./image/.net.png" width="50" height="50"></img>
