@@ -117,7 +117,7 @@ appendWindowsPath|布尔值|true|设置此键可确定 WSL 是否会将 Windows 
 # 文件系统权限
 Linux访问Windows通过`/mnt/c`访问C盘
 
-Windows访问Linux通过`\\wls$`访问
+Windows访问Linux通过`\\wls$\{Ubuntu18.04}`访问
 
 [更多参考官方文档](https://docs.microsoft.com/zh-cn/windows/wsl/file-permissions)
 
