@@ -19,6 +19,7 @@
 - `wsl -l -v`查看以安装的分发版
 - `wsl --set-version <Distro> 2`设置单个分发版为wsl2
 - `wsl --set-default-version 2`设置分发版都默认为wsl2
+   - 如果报错 : 0x1bc 需要更新WSL2 Linux内核。访问网址：https://docs.microsoft.com/nl-nl/windows/wsl/wsl2-kernel
 - `wsl -s <DistributionName>`设置默认wsl的分布版
 - `wsl --unregister <DistributionName>`卸载指定的分发版 
 - `wsl -u <Username>`以特定用户执行分发版
