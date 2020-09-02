@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Blazor.IdentityServer.Data;
+using Blazor.IdentityServer.Middleware;
 using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Mappers;
 using Microsoft.AspNetCore.Builder;
@@ -115,6 +116,8 @@ namespace Blazor.IdentityServer
 
             app.UseIdentityServer();
 
+            app.UseMiddleware<BlazorCookieLoginMiddleware<IdentityUser>>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
@@ -125,7 +128,7 @@ namespace Blazor.IdentityServer
         {
             var scope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
             var identityContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            identityContext.Database.EnsureDeleted();
+            //identityContext.Database.EnsureDeleted();
             //identityContext.Database.EnsureCreated();
             identityContext.Database.Migrate();
             if (!identityContext.Users.Any())

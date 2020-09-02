@@ -2,7 +2,7 @@
   "profiles": {
     "Blazor.IdentityServer": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "applicationUrl": "https://localhost:25003;http://localhost:25030",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
