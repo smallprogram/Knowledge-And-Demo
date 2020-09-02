@@ -19,7 +19,7 @@ namespace ApiOne
                 .AddJwtBearer("Bearer", config =>
                 {
                     //config.MetadataAddress 
-                    config.Authority = "https://localhost:17001";
+                    config.Authority = "https://localhost:25003";
                     config.Audience = "ApiOne";
 
                     //config.TokenValidationParameters.ValidateAudience = false; //≤ª—È÷§aud

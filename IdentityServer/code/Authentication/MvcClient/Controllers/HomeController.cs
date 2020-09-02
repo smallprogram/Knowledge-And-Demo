@@ -58,7 +58,7 @@ namespace MvcClient.Controllers
         {
 
             var serverClient = _httpClientFactory.CreateClient();
-            var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync("https://localhost:17001");
+            var discoveryDocument = await serverClient.GetDiscoveryDocumentAsync("https://localhost:25003");
 
             var refreshToken = await HttpContext.GetTokenAsync("refresh_token");
 

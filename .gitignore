@@ -78,3 +78,11 @@
 /Blazor/code/BlazorSample/BlazorWebAssembly/bin/Debug/netstandard2.1/wwwroot/_framework/wasm
 /Blazor/code/BlazorSample/BlazorWebAssembly/bin/Debug/netstandard2.1/wwwroot/_framework
 /Blazor/code/BlazorSample/BlazorWebAssembly/bin/Debug/netstandard2.1
+/IdentityServer/code/Authentication/Blazor.Api/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/Blazor.Api/obj
+/IdentityServer/code/Authentication/Blazor.Client/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/Blazor.Client/obj
+/IdentityServer/code/Authentication/Blazor.IdentityServer/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/Blazor.IdentityServer/obj
+/IdentityServer/code/Authentication/Blazor.IdentitySample/bin/Debug/netcoreapp3.1
+/IdentityServer/code/Authentication/Blazor.IdentitySample/obj
