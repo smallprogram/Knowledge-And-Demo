@@ -86,3 +86,8 @@
 /IdentityServer/code/Authentication/Blazor.IdentityServer/obj
 /IdentityServer/code/Authentication/Blazor.IdentitySample/bin/Debug/netcoreapp3.1
 /IdentityServer/code/Authentication/Blazor.IdentitySample/obj
+/Blazor/code/BlazorApplication/.vs/BlazorApplication
+/Blazor/code/BlazorApplication/BlazorServer/bin/Debug/netcoreapp3.1
+/Blazor/code/BlazorApplication/BlazorServer/obj
+/Blazor/code/BlazorApplication/BlazorWebAssembly/bin/Debug/netstandard2.1
+/Blazor/code/BlazorApplication/BlazorWebAssembly/obj
