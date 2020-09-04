@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RESTful.Blazor", "RESTful.B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeManagement.Web", "EmployeeManagement.Web\EmployeeManagement.Web.csproj", "{B86A15C3-C3CD-4C7B-ABE9-7DEA12DDD62F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorBaseSample", "BlazorBaseSample", "{B4478B64-62A0-40C1-985F-9E280DA04E0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,8 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{25833B52-5E22-4CE6-937E-B69EF7DD0F4A} = {B4478B64-62A0-40C1-985F-9E280DA04E0F}
+		{45303BA5-D04B-4D0B-99A0-A8E85A2D0251} = {B4478B64-62A0-40C1-985F-9E280DA04E0F}
 		{8634D7B5-4BDE-48A8-A898-4D09B3519195} = {2BA1E9CA-4CF8-4EB8-8E7E-EF62C8D7E546}
 		{B86A15C3-C3CD-4C7B-ABE9-7DEA12DDD62F} = {2BA1E9CA-4CF8-4EB8-8E7E-EF62C8D7E546}
 	EndGlobalSection
