@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Update="Pages\Counter - 复制.razor.cs">
+      <DependentUpon>Counter.razor.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>
