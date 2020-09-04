@@ -91,3 +91,7 @@
 /Blazor/code/BlazorApplication/BlazorServer/obj
 /Blazor/code/BlazorApplication/BlazorWebAssembly/bin/Debug/netstandard2.1
 /Blazor/code/BlazorApplication/BlazorWebAssembly/obj
+/Blazor/code/BlazorApplication/EmployeeManagement.Model/bin/Debug/netstandard2.0
+/Blazor/code/BlazorApplication/EmployeeManagement.Model/obj
+/Blazor/code/BlazorApplication/EmployeeManagement.Web/bin/Debug/netcoreapp3.1
+/Blazor/code/BlazorApplication/EmployeeManagement.Web/obj
