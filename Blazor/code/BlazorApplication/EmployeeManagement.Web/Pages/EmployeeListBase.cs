@@ -1,4 +1,5 @@
 ﻿using EmployeeManagement.Model;
+using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -9,12 +10,16 @@ namespace EmployeeManagement.Web.Pages
 {
     public class EmployeeListBase : ComponentBase
     {
+        [Inject]
+        public IEmployeeService EmployeeService { set; get; }
+
         public IEnumerable<Employee> Employees { get; set; }
 
 
         protected override async Task OnInitializedAsync()
         {
-            await Task.Run(LoadEmployees);
+            Employees = (await EmployeeService.GetEmployees()).ToList();
+            //await Task.Run(LoadEmployees);
         }
 
         private void LoadEmployees()

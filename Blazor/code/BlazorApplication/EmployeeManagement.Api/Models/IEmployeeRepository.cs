@@ -13,6 +13,7 @@ namespace EmployeeManagement.Api.Models
         Task<Employee> GetEmployeeByEmail(string email);
         Task<Employee> AddEmployee(Employee employee);
         Task<Employee> UpdateEmployee(Employee employee);
-        void DeleteEmployee(string employeeId);
+        Task<Employee> DeleteEmployee(string employeeId);
+        Task<IEnumerable<Employee>> Search(string name, Gender? gender);
     }
 }

@@ -76,5 +76,69 @@ namespace EmployeeManagement.Api.Controllers
                     "Error creating new employee record");
             }
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Employee>> UpdateEmployee(string id, [FromBody] Employee employee)
+        {
+            try
+            {
+                if (Guid.Parse(id) != employee.EmployeeId)
+                    return BadRequest("Employee ID mismatch");
+
+                var employeeToUpdate = await employeeRepository.GetEmployee(id);
+
+                if (employeeToUpdate == null)
+                    return NotFound($"Employee with Id = {id} not found");
+
+                return await employeeRepository.UpdateEmployee(employee);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error updating data");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Employee>> DeleteEmployee(string id)
+        {
+            try
+            {
+                var employeeToDelete = await employeeRepository.GetEmployee(id);
+
+                if (employeeToDelete == null)
+                {
+                    return NotFound($"Employee with Id = {id} not found");
+                }
+
+                return await employeeRepository.DeleteEmployee(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error deleting data");
+            }
+        }
+
+        [HttpGet("{search}")]
+        public async Task<ActionResult<IEnumerable<Employee>>> Search(string name, Gender? gender)
+        {
+            try
+            {
+                var result = await employeeRepository.Search(name, gender);
+
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Error retrieving data from the database");
+            }
+        }
     }
 }

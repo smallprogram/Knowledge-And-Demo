@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -23,6 +24,11 @@ namespace EmployeeManagement.Web
 
          public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient<IEmployeeService, EmployeeService>(options =>
+             {
+                 options.BaseAddress = new Uri("https://localhost:5002");
+             });
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
         }
