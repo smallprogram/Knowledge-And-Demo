@@ -95,3 +95,5 @@
 /Blazor/code/BlazorApplication/EmployeeManagement.Model/obj
 /Blazor/code/BlazorApplication/EmployeeManagement.Web/bin/Debug/netcoreapp3.1
 /Blazor/code/BlazorApplication/EmployeeManagement.Web/obj
+/Blazor/code/BlazorApplication/EmployeeManagement.Api/bin/Debug/netcoreapp3.1
+/Blazor/code/BlazorApplication/EmployeeManagement.Api/obj

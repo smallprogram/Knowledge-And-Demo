@@ -29,7 +29,7 @@ namespace EmployeeManagement.Web.Pages
                 Email = "David@pragimtech.com",
                 DateOfBrith = new DateTime(1980, 10, 5),
                 Gender = Gender.Male,
-                Department = new Department { DepartmentId = Guid.Parse("cbcebfdc-d176-4045-a680-75d5893fe185"), DepartmentName = "IT" },
+                DepartmentId = Guid.Parse("cbcebfdc-d176-4045-a680-75d5893fe185"),
                 PhotoPath = "images/john.jpg"
             };
 
@@ -41,7 +41,7 @@ namespace EmployeeManagement.Web.Pages
                 Email = "Sam@pragimtech.com",
                 DateOfBrith = new DateTime(1981, 12, 22),
                 Gender = Gender.Male,
-                Department = new Department { DepartmentId = Guid.Parse("fa87c5b3-0bbb-4ddb-a4ee-33a7a875cfe9"), DepartmentName = "HR" },
+                DepartmentId = Guid.Parse("fa87c5b3-0bbb-4ddb-a4ee-33a7a875cfe9"),
                 PhotoPath = "images/sam.jpg"
             };
 
@@ -53,7 +53,7 @@ namespace EmployeeManagement.Web.Pages
                 Email = "mary@pragimtech.com",
                 DateOfBrith = new DateTime(1979, 11, 11),
                 Gender = Gender.Female,
-                Department = new Department { DepartmentId = Guid.Parse("cbcebfdc-d176-4045-a680-75d5893fe185"), DepartmentName = "IT" },
+                DepartmentId = Guid.Parse("cbcebfdc-d176-4045-a680-75d5893fe185"),
                 PhotoPath = "images/mary.jpg"
             };
 
@@ -65,7 +65,7 @@ namespace EmployeeManagement.Web.Pages
                 Email = "sara@pragimtech.com",
                 DateOfBrith = new DateTime(1982, 9, 23),
                 Gender = Gender.Female,
-                Department = new Department { DepartmentId = Guid.Parse("53049207-ed06-4411-b920-9ab7de6b5c0e"), DepartmentName = "Payroll" },
+                DepartmentId = Guid.Parse("53049207-ed06-4411-b920-9ab7de6b5c0e"),
                 PhotoPath = "images/sara.jpg"
             };
 
