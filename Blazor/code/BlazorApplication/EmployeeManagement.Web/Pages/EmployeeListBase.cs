@@ -12,14 +12,15 @@ namespace EmployeeManagement.Web.Pages
         public IEnumerable<Employee> Employees { get; set; }
 
 
-        protected override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
-            LoadEmployees();
-            return base.OnInitializedAsync();
+            await Task.Run(LoadEmployees);
         }
 
         private void LoadEmployees()
         {
+            System.Threading.Thread.Sleep(2000);
+
             Employee e1 = new Employee
             {
                 EmployeeId = Guid.Parse("e5122517-92e7-42da-a445-915de6ee9717"),
