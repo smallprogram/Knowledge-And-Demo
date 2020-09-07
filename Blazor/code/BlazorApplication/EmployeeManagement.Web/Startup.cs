@@ -26,7 +26,7 @@ namespace EmployeeManagement.Web
         {
             services.AddHttpClient<IEmployeeService, EmployeeService>(options =>
              {
-                 options.BaseAddress = new Uri("https://localhost:5002");
+                 options.BaseAddress = new Uri("https://localhost:5002/");
              });
 
             services.AddRazorPages();
