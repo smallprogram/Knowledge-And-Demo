@@ -13,17 +13,19 @@ else
         <div class="col-sm-8">
             <div class="card">
                 <div class="card-header">
-                    <h1>@Employee.FirstName @Employee.LastName</h1>
+                    <h1>@Employee.FirstName @Employee.LastName @Coordinates</h1>
                 </div>
 
                 <div class="card-body text-center">
-                    <img class="card-img-top" src="@Employee.PhotoPath" />
+                    <img class="card-img-top" src="@Employee.PhotoPath" @onmousemove="@(e => Coordinates = $"X = {e.ClientX} Y = {e.ClientY}")" />
 
                     <h4>Employee ID : @Employee.EmployeeId</h4>
                     <h4>Email : @Employee.Email</h4>
                     <h4>Department : @(Employee.Department == null ? "N/A":Employee.Department.DepartmentName)</h4>
+                    <button class="btn btn-primary" @onclick="@Button_Click">@ButtonText</button>
                 </div>
-                <div class="card-footer text-center">
+                
+                <div class="card-footer text-center @CssClass">
                     <a href="/" class="btn btn-primary">Back</a>
                     <a href="#" class="btn btn-primary">Edit</a>
                     <a href="#" class="btn btn-danger">Delete</a>
