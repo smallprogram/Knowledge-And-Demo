@@ -12,5 +12,7 @@ namespace EmployeeManagement.Web.Pages
         protected string Colour { get; set; } = "background-color:white";
 
         protected string Gender { get; set; } = "Male";
+
+        public string Description { get; set; } = string.Empty;
     }
 }
