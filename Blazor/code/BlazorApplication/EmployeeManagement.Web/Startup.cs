@@ -22,12 +22,16 @@ namespace EmployeeManagement.Web
 
         public IConfiguration Configuration { get; }
 
-         public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient<IEmployeeService, EmployeeService>(options =>
-             {
-                 options.BaseAddress = new Uri("https://localhost:5002/");
-             });
+            {
+                options.BaseAddress = new Uri("https://localhost:5002/");
+            });
+            services.AddHttpClient<IDepartmentService, DepartmentService>(options =>
+            {
+                options.BaseAddress = new Uri("https://localhost:5002/");
+            });
 
             services.AddRazorPages();
             services.AddServerSideBlazor();

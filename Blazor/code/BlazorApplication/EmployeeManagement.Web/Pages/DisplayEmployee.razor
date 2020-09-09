@@ -3,16 +3,16 @@
 <div class="card m-3">
     <div class="card-header">
         <input type="checkbox" checked="@IsSelected" @onchange="CheckBoxChanged" />
-        <h3>@employee.FirstName @employee.LastName</h3>
+        <h3>@Employee.FirstName @Employee.LastName</h3>
     </div>
     <img class="card-img-top imageThumbnail"
-         src="@employee.PhotoPath" />
-    @if (showfooter)
+         src="@Employee.PhotoPath" />
+    @if (Showfooter)
     {
         <div class="card-footer text-center">
-            <a href="@($"employeedetails/{employee.EmployeeId}")" class="btn btn-primary m-1">View</a>
+            <a href="@($"employeedetails/{Employee.EmployeeId}")" class="btn btn-primary m-1">View</a>
 
-            <a href="#" class="btn btn-primary m-1">Edit</a>
+            <a href="@($"editemployee/{Employee.EmployeeId}")" class="btn btn-primary m-1">Edit</a>
 
             <a href="#" class="btn btn-danger m-1">Delete</a>
         </div>

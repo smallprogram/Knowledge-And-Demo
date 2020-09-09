@@ -10,9 +10,9 @@ namespace EmployeeManagement.Web.Pages
     public class DisplayEmployeeBase : ComponentBase
     {
         [Parameter]
-        public Employee employee { get; set; }
+        public Employee Employee { get; set; }
         [Parameter]
-        public bool showfooter { get; set; }
+        public bool Showfooter { get; set; }
 
         protected bool IsSelected { set; get; }
         [Parameter]
