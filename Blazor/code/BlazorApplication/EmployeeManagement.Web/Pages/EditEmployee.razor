@@ -5,6 +5,8 @@
 
 <EditForm Model="@Employee">
     <h3>EditEmployee</h3>
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
     <hr />
     <div class="form-group row">
         <label for="firstName" class="col-sm-2 col-form-label">
@@ -12,6 +14,7 @@
         </label>
         <div class="col-md-10">
             <InputText id="firstName" class="form-control" placeholder="First Name" @bind-Value="Employee.FirstName" />
+            <ValidationMessage For="@(()=>Employee.FirstName)"/>
         </div>
     </div>
     <div class="form-group row">
@@ -20,6 +23,7 @@
         </label>
         <div class="col-md-10">
             <InputText id="lastName" class="form-control" placeholder="Last Name" @bind-Value="Employee.LastName" />
+            <ValidationMessage For="@(()=>Employee.LastName)" />
         </div>
     </div>
     <div class="form-group row">
@@ -28,6 +32,7 @@
         </label>
         <div class="col-md-10">
             <InputText id="email" class="form-control" placeholder="Email" @bind-Value="Employee.Email" />
+            <ValidationMessage For="@(()=>Employee.Email)" />
         </div>
     </div>
     <div class="form-group row">
