@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmployeeManagement.Model.CustomValidators;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -14,6 +15,7 @@ namespace EmployeeManagement.Model
         [Required(ErrorMessage = "名必须要填写")]
         public string LastName { get; set; }
         [EmailAddress(ErrorMessage = "Email格式不对！")]
+        [EmailDomainValidator(AllowedDomain ="gmail.com")]
         public string Email { get; set; }
         public DateTime DateOfBrith { get; set; }
         public Gender Gender { get; set; }
