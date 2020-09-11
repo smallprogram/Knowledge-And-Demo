@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.Tokens;
 using Server;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -72,30 +74,36 @@ namespace Server.Controllers
                 else
                 {
                     // 不能直接用Convert.FromBase64String，会报错，微软二逼，必须对base64加密字符串按照规则整理一下，具体怎么整理看这个方法的内容
-                    var decodeBtyes = ConvertFromBase64String(arrayJwt[i]);
-                    decodeJwt += Encoding.UTF8.GetString(decodeBtyes);
+                    var decodeBytes = WebEncoders.Base64UrlDecode(arrayJwt[i]);
+                    //var decodeBytes = ConvertFromBase64String(arrayJwt[i]);
+                    decodeJwt += Encoding.UTF8.GetString(decodeBytes);
                 }
             }
 
             return Ok(decodeJwt);
         }
-        private static byte[] ConvertFromBase64String(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input)) return null;
-            try
-            {
-                string working = input.Replace('-', '+').Replace('_', '/'); ;
-                while (working.Length % 4 != 0)
-                {
-                    working += '=';
-                }
-                return Convert.FromBase64String(working);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
+
+        /// <summary>
+        /// 弃用，使用WebEndcoders.Base64UrlDecode代替
+        /// </summary>
+        /// <returns></returns>
+        //private static byte[] ConvertFromBase64String(string input)
+        //{
+        //    if (string.IsNullOrWhiteSpace(input)) return null;
+        //    try
+        //    {
+        //        string working = input.Replace('-', '+').Replace('_', '/'); ;
+        //        while (working.Length % 4 != 0)
+        //        {
+        //            working += '=';
+        //        }
+        //        return Convert.FromBase64String(working);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return null;
+        //    }
+        //}
         public IActionResult AccessDenied()
         {
             return View();

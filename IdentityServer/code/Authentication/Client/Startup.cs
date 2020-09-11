@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -46,7 +47,7 @@ namespace Client
                         {
                             var access_token = context.AccessToken;
                             var base64payload = access_token.Split('.')[1];
-                            var decodeBtyes = ConvertFromBase64String(base64payload);
+                            var decodeBtyes = WebEncoders.Base64UrlDecode(base64payload);
                             var jsonPayload = Encoding.UTF8.GetString(decodeBtyes);
                             var claims = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonPayload);
                             foreach (var claim in claims)
@@ -87,22 +88,22 @@ namespace Client
         }
 
 
-        private static byte[] ConvertFromBase64String(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input)) return null;
-            try
-            {
-                string working = input.Replace('-', '+').Replace('_', '/'); ;
-                while (working.Length % 4 != 0)
-                {
-                    working += '=';
-                }
-                return Convert.FromBase64String(working);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
+        //private static byte[] ConvertFromBase64String(string input)
+        //{
+        //    if (string.IsNullOrWhiteSpace(input)) return null;
+        //    try
+        //    {
+        //        string working = input.Replace('-', '+').Replace('_', '/'); ;
+        //        while (working.Length % 4 != 0)
+        //        {
+        //            working += '=';
+        //        }
+        //        return Convert.FromBase64String(working);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return null;
+        //    }
+        //}
     }
 }
