@@ -14,48 +14,55 @@ namespace EmployeeManagement.Web.Pages
     {
         [Inject]
         public IEmployeeService EmployeeService { set; get; }
-
-        private Employee Employee { set; get; } = new Employee();
-        public EditEmployeeModel EditEmployeeModel { set; get; } = new EditEmployeeModel();
-
-        [Parameter]
-        public string Id { get; set; }
-
         [Inject]
         public IDepartmentService DepartmentService { get; set; }
         [Inject]
         public IMapper Mapper { set; get; }
         [Inject]
         public NavigationManager NavigationManager { set; get; }
+        [Parameter]
+        public string Id { get; set; }
 
-
+        private Employee Employee { set; get; } = new Employee();
+        public EditEmployeeModel EditEmployeeModel { set; get; } = new EditEmployeeModel();
         public List<Department> Departments { get; set; } = new List<Department>();
-        //public string DepartmentId { get; set; }
+        public string PageHeader { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Employee = await EmployeeService.GetEmployee(Id);
+            if (Id == null || Id == "")
+            {
+                PageHeader = "CreateEmployee";
+                Employee = new Employee
+                {
+                    DepartmentId = Guid.Parse("cbcebfdc-d176-4045-a680-75d5893fe185"),
+                    DateOfBrith = DateTime.Now,
+                    PhotoPath = "images/nomal_head.jpg",
+                    //Department = await DepartmentService.GetDepartment("cbcebfdc-d176-4045-a680-75d5893fe185")
+                };
+            }
+            else
+            {
+                PageHeader = "EditEmployee";
+                Employee = await EmployeeService.GetEmployee(Id);
+            }
             Departments = (await DepartmentService.GetDepartments()).ToList();
-            //DepartmentId = Employee.DepartmentId.ToString();
 
             Mapper.Map(Employee, EditEmployeeModel);
-            //EditEmployeeModel.ConfirmEmail = Employee.Email;
-            //EditEmployeeModel.DateOfBrith = Employee.DateOfBrith;
-            //EditEmployeeModel.Department = Employee.Department;
-            //EditEmployeeModel.DepartmentId = Employee.DepartmentId;
-            //EditEmployeeModel.Email = Employee.Email;
-            //EditEmployeeModel.EmployeeId = Employee.EmployeeId;
-            //EditEmployeeModel.Gender = Employee.Gender;
-            //EditEmployeeModel.LastName = Employee.LastName;
-            //EditEmployeeModel.FirstName = Employee.FirstName;
-            //EditEmployeeModel.PhotoPath = Employee.PhotoPath;
         }
 
         protected async Task HandleValidSubmit()
         {
             Mapper.Map(EditEmployeeModel, Employee);
-
-            var result = await EmployeeService.UpdateEmployee(Employee);
+            Employee result = null;
+            if (Employee.EmployeeId == Guid.Empty)
+            {
+                result = await EmployeeService.CreateEmployee(Employee);
+            }
+            else
+            {
+                result = await EmployeeService.UpdateEmployee(Employee);
+            }
             if (result != null)
             {
                 NavigationManager.NavigateTo("/");

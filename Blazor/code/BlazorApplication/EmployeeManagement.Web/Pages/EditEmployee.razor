@@ -1,10 +1,12 @@
 ﻿@page "/editemployee/{id}"
+@page "/editemployee"
+
 @inherits EditEmployeeBase
 
 
 
 <EditForm Model="@EditEmployeeModel" OnValidSubmit="HandleValidSubmit">
-    <h3>EditEmployee</h3>
+    <h3>@PageHeader</h3>
     <ObjectGraphDataAnnotationsValidator />
     <ValidationSummary />
     <hr />
@@ -80,7 +82,7 @@
             <InputDate @bind-Value="EditEmployeeModel.DateOfBrith" class="form-control" @bind-Value:format="yyyy-MM-dd" />
         </div>
     </div>
-    <div class="form-group row">
+    @*<div class="form-group row">
         <label for="deptname" class="col-sm-2 col-form-label">
             Depertment Name
         </label>
@@ -88,7 +90,7 @@
             <InputText @bind-Value="EditEmployeeModel.Department.DepartmentName" class="form-control" />
             <ValidationMessage For="@(() => EditEmployeeModel.Department)" />
         </div>
-    </div>
+    </div>*@
 
     <button type="submit" class="btn btn-primary">Save</button>
 </EditForm>

@@ -34,6 +34,7 @@ namespace EmployeeManagement.Api.Models
         }
         public async Task<Employee> AddEmployee(Employee employee)
         {
+            employee.EmployeeId = Guid.NewGuid();
             var result = await appDbContext.Employees.AddAsync(employee);
             await appDbContext.SaveChangesAsync();
             return result.Entity;
