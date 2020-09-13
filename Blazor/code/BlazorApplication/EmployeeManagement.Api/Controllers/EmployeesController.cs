@@ -77,18 +77,18 @@ namespace EmployeeManagement.Api.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<Employee>> UpdateEmployee(string id, [FromBody] Employee employee)
+        [HttpPut()]
+        public async Task<ActionResult<Employee>> UpdateEmployee([FromBody] Employee employee)
         {
             try
             {
-                if (Guid.Parse(id) != employee.EmployeeId)
-                    return BadRequest("Employee ID mismatch");
+                //if (Guid.Parse(id) != employee.EmployeeId)
+                //    return BadRequest("Employee ID mismatch");
 
-                var employeeToUpdate = await employeeRepository.GetEmployee(id);
+                var employeeToUpdate = await employeeRepository.GetEmployee(employee.EmployeeId.ToString());
 
                 if (employeeToUpdate == null)
-                    return NotFound($"Employee with Id = {id} not found");
+                    return NotFound($"Employee with Id = {employee.EmployeeId} not found");
 
                 return await employeeRepository.UpdateEmployee(employee);
             }

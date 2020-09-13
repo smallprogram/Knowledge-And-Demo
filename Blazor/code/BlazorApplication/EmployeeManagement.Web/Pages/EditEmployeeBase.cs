@@ -25,6 +25,10 @@ namespace EmployeeManagement.Web.Pages
         public IDepartmentService DepartmentService { get; set; }
         [Inject]
         public IMapper Mapper { set; get; }
+        [Inject]
+        public NavigationManager NavigationManager { set; get; }
+
+
         public List<Department> Departments { get; set; } = new List<Department>();
         //public string DepartmentId { get; set; }
 
@@ -47,9 +51,15 @@ namespace EmployeeManagement.Web.Pages
             //EditEmployeeModel.PhotoPath = Employee.PhotoPath;
         }
 
-        protected void HandleValidSubmit()
+        protected async Task HandleValidSubmit()
         {
+            Mapper.Map(EditEmployeeModel, Employee);
 
+            var result = await EmployeeService.UpdateEmployee(Employee);
+            if (result != null)
+            {
+                NavigationManager.NavigateTo("/");
+            }
         }
     }
 }
