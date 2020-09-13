@@ -1,4 +1,5 @@
-﻿using EmployeeManagement.Model;
+﻿using AutoMapper;
+using EmployeeManagement.Model;
 using EmployeeManagement.Web.Models;
 using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Components;
@@ -22,6 +23,8 @@ namespace EmployeeManagement.Web.Pages
 
         [Inject]
         public IDepartmentService DepartmentService { get; set; }
+        [Inject]
+        public IMapper Mapper { set; get; }
         public List<Department> Departments { get; set; } = new List<Department>();
         //public string DepartmentId { get; set; }
 
@@ -30,16 +33,18 @@ namespace EmployeeManagement.Web.Pages
             Employee = await EmployeeService.GetEmployee(Id);
             Departments = (await DepartmentService.GetDepartments()).ToList();
             //DepartmentId = Employee.DepartmentId.ToString();
-            EditEmployeeModel.ConfirmEmail = Employee.Email;
-            EditEmployeeModel.DateOfBrith = Employee.DateOfBrith;
-            EditEmployeeModel.Department = Employee.Department;
-            EditEmployeeModel.DepartmentId = Employee.DepartmentId;
-            EditEmployeeModel.Email = Employee.Email;
-            EditEmployeeModel.EmployeeId = Employee.EmployeeId;
-            EditEmployeeModel.Gender = Employee.Gender;
-            EditEmployeeModel.LastName = Employee.LastName;
-            EditEmployeeModel.FirstName = Employee.FirstName;
-            EditEmployeeModel.PhotoPath = Employee.PhotoPath;
+
+            Mapper.Map(Employee, EditEmployeeModel);
+            //EditEmployeeModel.ConfirmEmail = Employee.Email;
+            //EditEmployeeModel.DateOfBrith = Employee.DateOfBrith;
+            //EditEmployeeModel.Department = Employee.Department;
+            //EditEmployeeModel.DepartmentId = Employee.DepartmentId;
+            //EditEmployeeModel.Email = Employee.Email;
+            //EditEmployeeModel.EmployeeId = Employee.EmployeeId;
+            //EditEmployeeModel.Gender = Employee.Gender;
+            //EditEmployeeModel.LastName = Employee.LastName;
+            //EditEmployeeModel.FirstName = Employee.FirstName;
+            //EditEmployeeModel.PhotoPath = Employee.PhotoPath;
         }
 
         protected void HandleValidSubmit()

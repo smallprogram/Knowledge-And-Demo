@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -32,6 +33,8 @@ namespace EmployeeManagement.Web
             {
                 options.BaseAddress = new Uri("https://localhost:5002/");
             });
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddRazorPages();
             services.AddServerSideBlazor();
