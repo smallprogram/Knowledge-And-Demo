@@ -17,6 +17,7 @@
             <button class="btn btn-danger m-1" @onclick="Delete_Click">Delete</button>
         </div>
     }
-</div>
 
+</div>
+<Confirm @ref="DeleteConfirmation" ConfirmationChanged="ConfirmDelete_Click" ConfirmationMessage="@($"你确定删除{Employee.FirstName}")"></Confirm>
 

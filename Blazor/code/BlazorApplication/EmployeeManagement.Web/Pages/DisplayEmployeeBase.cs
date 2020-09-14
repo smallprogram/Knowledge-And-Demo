@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.Model;
 using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Components;
+using SP.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace EmployeeManagement.Web.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
         [Parameter]
-        public EventCallback<string> OnEmployeeDeteled { set; get; }
+        public EventCallback<string> OnEmployeeDeleted { set; get; }
         [Parameter]
         public Employee Employee { get; set; }
         [Parameter]
@@ -30,11 +31,18 @@ namespace EmployeeManagement.Web.Pages
             await OnEmployeeSelection.InvokeAsync(IsSelected);
         }
 
-        protected async Task Delete_Click()
+        protected ConfirmBase DeleteConfirmation { get; set; }
+        protected async Task ConfirmDelete_Click(bool deleteConfirmed)
         {
-            await EmployeeService.DeleteEmployee(Employee.EmployeeId.ToString());
-            await OnEmployeeDeteled.InvokeAsync(Employee.EmployeeId.ToString());
-            //NavigationManager.NavigateTo("/", true);
+            if (deleteConfirmed)
+            {
+                await EmployeeService.DeleteEmployee(Employee.EmployeeId.ToString());
+                await OnEmployeeDeleted.InvokeAsync(Employee.EmployeeId.ToString());
+            }
+        }
+        protected void Delete_Click()
+        {
+            DeleteConfirmation.Show();
         }
     }
 }

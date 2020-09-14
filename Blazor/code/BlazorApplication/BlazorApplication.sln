@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BlazorBaseSample", "BlazorB
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmployeeManagement.Api", "EmployeeManagement.Api\EmployeeManagement.Api.csproj", "{15B49B31-ACF9-40AB-8BC9-2206EAD22093}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SP.Components", "SP.Components\SP.Components.csproj", "{1EBAE547-BD4C-42D8-8470-D02C48CC4CFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SP.Components", "SP.Components\SP.Components.csproj", "{1EBAE547-BD4C-42D8-8470-D02C48CC4CFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
