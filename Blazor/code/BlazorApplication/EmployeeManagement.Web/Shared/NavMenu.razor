@@ -15,6 +15,13 @@
     </ul>
     <ul class="nav flex-column">
         <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/createemployee" Match="NavLinkMatch.Prefix" @onclick="HandleClick">
+                <span class="oi oi-aperture" aria-hidden="true"></span> CreateEmployee
+            </NavLink>
+        </li>
+    </ul>
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
             <NavLink class="nav-link" href="/databindingdemo" Match="NavLinkMatch.Prefix">
                 <span class="oi oi-badge" aria-hidden="true"></span> DataBindingDemo
             </NavLink>
@@ -30,5 +37,10 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+    @inject NavigationManager NavigationManager
+    private void HandleClick()
+    {
+        NavigationManager.NavigateTo("createemployee", forceLoad: true);
     }
 }
