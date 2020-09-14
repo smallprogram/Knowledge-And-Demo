@@ -29,7 +29,10 @@ namespace EmployeeManagement.Web.Pages
                 SelectedEmployeesCount--;
             }
         }
-
+        public async Task OnEmployeeDeteled()
+        {
+            Employees = (await EmployeeService.GetEmployees()).ToList();
+        }
         protected override async Task OnInitializedAsync()
         {
             Employees = (await EmployeeService.GetEmployees()).ToList();
