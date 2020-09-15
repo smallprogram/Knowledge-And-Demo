@@ -36,7 +36,7 @@ namespace EmployeeManagement.Web.Areas.Identity.Pages.Account
             }
             else
             {
-                return RedirectToPage();
+                return LocalRedirect("/");
             }
         }
     }
