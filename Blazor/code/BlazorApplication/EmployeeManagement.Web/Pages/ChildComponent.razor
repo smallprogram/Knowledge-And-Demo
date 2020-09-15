@@ -1,11 +1,10 @@
 ﻿@inherits ChildComponentBase
-
 @*<input id="firstName" required="@Required" maxlength="@Maxlength" size="@Size"
-       placeholder="@Placeholder" />*@
-<h1 style="@ChildStyle">-ChildComponent</h1>
+    placeholder="@Placeholder" />*@
+<h1 style="@ChildStyle; @ChildBoderStyle">-ChildComponent</h1>
 
 
-    <GrandChildComponent></GrandChildComponent>
+<GrandChildComponent></GrandChildComponent>
 
 <hr />
 <input id="firstName" @attributes="InputAttributes" value="@Value" />
@@ -31,10 +30,12 @@
             { "placeholder", "Child Component Placeholder" },
             { "size", "100" },
             { "maxlength", "15" }
-    };
+        };
     [Parameter]
     public string Value { get; set; } = "Child Value";
 
-    [CascadingParameter]
+    [CascadingParameter(Name ="ColorStyle")]
     public string ChildStyle { get; set; }
+    [CascadingParameter(Name = "BorderStyle")]
+    public string ChildBoderStyle { get; set; }
 }
