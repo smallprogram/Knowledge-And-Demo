@@ -1,0 +1,32 @@
+﻿@inherits ChildComponentBase
+
+@*<input id="firstName" required="@Required" maxlength="@Maxlength" size="@Size"
+       placeholder="@Placeholder" />*@
+
+<input id="firstName" @attributes="InputAttributes" value="@Value" />
+
+@code {
+    //[Parameter]
+    //public string Required { get; set; } = "required";
+
+    //[Parameter]
+    //public string Maxlength { get; set; } = "15";
+
+    //[Parameter]
+    //public string Size { get; set; } = "25";
+
+    //[Parameter]
+    //public string Placeholder { get; set; } = "Child Component Placeholder";
+
+    [Parameter]
+    public Dictionary<string, object> InputAttributes { get; set; } =
+    new Dictionary<string, object>()
+    {
+            { "required", "required" },
+            { "placeholder", "Child Component Placeholder" },
+            { "size", "100" },
+            { "maxlength", "15" }
+    };
+    [Parameter]
+    public string Value { get; set; } = "Child Value";
+}
