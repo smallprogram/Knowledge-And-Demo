@@ -2,7 +2,7 @@
 
 @*<input id="firstName" required="@Required" maxlength="@Maxlength" size="@Size"
        placeholder="@Placeholder" />*@
-<h1 style="@Style">-ChildComponent</h1>
+<h1 style="@ChildStyle">-ChildComponent</h1>
 
 
     <GrandChildComponent></GrandChildComponent>
@@ -36,5 +36,5 @@
     public string Value { get; set; } = "Child Value";
 
     [CascadingParameter]
-    public string Style { get; set; }
+    public string ChildStyle { get; set; }
 }
