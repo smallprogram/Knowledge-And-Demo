@@ -19,7 +19,13 @@ namespace EmployeeManagement.Web.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("EmployeeManagementWebContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                services.AddDefaultIdentity<IdentityUser>(options => {
+                    options.SignIn.RequireConfirmedAccount = true;
+                    options.Password.RequiredLength = 4;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.SignIn.RequireConfirmedEmail = true;
+                })
                     .AddEntityFrameworkStores<EmployeeManagementWebContext>();
             });
         }

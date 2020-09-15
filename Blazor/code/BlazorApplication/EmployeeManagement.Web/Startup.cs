@@ -25,6 +25,10 @@ namespace EmployeeManagement.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication("Identity.Application")
+                .AddCookie();
+
+
             services.AddHttpClient<IEmployeeService, EmployeeService>(options =>
             {
                 options.BaseAddress = new Uri("https://localhost:5002/");
@@ -57,6 +61,9 @@ namespace EmployeeManagement.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
