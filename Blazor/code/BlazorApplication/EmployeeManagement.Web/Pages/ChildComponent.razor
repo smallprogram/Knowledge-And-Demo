@@ -2,7 +2,12 @@
 
 @*<input id="firstName" required="@Required" maxlength="@Maxlength" size="@Size"
        placeholder="@Placeholder" />*@
+<h1 style="@ElementStyle">-ChildComponent</h1>
 
+<CascadingValue Value="@ElementStyle">
+    <GrandChildComponent></GrandChildComponent>
+</CascadingValue>
+<hr />
 <input id="firstName" @attributes="InputAttributes" value="@Value" />
 
 @code {
@@ -29,4 +34,7 @@
     };
     [Parameter]
     public string Value { get; set; } = "Child Value";
+
+    [CascadingParameter]
+    public string ElementStyle { get; set; }
 }

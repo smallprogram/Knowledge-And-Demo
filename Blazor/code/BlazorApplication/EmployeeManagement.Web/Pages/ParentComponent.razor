@@ -1,11 +1,12 @@
 ﻿@page "/parent"
 @inherits ParentComponentBase
 
-<h3>ParentComponent</h3>
+<h1 style="@Style">ParentComponent</h1>
 
-<ChildComponent InputAttributes="attributesFromParent" Value="Parent Value">
-</ChildComponent>
-
+<CascadingValue Value="@Style">
+    <ChildComponent InputAttributes="attributesFromParent" Value="Parent Value">
+    </ChildComponent>
+</CascadingValue>
 @code {
     public Dictionary<string, object> attributesFromParent { get; set; } =
     new Dictionary<string, object>()
@@ -15,4 +16,7 @@
             { "size", "50" },
             { "maxlength", "5" }
     };
+
+
+    public string Style { get; set; } = "color:red";
 }
