@@ -1,12 +1,19 @@
 ﻿@page "/parent"
 @inherits ParentComponentBase
 
-<h1 style="@Style; @BorderStyle">ParentComponent</h1>
 
-<CascadingValue Value="@Style" Name="ColorStyle">
-    <CascadingValue Value="@BorderStyle" Name="BorderStyle">
-        <ChildComponent InputAttributes="attributesFromParent" Value="Parent Value">
-        </ChildComponent>
+<button class="btn btn-primary" @onclick="IncrementCounter">
+    Increment Counter
+</button>
+
+<h1 style="@Style; @BorderStyle">ParentComponent - Count Value: @Counter</h1>
+
+<CascadingValue Value="@Counter" Name="Counter" IsFixed="false">
+    <CascadingValue Value="@Style" Name="ColorStyle">
+        <CascadingValue Value="@BorderStyle" Name="BorderStyle">
+            <ChildComponent InputAttributes="attributesFromParent" Value="Parent Value">
+            </ChildComponent>
+        </CascadingValue>
     </CascadingValue>
 </CascadingValue>
 @code {
@@ -22,4 +29,11 @@
 
     public string Style { get; set; } = "color:red";
     public string BorderStyle { get; set; } = "border:1px solid red";
+
+    public int Counter { get; set; } = 0;
+
+    private void IncrementCounter()
+    {
+        Counter = Counter + 1;
+    }
 }
