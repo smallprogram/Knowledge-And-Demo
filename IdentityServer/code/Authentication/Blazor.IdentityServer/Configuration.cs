@@ -105,6 +105,36 @@ namespace Blazor.IdentityServer
                     AllowOfflineAccess = true, // 启用refresh_token
                     //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
                 },
+
+                // Blazor Authorization code Client
+                new Client
+                {
+                    ClientId = "client_id_blazor",
+                    ClientSecrets = {new Secret("client_secret_blazor".ToSha256())},
+
+                    AllowedGrantTypes = GrantTypes.Code,
+
+                    RedirectUris ={"https://localhost:25002/signin-oidc" },
+                    PostLogoutRedirectUris = {"https://localhost:25002/" },
+
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "ApiOne.read",
+                        "ApiTwo.read",
+                        //"role.scope",
+
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                    },
+                    RequireConsent = false, //是否需要用户确认授权
+
+                    RequirePkce = true,
+
+                    AllowOfflineAccess = true, // 启用refresh_token
+                    //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
+                },
                 new Client
                 {
                     ClientId = "client_id_js",

@@ -1,0 +1,8 @@
+﻿@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Components.Authorization
+@code{
+    protected override void OnInitialized()
+    {
+        NavigationManager.NavigateTo($"https://localhost:25003/Auth/Login?returnUrl={NavigationManager.Uri}");
+    }
+}

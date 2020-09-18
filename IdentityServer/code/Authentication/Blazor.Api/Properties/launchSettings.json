@@ -2,7 +2,7 @@
   "profiles": {
     "Blazor.Api": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "applicationUrl": "https://localhost:25001;http://localhost:25010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

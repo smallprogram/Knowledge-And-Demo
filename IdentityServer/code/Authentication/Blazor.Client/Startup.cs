@@ -22,16 +22,58 @@ namespace Blazor.Client
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+
+
+            services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = "BlazorClientCookie";
+                config.DefaultChallengeScheme = "oidc";
+
+            })
+               .AddCookie("BlazorClientCookie")
+               .AddOpenIdConnect("oidc", config =>
+               {
+                   config.Authority = "https://localhost:25003";
+                   config.ClientId = "client_id_blazor";
+                   config.ClientSecret = "client_secret_blazor";
+                   config.SaveTokens = true;
+
+                   config.ResponseType = "code"; // 请求oidc模式
+
+                   config.SignedOutCallbackPath = "/";
+
+                   config.UsePkce = true;
+
+                   //对Claim进行操作，删除，映射到新的Claim上
+                   //config.ClaimActions.DeleteClaim("amr");
+                   //config.ClaimActions.MapUniqueJsonKey("RawCoding.role", "role");
+
+                   // 使用idp服务器的userinfo端点请求用户信息
+                   config.GetClaimsFromUserInfoEndpoint = true;
+
+                   // 对请求的scope进行操作。去掉无用的，只添加有用的scope
+                   config.Scope.Clear();
+                   config.Scope.Add("openid");
+                   config.Scope.Add("profile");
+                   config.Scope.Add("offline_access"); // refresh_token
+                                                       //config.Scope.Add("role.scope");
+                   config.Scope.Add("ApiOne.read");
+                   config.Scope.Add("ApiTwo.read");
+
+               });
+
+            services.AddHttpClient();
+
+
             services.AddSingleton<WeatherForecastService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -49,6 +91,9 @@ namespace Blazor.Client
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
