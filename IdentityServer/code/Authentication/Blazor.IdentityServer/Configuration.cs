@@ -110,14 +110,15 @@ namespace Blazor.IdentityServer
                 new Client
                 {
                     ClientId = "client_id_blazor",
-                    ClientSecrets = {new Secret("client_secret_blazor".ToSha256())},
+                    //ClientSecrets = {new Secret("client_secret_blazor".ToSha256())},
+                    RequireClientSecret = false,
 
                     AllowedGrantTypes = GrantTypes.Code,
 
-                    RedirectUris ={"https://localhost:25002/signin-oidc" },
-                    PostLogoutRedirectUris = {"https://localhost:25002/" },
-
-
+                    RedirectUris ={"https://localhost:25004/authentication/login-callback" },
+                    PostLogoutRedirectUris = {"https://localhost:25004/" },
+                    AllowedCorsOrigins = {"https://localhost:25004" },
+                    
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,

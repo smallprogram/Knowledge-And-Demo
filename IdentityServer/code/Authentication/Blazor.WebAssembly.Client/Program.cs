@@ -23,7 +23,15 @@ namespace Blazor.WebAssembly.Client
             {
                 // Configure your authentication provider options here.
                 // For more information, see https://aka.ms/blazor-standalone-auth
-                builder.Configuration.Bind("Local", options.ProviderOptions);
+                //builder.Configuration.Bind("Local", options.ProviderOptions);
+                options.ProviderOptions.Authority = "https://localhost:25003";
+                options.ProviderOptions.ClientId = "client_id_blazor";
+                options.ProviderOptions.DefaultScopes.Add("openid");
+                options.ProviderOptions.DefaultScopes.Add("profile");
+                options.ProviderOptions.DefaultScopes.Add("ApiOne.read");
+                options.ProviderOptions.PostLogoutRedirectUri = "/";
+                //options.ProviderOptions.RedirectUri = "https://localhost:25004/";
+                options.ProviderOptions.ResponseType = "code";
             });
 
             await builder.Build().RunAsync();
