@@ -1,12 +1,5 @@
 ﻿@page "/Auth/Login"
-@using Microsoft.AspNetCore.WebUtilities
-@using Microsoft.AspNetCore.Identity;
-@using Microsoft.AspNetCore.Mvc;
-@using Blazor.IdentityServer.ViewModels
-@using Blazor.IdentityServer.Middleware
-@inject NavigationManager NavigationManager
-@inject UserManager<IdentityUser> _userManager
-@inject SignInManager<IdentityUser> _signInManager
+@inherits LoginBase
 
 
 
@@ -24,78 +17,3 @@
     <button type="submit">Submit</button>
 </EditForm>
 
-@code {
-    //private Blazor.IdentityServer.ViewModels.LoginViewModel vm = new ViewModels.LoginViewModel();
-
-    //protected override void OnInitialized()
-    //{
-    //    var query = new Uri(NavigationManager.Uri).Query;
-
-    //    if (QueryHelpers.ParseQuery(query).TryGetValue("{returnUrl}", out var value))
-    //    {
-    //        vm.ReturnUrl = value;
-    //    }
-    //}
-    //private async Task OnSubmit()
-    //{
-    //    var user = await _userManager.FindByNameAsync(vm.Username);
-
-    //    if (user != null)
-    //    {
-    //        // sign in
-    //        var signInResult = await _signInManager.PasswordSignInAsync(user, vm.Password, false, false);
-    //        if (signInResult.Succeeded)
-    //        {
-    //            NavigationManager.NavigateTo(vm.ReturnUrl);
-    //        }
-    //    }
-    //}
-
-    private LoginModel<IdentityUser> vm { get; set; } = new LoginModel<IdentityUser>();
-
-    protected override void OnInitialized()
-    {
-        var query = new Uri(NavigationManager.Uri).Query;
-
-        if (QueryHelpers.ParseQuery(query).TryGetValue("ReturnUrl", out var value))
-        {
-            vm.ReturnUrl = value;
-        }
-    }
-
-    private async Task Submit()
-    {
-        var query = new Uri(NavigationManager.Uri).Query;
-
-        if (QueryHelpers.ParseQuery(query).TryGetValue("ReturnUrl", out var value))
-        {
-            vm.ReturnUrl = value;
-        }
-        vm.Error = null;
-        var usr = await _userManager.FindByNameAsync(vm.UserName);
-        if (usr == null)
-        {
-            vm.Error = "Login failed. Check your username and password.";
-            return;
-        }
-
-
-        if (await _signInManager.CanSignInAsync(usr))
-        {
-            var result = await _signInManager.CheckPasswordSignInAsync(usr, vm.Password, true);
-            if (result.Succeeded)
-            {
-                Guid key = BlazorCookieLoginMiddleware<IdentityUser>.AnnounceLogin(vm);
-                NavigationManager.NavigateTo($"/login?redirecturl={vm.ReturnUrl}&key={key}", true);
-            }
-            else
-            {
-                vm.Error = "Login failed. Check your username and password.";
-            }
-        }
-        else
-        {
-            vm.Error = "Your account is blocked";
-        }
-    }
-}
