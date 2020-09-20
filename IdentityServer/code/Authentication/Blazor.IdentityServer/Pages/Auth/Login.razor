@@ -2,18 +2,35 @@
 @inherits LoginBase
 
 
+<style>
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+        top: 50%;
+        left: 50%;
+    }
+</style>
+<video id="background_video" loop muted autoplay style="position: absolute;z-index:-100;width: 100%;"></video>
+<div id="video_cover"></div>
+<div class="text-center d-flex align-content-center flex-wrap" style="margin-top:15%">
+    <EditForm Model="@vm" OnSubmit="@Submit" class="form-signin">
+        <img class="mb-4" src="/imges/logo.jpg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="username" class="sr-only">用户名：</label>
+        <InputText @bind-Value="vm.UserName" class="form-control" placeholder="用户名" id="username" />
+        <label for="inputPassword" class="sr-only">密码：</label>
+        <InputText @bind-Value="vm.Password" id="inputPassword" class="form-control" placeholder="密码" />
+        @*<div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" value="remember-me"> 记住我
+                </label>
+            </div>*@
+        <label style="color:red">@vm.Error</label>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登 录</button>
+        <p class="mt-5 mb-3 text-muted">© 2017-2020</p>
+    </EditForm>
+</div>
 
-<h3>Login</h3>
-
-<EditForm Model="@vm" OnSubmit="@Submit">
-    <p>
-        <label>用户名：</label>
-        <InputText @bind-Value="vm.UserName" />
-    </p>
-    <p>
-        <label>密码：</label>
-        <InputText @bind-Value="vm.Password" />
-    </p>
-    <button type="submit">Submit</button>
-</EditForm>
 

@@ -10,6 +10,7 @@ using Blazor.IdentityServer.ViewModels;
 using Blazor.IdentityServer.Middleware;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 
 namespace Blazor.IdentityServer.Pages.Auth
 {
@@ -21,6 +22,8 @@ namespace Blazor.IdentityServer.Pages.Auth
         UserManager<IdentityUser> _userManager { set; get; }
         [Inject]
         SignInManager<IdentityUser> _signInManager { set; get; }
+        [Inject]
+        IJSRuntime JSRuntime { set; get; }
 
         protected LoginModel<IdentityUser> vm { get; set; } = new LoginModel<IdentityUser>();
 
@@ -32,9 +35,16 @@ namespace Blazor.IdentityServer.Pages.Auth
             {
                 vm.ReturnUrl = value;
             }
+
+            
         }
-
-
+        protected override void OnAfterRender(bool firstRender)
+        {
+            if (firstRender)
+            {
+                JSRuntime.InvokeVoidAsync("backgroundvideo");
+            }
+        }
         protected async Task Submit()
         {
             var query = new Uri(NavigationManager.Uri).Query;
