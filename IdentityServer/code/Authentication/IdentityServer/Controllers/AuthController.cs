@@ -73,24 +73,24 @@ namespace IdentityServer.Controllers
             }
             return Redirect(logoutRequest.PostLogoutRedirectUri);
         }
-        [HttpPost]
-        public async Task<IActionResult> Logout(LoginViewModel vm)
-        {
-            // 登录业务
+        //[HttpPost]
+        //public async Task<IActionResult> Logout(LoginViewModel vm)
+        //{
+        //    // 登录业务
 
-            var user = await _userManager.FindByNameAsync(vm.Username);
+        //    var user = await _userManager.FindByNameAsync(vm.Username);
 
-            if (user != null)
-            {
-                // sign in
-                var signInResult = await _signInManager.PasswordSignInAsync(user, vm.Password, false, false);
-                if (signInResult.Succeeded)
-                {
-                    return Redirect(vm.ReturnUrl);
-                }
-            }
-            return BadRequest();
-        }
+        //    if (user != null)
+        //    {
+        //        // sign in
+        //        var signInResult = await _signInManager.PasswordSignInAsync(user, vm.Password, false, false);
+        //        if (signInResult.Succeeded)
+        //        {
+        //            return Redirect(vm.ReturnUrl);
+        //        }
+        //    }
+        //    return BadRequest();
+        //}
 
         public IActionResult Register(string returnUrl)
         {

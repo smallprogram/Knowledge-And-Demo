@@ -41,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{603BBD1E-C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.IdentitySample", "Blazor.IdentitySample\Blazor.IdentitySample.csproj", "{EF42D975-1E59-4E15-94E7-3319F744BD3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blazor.WebAssembly.Client", "Blazor.WebAssembly.Client\Blazor.WebAssembly.Client.csproj", "{7DC61601-EE11-404F-AF5D-9E19BFE4E627}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blazor.WebAssembly.Client", "Blazor.WebAssembly.Client\Blazor.WebAssembly.Client.csproj", "{7DC61601-EE11-404F-AF5D-9E19BFE4E627}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
