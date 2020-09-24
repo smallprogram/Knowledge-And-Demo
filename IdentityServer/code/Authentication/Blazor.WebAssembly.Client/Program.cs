@@ -21,6 +21,7 @@ namespace Blazor.WebAssembly.Client
 
             builder.Services.AddHttpClient("LocalAPI",sp => sp.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) );
 
+            builder.Services.AddScoped<CustomAuthorizationMessageHandler>();
             builder.Services.AddHttpClient("ServerAPI", client => client.BaseAddress = new Uri("https://localhost:25001"))
                 .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
 

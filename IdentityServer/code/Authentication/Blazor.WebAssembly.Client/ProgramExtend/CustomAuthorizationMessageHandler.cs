@@ -14,8 +14,9 @@ namespace Blazor.WebAssembly.Client.ProgramExtend
             : base(provider, navigationManager)
         {
             ConfigureHandler(
-                authorizedUrls: new[] { "https://localhost:25001" },
-                scopes: new[] { "ApiOne.read" });
+                authorizedUrls: new[] { "https://localhost:25001" }
+                //scopes: new[] { "ApiOne.read" }
+                );
         }
     }
 }

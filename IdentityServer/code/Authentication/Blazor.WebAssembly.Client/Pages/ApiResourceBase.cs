@@ -21,7 +21,7 @@ namespace Blazor.WebAssembly.Client.Pages
             {
                 var Client = HttpClientFactory.CreateClient("ServerAPI");
                 var baseuri = Client.BaseAddress;
-                var result = await Client.GetFromJsonAsync<string>("api/secret");
+                result = await Client.GetStringAsync("api/secret");
                 
             }
             catch (Exception ex)
