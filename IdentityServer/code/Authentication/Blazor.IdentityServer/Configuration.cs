@@ -126,15 +126,13 @@ namespace Blazor.IdentityServer
                         "ApiOne.read",
                         //"ApiTwo.read",
                         "role.scope",
-
-                        IdentityServerConstants.StandardScopes.OfflineAccess,
                     },
                     
                     RequireConsent = false, //是否需要用户确认授权
 
                     RequirePkce = true,
 
-                    AllowOfflineAccess = true, // 启用refresh_token
+                    AllowOfflineAccess = false, // 启用refresh_token , Blazor WASM不让发送刷新令牌，因为不安全，令牌会在每次请求被保护资源时重新获取。
                     //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
 
                      AccessTokenLifetime = 10,
