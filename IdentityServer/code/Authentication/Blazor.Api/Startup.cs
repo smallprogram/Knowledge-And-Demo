@@ -32,6 +32,14 @@ namespace Blazor.Api
                 });
 
             services.AddAuthorization();
+
+            services.AddCors(config =>
+                config.AddPolicy("AllowAll",
+                    p => p.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()));
+
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +49,7 @@ namespace Blazor.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors("AllowAll");
 
             app.UseRouting();
 
@@ -49,9 +58,9 @@ namespace Blazor.Api
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
+                app.UseEndpoints(endpoints =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    endpoints.MapControllers();
                 });
             });
         }

@@ -1,5 +1,5 @@
 @page "/fetchdata"
-@inject HttpClient Http
+@inject IHttpClientFactory HttpClientFactroy
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
 <h1>Weather forecast</h1>
@@ -40,6 +40,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        var Http = HttpClientFactroy.CreateClient("LocalAPI");
         forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
     }
 

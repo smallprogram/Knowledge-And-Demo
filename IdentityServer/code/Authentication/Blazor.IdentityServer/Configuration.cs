@@ -49,7 +49,7 @@ namespace Blazor.IdentityServer
                 // Aud
                 new ApiResource(name:"ApiOne",displayName:"ApiOneResource",userClaims:new string[]{ "role.apione" })
                 {
-                    Scopes ={ "ApiOne.read" }
+                    Scopes ={ "ApiOne.read", "ApiOne.all" }
                 },
                 new ApiResource(name:"ApiTwo")
                 {
@@ -124,17 +124,20 @@ namespace Blazor.IdentityServer
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "ApiOne.read",
-                        "ApiTwo.read",
-                        //"role.scope",
+                        //"ApiTwo.read",
+                        "role.scope",
 
                         IdentityServerConstants.StandardScopes.OfflineAccess,
                     },
+                    
                     RequireConsent = false, //是否需要用户确认授权
 
                     RequirePkce = true,
 
                     AllowOfflineAccess = true, // 启用refresh_token
                     //AlwaysIncludeUserClaimsInIdToken = true, //UserClaim包含到idToken中
+
+                     AccessTokenLifetime = 10,
                 },
                 new Client
                 {

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Blazor.WebAssembly.Client.ProgramExtend;
 
 namespace Blazor.WebAssembly.Client
 {
@@ -17,22 +19,28 @@ namespace Blazor.WebAssembly.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddHttpClient("LocalAPI",sp => sp.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) );
+
+            builder.Services.AddHttpClient("ServerAPI", client => client.BaseAddress = new Uri("https://localhost:25001"))
+                .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
+
 
             builder.Services.AddOidcAuthentication(options =>
             {
-                // Configure your authentication provider options here.
-                // For more information, see https://aka.ms/blazor-standalone-auth
                 //builder.Configuration.Bind("Local", options.ProviderOptions);
                 options.ProviderOptions.Authority = "https://localhost:25003";
                 options.ProviderOptions.ClientId = "client_id_blazor";
+                options.ProviderOptions.PostLogoutRedirectUri = "/";
+                options.ProviderOptions.ResponseType = "code";
+
+                options.ProviderOptions.DefaultScopes.Clear();
                 options.ProviderOptions.DefaultScopes.Add("openid");
                 options.ProviderOptions.DefaultScopes.Add("profile");
+                //options.ProviderOptions.DefaultScopes.Add("ApiOne");
                 options.ProviderOptions.DefaultScopes.Add("ApiOne.read");
-                options.ProviderOptions.PostLogoutRedirectUri = "/";
-                //options.ProviderOptions.RedirectUri = "https://localhost:25004/";
-                options.ProviderOptions.ResponseType = "code";
             });
+
+
 
             await builder.Build().RunAsync();
         }
