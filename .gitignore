@@ -102,3 +102,4 @@
 /IdentityServer/code/Authentication/BlazorWebAssembly/obj
 /IdentityServer/code/Authentication/Blazor.WebAssembly.Client/obj
 /IdentityServer/code/Authentication/Blazor.WebAssembly.Client/bin/Debug/netstandard2.1
+/Angular8/code/angular-router-sample/node_modules
