@@ -1,7 +1,8 @@
 # 安装
 1. win10 启用关闭Windows功能，开启 windows虚拟机监控程序平台 适用于Linux的Windows子系统
 2. Win10 更新，开启Windows预览体验计划，选在快速更新
-3. 安装Linux子系统 [官方文档](https://docs.microsoft.com/zh-cn/windows/wsl/install-win10#install-your-linux-distribution-of-choice)
+3. 下载 Linux 内核更新包,https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi,在官方文档中也有这个链接
+4. 安装Linux子系统 [官方文档](https://docs.microsoft.com/zh-cn/windows/wsl/install-win10#install-your-linux-distribution-of-choice)
    1. 从Microsoft Store下载安装
    2. 手动命令安装,适用于应用商店不可用的情况 [官方文档](https://docs.microsoft.com/zh-cn/windows/wsl/install-manual)
    3. 下载并手动解压安装。适用于Windows server 2019或更高版本。
