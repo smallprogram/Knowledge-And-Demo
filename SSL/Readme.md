@@ -4,6 +4,8 @@ https://github.com/FiloSottile/mkcert
 
 mkcert -pkcs12 somedomain.net
 
+默认密码 changeit
+
 ~~配置IIS pfx证书，系统安装git，在git目录有openssl~~
 ~~C:\Program Files\Git\usr\bin~~
 
